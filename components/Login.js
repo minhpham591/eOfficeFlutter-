@@ -10,9 +10,9 @@ export default class Login extends Component {
                         <View style={styles.container}>
                             <View style={styles.logoContainer}>
                                 <Image style={styles.logo}
-                                    source={require('../images/office.png')}>
+                                    source={require('../images/eOffice.png')}>
                                 </Image>
-                                <Text style={styles.title}>LOGIN</Text>
+                               
                             </View>
                             <View style={styles.infoContainer}>
                                 <TextInput style={styles.input}
@@ -31,9 +31,7 @@ export default class Login extends Component {
                                     autoCorrect={false}
                                     ref={"txtPassword"}
                                 />
-                                <CheckBox>
-                                    
-                                </CheckBox>
+                               
                                 <TouchableOpacity style={styles.buttonContainer}>
                                     <Text style={styles.buttonText}>Sign in</Text>
                                 </TouchableOpacity>
@@ -50,19 +48,19 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FF7F50',
+        backgroundColor: 'rgb(90,120,255)',
         flexDirection: 'column',
     },
     logoContainer: {
         alignItems: 'center',
         justifyContent: 'center',
         flex: 0.5,
-        top: 100,
-        bottom: 300,
+        top: 75,
+        bottom: 200,
     },
     logo: {
-        width: 200,
-        height: 40,
+        width: 250,
+        height: 180,
     },
     title: {
         color: 'yellow',
