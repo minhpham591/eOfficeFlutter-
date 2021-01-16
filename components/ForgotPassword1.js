@@ -4,6 +4,7 @@ export default class Login extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <ImageBackground style={styles.backgroundImage} source={require('../images/17975.png')}>
                 <StatusBar barStyle="light-content" />
                 <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
@@ -32,14 +33,18 @@ export default class Login extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </KeyboardAvoidingView>
+                </ImageBackground>
             </SafeAreaView>)
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgb(90,120,255)',
         flexDirection: 'column',
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
     },
     logoContainer: {
         alignItems: 'center',
