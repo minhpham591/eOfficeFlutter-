@@ -1,9 +1,12 @@
 import React, { Component } from 'react'
-import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, TouchableOpacityBase, CheckBox, Button } from 'react-native'
+import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, TouchableOpacityBase, CheckBox, Button, ImageBackground } from 'react-native'
 export default class Login extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>
+                <ImageBackground style={styles.backgroundImage} source={require('../images/17975.png')}>
+
+                
                 <StatusBar barStyle="light-content" />
                 <KeyboardAvoidingView behavior='padding' style={styles.container}>
                     <TouchableWithoutFeedback style={styles.container} onPress={Keyboard.dismiss}>
@@ -44,14 +47,18 @@ export default class Login extends Component {
                         </View>
                     </TouchableWithoutFeedback>
                 </KeyboardAvoidingView>
+                </ImageBackground>
             </SafeAreaView>)
     }
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#FAFAD2',
         flexDirection: 'column',
+    },
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
     },
     logoContainer: {
         alignItems: 'center',
