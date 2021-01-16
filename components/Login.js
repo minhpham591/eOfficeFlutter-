@@ -36,10 +36,10 @@ export default class Login extends Component {
                                     <Text style={styles.buttonText}>Login</Text>
                                 </TouchableOpacity>
 
-                                <TouchableOpacity >
-                                    <Text style={styles.buttonText}>Forgot your password???</Text>
+                                <TouchableOpacity style={styles.buttonContainer1}>
+                                    <Text style={styles.buttonText1}>Forgot your password???</Text>
                                 </TouchableOpacity>
-                               
+
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
@@ -50,7 +50,7 @@ export default class Login extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'rgb(90,120,255)',
+        backgroundColor: 'white',
         flexDirection: 'column',
     },
     logoContainer: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     },
     logo: {
         width: 250,
-        height: 180,
+        height: 200,
     },
     title: {
         color: 'yellow',
@@ -90,16 +90,34 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderStyle: 'solid',
         borderRadius: 10,
+        borderWidth: 1.5,
     },
     buttonContainer: {
         backgroundColor: 'lightblue',
-        paddingVertical: 15,
+        paddingVertical: 10,
         borderRadius: 10,
+        left: 250,
+        marginRight: 250,
     },
     buttonText: {
         textAlign: 'center',
         color: 'black',
         fontWeight: 'bold',
         fontSize: 16,
+
+    },
+    buttonContainer1: {
+
+        paddingVertical: 10,
+        borderRadius: 10,
+        top: 130,
+
+    },
+    buttonText1: {
+        textAlign: 'center',
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 16,
+
     },
 })
