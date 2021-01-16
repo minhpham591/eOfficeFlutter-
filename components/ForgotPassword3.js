@@ -15,16 +15,17 @@ export default class Login extends Component {
 
                             </View>
                             <View style={styles.infoContainer}>
+                                <Text style={styles.title}>Please enter your new password.</Text>
                                 <TextInput style={styles.input}
-                                    placeholder="Enter your email"
+                                    placeholder="Enter New Password"
                                     placeholderTextColor="gray"
-                                    keyboardType='email-address'
                                     returnKeyType='next'
+                                    secureTextEntry
                                     autoCorrect={false}
                                     onSubmitEditing={() => this.refs.txtPassword.focus()}
                                 />
                                 <TextInput style={styles.input}
-                                    placeholder="Enter your password"
+                                    placeholder="Enter New Password Confirm"
                                     placeholderTextColor="gray"
                                     returnKeyType='go'
                                     secureTextEntry
@@ -33,11 +34,7 @@ export default class Login extends Component {
                                 />
 
                                 <TouchableOpacity style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Login</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity >
-                                    <Text style={styles.buttonText}>Forgot your password???</Text>
+                                    <Text style={styles.buttonText}>Go</Text>
                                 </TouchableOpacity>
                                
                             </View>
@@ -65,19 +62,21 @@ const styles = StyleSheet.create({
         height: 180,
     },
     title: {
-        color: 'yellow',
+        color: 'black',
+        fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'center',
         marginTop: 1,
+        marginBottom: 5,
         opacity: 0.5,
-        top: 15,
-        bottom: 50,
+        top: 0,
+        bottom: 350,
     },
     infoContainer: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 350,
+        top: 340,
         bottom: 100,
         height: 120,
         padding: 15,

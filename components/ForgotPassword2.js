@@ -15,29 +15,17 @@ export default class Login extends Component {
 
                             </View>
                             <View style={styles.infoContainer}>
+                                <Text style={styles.title}>We just sent a 6-digit verifivation code to your email.</Text>
                                 <TextInput style={styles.input}
-                                    placeholder="Enter your email"
-                                    placeholderTextColor="gray"
-                                    keyboardType='email-address'
-                                    returnKeyType='next'
-                                    autoCorrect={false}
-                                    onSubmitEditing={() => this.refs.txtPassword.focus()}
-                                />
-                                <TextInput style={styles.input}
-                                    placeholder="Enter your password"
+                                    placeholder="Enter OTP"
                                     placeholderTextColor="gray"
                                     returnKeyType='go'
-                                    secureTextEntry
                                     autoCorrect={false}
-                                    ref={"txtPassword"}
+                                   
                                 />
 
                                 <TouchableOpacity style={styles.buttonContainer}>
-                                    <Text style={styles.buttonText}>Login</Text>
-                                </TouchableOpacity>
-
-                                <TouchableOpacity >
-                                    <Text style={styles.buttonText}>Forgot your password???</Text>
+                                    <Text style={styles.buttonText}>Next</Text>
                                 </TouchableOpacity>
                                
                             </View>
@@ -65,19 +53,21 @@ const styles = StyleSheet.create({
         height: 180,
     },
     title: {
-        color: 'yellow',
+        color: 'black',
+        fontWeight: 'bold',
         fontSize: 16,
         textAlign: 'center',
         marginTop: 1,
+        marginBottom: 5,
         opacity: 0.5,
-        top: 15,
-        bottom: 50,
+        top: 0,
+        bottom: 350,
     },
     infoContainer: {
         position: 'absolute',
         left: 0,
         right: 0,
-        top: 350,
+        top: 340,
         bottom: 100,
         height: 120,
         padding: 15,
