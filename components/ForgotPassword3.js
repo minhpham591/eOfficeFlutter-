@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { StyleSheet, Text, View, Image, TouchableWithoutFeedback, StatusBar, TextInput, SafeAreaView, Keyboard, TouchableOpacity, KeyboardAvoidingView, TouchableOpacityBase, CheckBox, Button,ImageBackground } from 'react-native'
-export default class Login extends Component {
+export default class ForgotPassword3 extends Component {
     render() {
         return (
             <SafeAreaView style={styles.container}>

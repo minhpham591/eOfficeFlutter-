@@ -103,8 +103,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'lightblue',
         paddingVertical: 10,
         borderRadius: 10,
-        left: 250,
-        marginRight: 250,
+        marginRight: 100,
+        marginLeft: 100,
     },
     buttonText: {
         textAlign: 'center',
