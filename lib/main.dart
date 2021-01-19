@@ -1,3 +1,4 @@
+import 'package:EOfficeMobile/forgotPassword.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -90,7 +91,12 @@ class _MyHomePageState extends State<MyHomePage> {
       color: Color.fromRGBO(238, 237, 237, 0),
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => forgotPassword()),
+          );
+        },
         child: Text(
           "Forgot your password",
           textAlign: TextAlign.center,
