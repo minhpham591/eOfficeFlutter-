@@ -1,3 +1,4 @@
+import 'package:EOfficeMobile/enterNewPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
@@ -20,6 +21,10 @@ class enterOTPForgotPassword extends StatelessWidget {
           } else {
             print("pass");
             pin = null;
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => enterNewPassword()),
+            );
           }
         },
         child: Text(
@@ -74,6 +79,21 @@ class enterOTPForgotPassword extends StatelessWidget {
                 ),
                 SizedBox(height: 25),
                 nextButton,
+                SizedBox(height: 15),
+                SizedBox(
+                  height: 15,
+                  child: Text(
+                    "-------------step 2 of 3-------------",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(
+                  height: 32,
+                  child: Text(
+                    "If you do not see a letter with a code in your mail, please check your SPAM folder or SEND OTP AGAIN?",
+                    textAlign: TextAlign.center,
+                  ),
+                ),
               ],
             ),
           ),

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:EOfficeMobile/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
@@ -104,6 +106,21 @@ class forgotPassword extends StatelessWidget {
                   phoneField,
                   SizedBox(height: 25),
                   nextButton,
+                  SizedBox(height: 15),
+                  SizedBox(
+                    height: 15,
+                    child: Text(
+                      "-------------step 1 of 3-------------",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 30,
+                    child: Text(
+                      "If you do not see an email with a code in your mail, check your SPAM folder",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ],
               ),
             ),

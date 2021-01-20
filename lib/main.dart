@@ -1,9 +1,12 @@
 import 'package:EOfficeMobile/forgotPassword.dart';
+import 'package:EOfficeMobile/restartApp.dart';
 import 'package:flutter/material.dart';
 import 'package:form_validator/form_validator.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(RestarApp(
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
