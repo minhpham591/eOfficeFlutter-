@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 
 class enterNewPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String newPassword;
   String newPasswordConfirm;
+  RegExp regexPassword =
+      new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
   @override
   Widget build(BuildContext context) {
     final nextButton = Material(
@@ -15,7 +18,14 @@ class enterNewPassword extends StatelessWidget {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: () {},
+        onPressed: () {
+          if (!formKey.currentState.validate()) {
+            return;
+          } else if (newPassword != newPasswordConfirm) {
+          } else {
+            RestarApp.restartApp(context);
+          }
+        },
         child: Text(
           "Update",
           textAlign: TextAlign.center,
@@ -32,85 +42,95 @@ class enterNewPassword extends StatelessWidget {
       body: Center(
         child: Container(
           color: Color.fromRGBO(238, 237, 237, 0.5),
-          child: Padding(
-            padding: const EdgeInsets.all(36),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 110,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    fit: BoxFit.contain,
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(36),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 110,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SizedBox(height: 45),
-                TextFormField(
-                  obscureText: false,
-                  style: style,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "New Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12))),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Password is not empty';
-                    }
-                    return null;
-                  },
-                  onSaved: (String value) {},
-                ),
-                SizedBox(height: 25),
-                TextFormField(
-                  obscureText: false,
-                  style: style,
-                  decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "Confirm New Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12))),
-                  validator: (String value) {
-                    if (value.isEmpty) {
-                      return 'Password is not empty';
-                    }
-                    return null;
-                  },
-                  onSaved: (String value) {},
-                ),
-                SizedBox(height: 25),
-                nextButton,
-                SizedBox(height: 15),
-                SizedBox(
-                  height: 15,
-                  child: Text(
-                    "-------------step 3 of 3-------------",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                SizedBox(
-                  height: 32,
-                  child: Text(
-                    "If you change your password by mistake - return to the",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Material(
-                  elevation: 0,
-                  color: Color.fromRGBO(238, 237, 237, 0),
-                  child: MaterialButton(
-                    minWidth: MediaQuery.of(context).size.width,
-                    onPressed: () {
-                      RestarApp.restartApp(context);
+                  SizedBox(height: 15),
+                  TextFormField(
+                    obscureText: true,
+                    style: style,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        hintText: "New Password",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Password is not empty';
+                      } else if (!regexPassword.hasMatch(value)) {
+                        return 'Password is had more than 8 character,\n at least 1 uppercase, not contain special character';
+                      }
+                      return null;
                     },
+                    onSaved: (String value) {
+                      newPassword = value;
+                    },
+                  ),
+                  SizedBox(height: 15),
+                  TextFormField(
+                    obscureText: true,
+                    style: style,
+                    decoration: InputDecoration(
+                        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                        hintText: "Confirm New Password",
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(12))),
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Password is not empty';
+                      } else if (!regexPassword.hasMatch(value)) {
+                        return 'Password is had more than 8 character,\n at least 1 uppercase, not contain special character';
+                      }
+                      return null;
+                    },
+                    onSaved: (String value) {
+                      newPasswordConfirm = value;
+                    },
+                  ),
+                  SizedBox(height: 10),
+                  nextButton,
+                  SizedBox(
+                    height: 14,
                     child: Text(
-                      "MAIN PAGE",
+                      "-------------step 3 of 3-------------",
                       textAlign: TextAlign.center,
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(
+                    height: 15,
+                    child: Text(
+                      "If you change your password by mistake - return to the",
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  Material(
+                    elevation: 0,
+                    color: Color.fromRGBO(238, 237, 237, 0),
+                    child: MaterialButton(
+                      height: 2,
+                      onPressed: () {
+                        RestarApp.restartApp(context);
+                      },
+                      child: Text(
+                        "main page",
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
