@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:form_validator/form_validator.dart';
 
 class enterOTPForgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  String pin = null;
   @override
   Widget build(BuildContext context) {
     final nextButton = Material(
@@ -13,7 +15,13 @@ class enterOTPForgotPassword extends StatelessWidget {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: () {},
+        onPressed: () {
+          if (pin == null) {
+          } else {
+            print("pass");
+            pin = null;
+          }
+        },
         child: Text(
           "Verifying",
           textAlign: TextAlign.center,
@@ -37,7 +45,7 @@ class enterOTPForgotPassword extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 125,
+                  height: 110,
                   child: Image.asset(
                     "assets/images/logo.png",
                     fit: BoxFit.contain,
@@ -60,8 +68,8 @@ class enterOTPForgotPassword extends StatelessWidget {
                   style: TextStyle(fontSize: 14),
                   textFieldAlignment: MainAxisAlignment.spaceAround,
                   fieldStyle: FieldStyle.box,
-                  onCompleted: (pin) {
-                    print("Completed: " + pin);
+                  onCompleted: (value) {
+                    pin = value;
                   },
                 ),
                 SizedBox(height: 25),

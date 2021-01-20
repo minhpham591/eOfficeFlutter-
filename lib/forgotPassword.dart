@@ -1,25 +1,54 @@
 import 'package:EOfficeMobile/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 
 class forgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  String email;
+  String phone;
+  RegExp regexEmail = new RegExp(
+      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+  RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,11}$)');
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final emailField = TextFormField(
       obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Please enter email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Email is not empty';
+        } else if (!regexEmail.hasMatch(value)) {
+          return 'Email must be validate';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        email = value;
+      },
     );
-    final phoneField = TextField(
+    final phoneField = TextFormField(
       obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Please enter Phone number",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Phone is not empty';
+        } else if (!regexPhone.hasMatch(value)) {
+          return 'Phone must be validate';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        phone = value;
+      },
     );
     final nextButton = Material(
       elevation: 5,
@@ -29,10 +58,14 @@ class forgotPassword extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => enterOTPForgotPassword()),
-          );
+          if (!formKey.currentState.validate()) {
+            return;
+          } else {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => enterOTPForgotPassword()),
+            );
+          }
         },
         child: Text(
           "Send OTP",
@@ -50,26 +83,29 @@ class forgotPassword extends StatelessWidget {
       body: Center(
         child: Container(
           color: Color.fromRGBO(238, 237, 237, 0.5),
-          child: Padding(
-            padding: const EdgeInsets.all(36),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 125,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    fit: BoxFit.contain,
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(36),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 110,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SizedBox(height: 45),
-                emailField,
-                SizedBox(height: 25),
-                phoneField,
-                SizedBox(height: 25),
-                nextButton,
-              ],
+                  SizedBox(height: 45),
+                  emailField,
+                  SizedBox(height: 15),
+                  phoneField,
+                  SizedBox(height: 25),
+                  nextButton,
+                ],
+              ),
             ),
           ),
         ),

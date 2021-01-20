@@ -1,5 +1,6 @@
 import 'package:EOfficeMobile/forgotPassword.dart';
 import 'package:flutter/material.dart';
+import 'package:form_validator/form_validator.dart';
 
 void main() {
   runApp(MyApp());
@@ -52,23 +53,45 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
+
+  String userName;
+  String password;
   @override
   Widget build(BuildContext context) {
-    final emailField = TextField(
+    final emailField = TextFormField(
       obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Username",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Username is not empty';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        userName = value;
+      },
     );
-    final passwordField = TextField(
+    final passwordField = TextFormField(
       obscureText: true,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+      validator: (String value) {
+        if (value.isEmpty) {
+          return 'Password is not empty';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        password = value;
+      },
     );
     final loginButton = Material(
       elevation: 5,
@@ -77,7 +100,11 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-        onPressed: () {},
+        onPressed: () {
+          if (!formKey.currentState.validate()) {
+            return;
+          }
+        },
         child: Text(
           "Login",
           textAlign: TextAlign.center,
@@ -109,28 +136,31 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Container(
           color: Color.fromRGBO(238, 237, 237, 0.5),
-          child: Padding(
-            padding: const EdgeInsets.all(36),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                SizedBox(
-                  height: 125,
-                  child: Image.asset(
-                    "assets/images/logo.png",
-                    fit: BoxFit.contain,
+          child: Form(
+            key: formKey,
+            child: Padding(
+              padding: const EdgeInsets.all(36),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  SizedBox(
+                    height: 110,
+                    child: Image.asset(
+                      "assets/images/logo.png",
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-                SizedBox(height: 45),
-                emailField,
-                SizedBox(height: 25),
-                passwordField,
-                SizedBox(height: 25),
-                loginButton,
-                SizedBox(height: 20),
-                forgotButton,
-              ],
+                  SizedBox(height: 45),
+                  emailField,
+                  SizedBox(height: 15),
+                  passwordField,
+                  SizedBox(height: 15),
+                  loginButton,
+                  SizedBox(height: 20),
+                  forgotButton,
+                ],
+              ),
             ),
           ),
         ),
