@@ -121,7 +121,11 @@ class enterNewPassword extends StatelessWidget {
                     child: MaterialButton(
                       height: 2,
                       onPressed: () {
-                        RestarApp.restartApp(context);
+                        Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(builder: (context) => MyApp()),
+                          ModalRoute.withName('/'),
+                        );
                       },
                       child: Text(
                         "main page",

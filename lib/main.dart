@@ -122,9 +122,10 @@ class _MyHomePageState extends State<MyHomePage> {
       child: MaterialButton(
         minWidth: MediaQuery.of(context).size.width,
         onPressed: () {
-          Navigator.push(
+          Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => forgotPassword()),
+            ModalRoute.withName('/'),
           );
         },
         child: Text(
