@@ -1,5 +1,4 @@
 import 'package:EOfficeMobile/main.dart';
-import 'package:EOfficeMobile/restartApp.dart';
 import 'package:flutter/material.dart';
 
 class enterNewPassword extends StatelessWidget {
@@ -22,9 +21,7 @@ class enterNewPassword extends StatelessWidget {
           if (!formKey.currentState.validate()) {
             return;
           } else if (newPassword != newPasswordConfirm) {
-          } else {
-            RestarApp.restartApp(context);
-          }
+          } else {}
         },
         child: Text(
           "Update",
@@ -124,7 +121,7 @@ class enterNewPassword extends StatelessWidget {
                         Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(builder: (context) => MyApp()),
-                          ModalRoute.withName('/'),
+                          ModalRoute.withName('/MyApp'),
                         );
                       },
                       child: Text(
