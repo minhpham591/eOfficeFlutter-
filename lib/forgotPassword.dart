@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:EOfficeMobile/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
-import 'package:form_validator/form_validator.dart';
 
 class forgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);

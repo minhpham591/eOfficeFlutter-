@@ -2,7 +2,6 @@ import 'package:EOfficeMobile/enterNewPassword.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
-import 'package:form_validator/form_validator.dart';
 
 class enterOTPForgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);

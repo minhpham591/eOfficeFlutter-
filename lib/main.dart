@@ -1,6 +1,5 @@
 import 'package:EOfficeMobile/forgotPassword.dart';
 import 'package:flutter/material.dart';
-import 'package:form_validator/form_validator.dart';
 
 void main() {
   runApp(
