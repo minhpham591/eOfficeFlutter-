@@ -49,13 +49,6 @@ class enterOTPForgotPassword extends StatelessWidget {
       },
       onChanged: (value) {
         pin = value;
-        if (pin == null) {
-          style:
-          TextStyle(backgroundColor: Colors.red);
-        } else if (!regexPin.hasMatch(pin)) {
-          style:
-          TextStyle(backgroundColor: Colors.red);
-        }
       },
     );
     final nextButton = Material(
@@ -67,9 +60,9 @@ class enterOTPForgotPassword extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
           if (pin == null) {
-            //showAlertDialog(context);
+            showAlertDialog(context);
           } else if (!regexPin.hasMatch(pin)) {
-            //showAlertDialog(context);
+            showAlertDialog(context);
           } else {
             print("pass");
             pin = null;
