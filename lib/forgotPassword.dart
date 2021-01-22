@@ -7,32 +7,10 @@ import 'package:form_validator/form_validator.dart';
 class forgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String email;
   String phone;
-  RegExp regexEmail = new RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
   RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
   @override
   Widget build(BuildContext context) {
-    final emailField = TextFormField(
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Please enter email",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-      validator: (String value) {
-        if (value.isEmpty) {
-          return 'Email is not empty';
-        } else if (!regexEmail.hasMatch(value)) {
-          return 'Email must be validate';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        email = value;
-      },
-    );
     final phoneField = TextFormField(
       obscureText: false,
       style: style,
@@ -42,9 +20,9 @@ class forgotPassword extends StatelessWidget {
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Phone is not empty';
+          return 'Please enter phone number';
         } else if (!regexPhone.hasMatch(value)) {
-          return 'Phone must be validate';
+          return 'Phone number is not correct';
         }
         return null;
       },
@@ -101,8 +79,6 @@ class forgotPassword extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 45),
-                  emailField,
-                  SizedBox(height: 15),
                   phoneField,
                   SizedBox(height: 25),
                   nextButton,
