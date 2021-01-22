@@ -63,6 +63,37 @@ class enterNewPassword extends StatelessWidget {
     );
   }
 
+  showAlertDialog2(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => MyApp()),
+          ModalRoute.withName('/MyApp'),
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Changed Password Successfully"),
+      content: Text("Your new password is update"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final nextButton = Material(
@@ -77,7 +108,9 @@ class enterNewPassword extends StatelessWidget {
             return;
           } else if (newPassword != newPasswordConfirm) {
             showAlertDialog1(context);
-          } else {}
+          } else {
+            showAlertDialog2(context);
+          }
         },
         child: Text(
           "Update",
