@@ -8,6 +8,61 @@ class enterNewPassword extends StatelessWidget {
   String newPasswordConfirm;
   RegExp regexPassword =
       new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Wrong"),
+      content: Text(
+          "Password is had more than 8 character, at least 1 uppercase, not contain special character!!!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertDialog1(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Wrong"),
+      content: Text("Password confirm is not correct!!!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final nextButton = Material(
@@ -21,6 +76,7 @@ class enterNewPassword extends StatelessWidget {
           if (!formKey.currentState.validate()) {
             return;
           } else if (newPassword != newPasswordConfirm) {
+            showAlertDialog1(context);
           } else {}
         },
         child: Text(
@@ -67,7 +123,9 @@ class enterNewPassword extends StatelessWidget {
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {
-                        return 'Password is had more than 8 character,\n at least 1 uppercase, not contain special character';
+                        showAlertDialog(context);
+                      } else {
+                        newPassword = value;
                       }
                       return null;
                     },
@@ -88,7 +146,9 @@ class enterNewPassword extends StatelessWidget {
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {
-                        return 'Password is had more than 8 character,\n at least 1 uppercase, not contain special character';
+                        showAlertDialog(context);
+                      } else {
+                        newPasswordConfirm = value;
                       }
                       return null;
                     },

@@ -7,8 +7,57 @@ import 'package:form_validator/form_validator.dart';
 class enterOTPForgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
+  RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
+  showAlertDialog(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      onPressed: () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Wrong"),
+      content: Text("OTP is WRONG!!!!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    final OTPtextField = OTPTextField(
+      length: 6,
+      width: MediaQuery.of(context).size.width,
+      fieldWidth: 50,
+      style: TextStyle(fontSize: 14),
+      textFieldAlignment: MainAxisAlignment.spaceAround,
+      fieldStyle: FieldStyle.box,
+      onCompleted: (value) {
+        pin = value;
+      },
+      onChanged: (value) {
+        pin = value;
+        if (pin == null) {
+          style:
+          TextStyle(backgroundColor: Colors.red);
+        } else if (!regexPin.hasMatch(pin)) {
+          style:
+          TextStyle(backgroundColor: Colors.red);
+        }
+      },
+    );
     final nextButton = Material(
       elevation: 5,
       borderRadius: BorderRadius.circular(30),
@@ -18,6 +67,9 @@ class enterOTPForgotPassword extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
           if (pin == null) {
+            //showAlertDialog(context);
+          } else if (!regexPin.hasMatch(pin)) {
+            //showAlertDialog(context);
           } else {
             print("pass");
             pin = null;
@@ -66,17 +118,7 @@ class enterOTPForgotPassword extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(height: 45),
-                OTPTextField(
-                  length: 6,
-                  width: MediaQuery.of(context).size.width,
-                  fieldWidth: 50,
-                  style: TextStyle(fontSize: 14),
-                  textFieldAlignment: MainAxisAlignment.spaceAround,
-                  fieldStyle: FieldStyle.box,
-                  onCompleted: (value) {
-                    pin = value;
-                  },
-                ),
+                OTPtextField,
                 SizedBox(height: 25),
                 nextButton,
                 SizedBox(height: 15),
