@@ -29,6 +29,7 @@ class MyHomePage extends StatelessWidget {
     final emailField = TextFormField(
       obscureText: false,
       style: style,
+      cursorColor: Colors.grey[600],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Username",
@@ -46,6 +47,7 @@ class MyHomePage extends StatelessWidget {
     final passwordField = TextFormField(
       obscureText: true,
       style: style,
+      cursorColor: Colors.grey[600],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Password",
