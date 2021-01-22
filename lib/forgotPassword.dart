@@ -11,7 +11,7 @@ class forgotPassword extends StatelessWidget {
   String phone;
   RegExp regexEmail = new RegExp(
       r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
-  RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,11}$)');
+  RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
