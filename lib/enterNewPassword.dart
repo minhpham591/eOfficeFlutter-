@@ -131,6 +131,7 @@ class enterNewPassword extends StatelessWidget {
                           borderRadius: BorderRadius.circular(12)),
                     ),
                     validator: (String value) {
+                      value = value.trim();
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {
@@ -154,6 +155,7 @@ class enterNewPassword extends StatelessWidget {
                         border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(12))),
                     validator: (String value) {
+                      value = value.trim();
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {

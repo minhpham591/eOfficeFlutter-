@@ -25,7 +25,7 @@ class forgotPassword extends StatelessWidget {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Success"),
-      content: Text("Phone number is correct!"),
+      content: Text("Phone number and Username is correct!"),
       actions: [
         okButton,
       ],
@@ -42,6 +42,24 @@ class forgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userNameField = TextFormField(
+      obscureText: false,
+      style: style,
+      decoration: InputDecoration(
+          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+          hintText: "Please enter Username",
+          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+      validator: (String value) {
+        value = value.trim();
+        if (value.isEmpty) {
+          return 'Please enter Username';
+        }
+        return null;
+      },
+      onSaved: (String value) {
+        phone = value;
+      },
+    );
     final phoneField = TextFormField(
       obscureText: false,
       style: style,
@@ -50,6 +68,7 @@ class forgotPassword extends StatelessWidget {
           hintText: "Please enter Phone number",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
       validator: (String value) {
+        value = value.trim();
         if (value.isEmpty) {
           return 'Please enter phone number';
         } else if (!regexPhone.hasMatch(value)) {
@@ -106,9 +125,11 @@ class forgotPassword extends StatelessWidget {
                       fit: BoxFit.contain,
                     ),
                   ),
-                  SizedBox(height: 45),
+                  SizedBox(height: 30),
+                  userNameField,
+                  SizedBox(height: 15),
                   phoneField,
-                  SizedBox(height: 25),
+                  SizedBox(height: 15),
                   nextButton,
                   SizedBox(height: 15),
                   SizedBox(
