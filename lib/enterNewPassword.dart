@@ -106,10 +106,12 @@ class enterNewPassword extends StatelessWidget {
         onPressed: () {
           if (!formKey.currentState.validate()) {
             return;
-          } else if (newPassword != newPasswordConfirm) {
-            showAlertDialog1(context);
           } else {
-            showAlertDialog2(context);
+            if (newPassword != newPasswordConfirm) {
+              showAlertDialog1(context);
+            } else {
+              showAlertDialog2(context);
+            }
           }
         },
         child: Text(
@@ -156,7 +158,7 @@ class enterNewPassword extends StatelessWidget {
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {
-                        showAlertDialog(context);
+                        return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
                       } else {
                         newPassword = value;
                       }
@@ -179,7 +181,7 @@ class enterNewPassword extends StatelessWidget {
                       if (value.isEmpty) {
                         return 'Password is not empty';
                       } else if (!regexPassword.hasMatch(value)) {
-                        showAlertDialog(context);
+                        return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
                       } else {
                         newPasswordConfirm = value;
                       }
