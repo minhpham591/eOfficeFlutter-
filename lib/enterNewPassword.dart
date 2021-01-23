@@ -8,38 +8,12 @@ class enterNewPassword extends StatelessWidget {
   String newPasswordConfirm;
   RegExp regexPassword =
       new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
-  showAlertDialog(BuildContext context) {
+
+  showAlertWrongConfirmPassword(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
-      onPressed: () {
-        Navigator.of(context).pop();
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Wrong"),
-      content: Text(
-          "Password is had more than 8 character, at least 1 uppercase, not contain special character!!!"),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
-
-  showAlertDialog1(BuildContext context) {
-    // set up the button
-    Widget okButton = FlatButton(
-      child: Text("OK"),
+      color: Colors.red,
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -63,10 +37,11 @@ class enterNewPassword extends StatelessWidget {
     );
   }
 
-  showAlertDialog2(BuildContext context) {
+  showAlertSuccessUpdatePassword(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
+      color: Colors.blue[900],
       onPressed: () {
         Navigator.pushAndRemoveUntil(
           context,
@@ -108,9 +83,9 @@ class enterNewPassword extends StatelessWidget {
             return;
           } else {
             if (newPassword != newPasswordConfirm) {
-              showAlertDialog1(context);
+              showAlertWrongConfirmPassword(context);
             } else {
-              showAlertDialog2(context);
+              showAlertSuccessUpdatePassword(context);
             }
           }
         },
@@ -150,10 +125,11 @@ class enterNewPassword extends StatelessWidget {
                     obscureText: true,
                     style: style,
                     decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "New Password",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
+                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      hintText: "New Password",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12)),
+                    ),
                     validator: (String value) {
                       if (value.isEmpty) {
                         return 'Password is not empty';

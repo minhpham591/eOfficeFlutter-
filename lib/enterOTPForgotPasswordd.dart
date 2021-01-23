@@ -7,10 +7,11 @@ class enterOTPForgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
-  showAlertDialog(BuildContext context) {
+  showAlertWrongOTP(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
       child: Text("OK"),
+      color: Colors.red,
       onPressed: () {
         Navigator.of(context).pop();
       },
@@ -19,7 +20,39 @@ class enterOTPForgotPassword extends StatelessWidget {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Wrong"),
-      content: Text("OTP is WRONG!!!!"),
+      content: Text("Confirm OTP is incorrect!!!!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showAlertTrueOTP(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("OK"),
+      color: Colors.blue[900],
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => enterNewPassword()),
+          ModalRoute.withName('/'),
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Success"),
+      content: Text("Confirm OTP is correct!"),
       actions: [
         okButton,
       ],
@@ -59,16 +92,13 @@ class enterOTPForgotPassword extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
           if (pin == null) {
-            showAlertDialog(context);
+            showAlertWrongOTP(context);
           } else if (!regexPin.hasMatch(pin)) {
-            showAlertDialog(context);
+            showAlertWrongOTP(context);
           } else {
             print("pass");
             pin = null;
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => enterNewPassword()),
-            );
+            showAlertTrueOTP(context);
           }
         },
         child: Text(

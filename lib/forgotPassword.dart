@@ -8,6 +8,38 @@ class forgotPassword extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String phone;
   RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
+  showAlertPhoneSuccess(BuildContext context) {
+    // set up the button
+    Widget okButton = FlatButton(
+      child: Text("Continue"),
+      color: Colors.blue[900],
+      onPressed: () {
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => enterOTPForgotPassword()),
+          ModalRoute.withName('/'),
+        );
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Success"),
+      content: Text("Phone number is correct!"),
+      actions: [
+        okButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final phoneField = TextFormField(
@@ -40,10 +72,7 @@ class forgotPassword extends StatelessWidget {
           if (!formKey.currentState.validate()) {
             return;
           } else {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => enterOTPForgotPassword()),
-            );
+            showAlertPhoneSuccess(context);
           }
         },
         child: Text(
