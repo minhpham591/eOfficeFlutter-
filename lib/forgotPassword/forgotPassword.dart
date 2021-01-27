@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:EOfficeMobile/enterOTPForgotPasswordd.dart';
+import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 
 class forgotPassword extends StatelessWidget {

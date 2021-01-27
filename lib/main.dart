@@ -1,6 +1,7 @@
-import 'package:EOfficeMobile/forgotPassword.dart';
+import 'package:EOfficeMobile/api/api_service.dart';
+import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
+import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
-import 'package:otp_text_field/style.dart';
 
 void main() {
   runApp(
@@ -19,13 +20,43 @@ class MyApp extends StatelessWidget {
   }
 }
 
+showAlertLoginSuccess(BuildContext context) {
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("Continue"),
+    color: Colors.blue[900],
+    onPressed: () {
+      Navigator.pop(context);
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Success"),
+    content: Text("login successfully!"),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 class MyHomePage extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String userName;
-  String password;
+
+  LoginRequestModel requestModel;
+
   @override
   Widget build(BuildContext context) {
+    requestModel = new LoginRequestModel();
     final emailField = TextFormField(
       obscureText: false,
       style: style,
@@ -40,9 +71,7 @@ class MyHomePage extends StatelessWidget {
         }
         return null;
       },
-      onSaved: (String value) {
-        userName = value;
-      },
+      onSaved: (input) => requestModel.userName = input,
     );
     final passwordField = TextFormField(
       obscureText: true,
@@ -58,9 +87,7 @@ class MyHomePage extends StatelessWidget {
         }
         return null;
       },
-      onSaved: (String value) {
-        password = value;
-      },
+      onSaved: (input) => requestModel.password = input,
     );
     final loginButton = Material(
       elevation: 5,
@@ -72,6 +99,17 @@ class MyHomePage extends StatelessWidget {
         onPressed: () {
           if (!formKey.currentState.validate()) {
             return;
+          } else {
+            formKey.currentState.save();
+            APIService apiService = new APIService();
+            apiService.login(requestModel).then((value) {
+              if (value.token.isNotEmpty) {
+                print('login successful');
+              } else {
+                print(value.error);
+              }
+            });
+            print(requestModel.toJson());
           }
         },
         child: Text(
