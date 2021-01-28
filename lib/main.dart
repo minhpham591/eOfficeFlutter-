@@ -106,10 +106,9 @@ class MyHomePage extends StatelessWidget {
             APIService apiService = new APIService();
             apiService.login(requestModel).then((value) {
               if (value.token.isNotEmpty) {
-                Navigator.pushAndRemoveUntil(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => bottomNavigateBar()),
-                  ModalRoute.withName('/'),
                 );
               } else {
                 print(value.error);

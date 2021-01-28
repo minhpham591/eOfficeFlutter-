@@ -48,46 +48,70 @@ class _MyStatefulWidgetState extends State<bottomNavigateBar> {
     });
   }
 
+  Future<bool> _onWillPop() async {
+    return (await showDialog(
+          context: context,
+          builder: (context) => new AlertDialog(
+            title: new Text('Are you sure?'),
+            content: new Text('Do you want to exit an App'),
+            actions: <Widget>[
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: new Text('No'),
+              ),
+              new FlatButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: new Text('Yes'),
+              ),
+            ],
+          ),
+        )) ??
+        false;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: _widgetOptions.elementAt(selectedIndex),
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.home_rounded,
+    return new WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        body: Center(
+          child: _widgetOptions.elementAt(selectedIndex),
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          items: const <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home_rounded,
+              ),
+              label: 'Home',
+              backgroundColor: Colors.blue,
             ),
-            label: 'Home',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.insert_drive_file_rounded,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.insert_drive_file_rounded,
+              ),
+              label: 'Document',
+              backgroundColor: Colors.blue,
             ),
-            label: 'Document',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_rounded,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.notifications_rounded,
+              ),
+              label: 'Notification',
+              backgroundColor: Colors.blue,
             ),
-            label: 'Notification',
-            backgroundColor: Colors.blue,
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.person_rounded,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person_rounded,
+              ),
+              label: 'Profile',
+              backgroundColor: Colors.blue,
             ),
-            label: 'Profile',
-            backgroundColor: Colors.blue,
-          ),
-        ],
-        currentIndex: selectedIndex,
-        selectedItemColor: Colors.black87,
-        onTap: _onItemTapped,
+          ],
+          currentIndex: selectedIndex,
+          selectedItemColor: Colors.black87,
+          onTap: _onItemTapped,
+        ),
       ),
     );
   }
