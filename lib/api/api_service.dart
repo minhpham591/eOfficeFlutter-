@@ -4,8 +4,9 @@ import 'dart:convert';
 
 class APIService {
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url = "https://datnxeoffice.azurewebsites.net/api/Admins/login";
+    String url = "https://datnxeoffice.azurewebsites.net/api/Accounts/login";
     var body = json.encode(loginRequestModel.toJson());
+    print(body);
     final response = await http.post(url,
         headers: <String, String>{
           "Accept": "application/json",

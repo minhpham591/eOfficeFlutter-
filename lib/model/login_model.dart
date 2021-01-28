@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
+
 class LoginResponseModel {
   final String token;
   final String error;
@@ -22,8 +25,8 @@ class LoginRequestModel {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'username': userName.trim(),
-      'password': password.trim(),
+      'email': userName.trim(),
+      'password': md5.convert(utf8.encode(password.trim())).toString(),
     };
 
     return map;

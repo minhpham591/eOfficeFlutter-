@@ -1,4 +1,6 @@
 import 'package:EOfficeMobile/api/api_service.dart';
+import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
+import 'package:EOfficeMobile/dashboard/dashboard.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
@@ -104,7 +106,11 @@ class MyHomePage extends StatelessWidget {
             APIService apiService = new APIService();
             apiService.login(requestModel).then((value) {
               if (value.token.isNotEmpty) {
-                print('login successful');
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => bottomNavigateBar()),
+                  ModalRoute.withName('/'),
+                );
               } else {
                 print(value.error);
               }
