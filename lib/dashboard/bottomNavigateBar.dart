@@ -57,24 +57,36 @@ class _MyStatefulWidgetState extends State<bottomNavigateBar> {
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'HOME',
+            icon: Icon(
+              Icons.home_rounded,
+            ),
+            label: 'Home',
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.file_present),
-            label: 'DOCUMENTS',
+            icon: Icon(
+              Icons.insert_drive_file_rounded,
+            ),
+            label: 'Document',
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notifications),
-            label: 'NOTIFICATIONS',
+            icon: Icon(
+              Icons.notifications_rounded,
+            ),
+            label: 'Notification',
+            backgroundColor: Colors.blue,
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'PROFILE',
+            icon: Icon(
+              Icons.person_rounded,
+            ),
+            label: 'Profile',
+            backgroundColor: Colors.blue,
           ),
         ],
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.amber[800],
+        selectedItemColor: Colors.black87,
         onTap: _onItemTapped,
       ),
     );
