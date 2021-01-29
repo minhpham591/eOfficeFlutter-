@@ -1,8 +1,8 @@
 import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
-import 'package:EOfficeMobile/dashboard/dashboard.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -108,8 +108,13 @@ class MyHomePage extends StatelessWidget {
               if (value.token.isNotEmpty) {
                 Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => bottomNavigateBar()),
+                  MaterialPageRoute(
+                    builder: (context) => bottomNavigateBar(
+                      value: value,
+                    ),
+                  ),
                 );
+                print(value.name);
               } else {
                 print(value.error);
               }
@@ -144,34 +149,36 @@ class MyHomePage extends StatelessWidget {
         ),
       ),
     );
-    return Scaffold(
-      body: Center(
-        child: Container(
-          color: Color.fromRGBO(238, 237, 237, 0.5),
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(36),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 110,
-                    child: Image.asset(
-                      "assets/images/logo.png",
-                      fit: BoxFit.contain,
+    return MaterialApp(
+      home: Scaffold(
+        body: Center(
+          child: Container(
+            color: Color.fromRGBO(238, 237, 237, 0.5),
+            child: Form(
+              key: formKey,
+              child: Padding(
+                padding: const EdgeInsets.all(36),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 110,
+                      child: Image.asset(
+                        "assets/images/logo.png",
+                        fit: BoxFit.contain,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 45),
-                  emailField,
-                  SizedBox(height: 15),
-                  passwordField,
-                  SizedBox(height: 15),
-                  loginButton,
-                  SizedBox(height: 20),
-                  forgotButton,
-                ],
+                    SizedBox(height: 45),
+                    emailField,
+                    SizedBox(height: 15),
+                    passwordField,
+                    SizedBox(height: 15),
+                    loginButton,
+                    SizedBox(height: 20),
+                    forgotButton,
+                  ],
+                ),
               ),
             ),
           ),

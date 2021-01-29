@@ -22,14 +22,14 @@ class dashboard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 110,
+                height: 210,
                 child: PieChart(dataMap: dataMap),
               ),
               SizedBox(
                 height: 40,
               ),
               SizedBox(
-                height: 110,
+                height: 210,
                 child: PieChart(dataMap: dataMap),
               ),
             ],
