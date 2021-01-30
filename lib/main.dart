@@ -103,18 +103,12 @@ class MyHomePage extends StatelessWidget {
             return;
           } else {
             formKey.currentState.save();
-            APIService apiService = new APIService();
+            APIService apiService = APIService();
             apiService.login(requestModel).then((value) {
               if (value.token.isNotEmpty) {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => bottomNavigateBar(
-                      value: value,
-                    ),
-                  ),
+                Navigator.of(context).pushReplacement(
+                  MaterialPageRoute(builder: (context) => MyNavigateBar(value)),
                 );
-                print(value.name);
               } else {
                 print(value.error);
               }

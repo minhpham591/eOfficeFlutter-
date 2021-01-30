@@ -8,7 +8,7 @@ class profile extends StatelessWidget {
   profile({this.value});
   @override
   Widget build(BuildContext context) {
-    print(profile().value);
+    print(value.name);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 250,
