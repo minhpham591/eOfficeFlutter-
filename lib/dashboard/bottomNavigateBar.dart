@@ -6,23 +6,32 @@ import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
 class MyNavigateBar extends StatelessWidget {
+  final LoginResponseModel value;
+  MyNavigateBar(this.value);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: bottomNavigateBar(),
+      home: BottomNavigateBar(value),
     );
   }
 }
 
-class bottomNavigateBar extends StatefulWidget {
+LoginResponseModel testValue = null;
+
+class BottomNavigateBar extends StatefulWidget {
   // bottomNavigateBar({Key key}) : super(key: key);
-  final LoginResponseModel value;
-  bottomNavigateBar({this.value});
+  LoginResponseModel value;
+  BottomNavigateBar(LoginResponseModel _value) {
+    value = _value;
+    testValue = _value;
+  }
+
   @override
   _MyStatefulWidgetState createState() => _MyStatefulWidgetState();
 }
 
-class _MyStatefulWidgetState extends State<bottomNavigateBar> {
+class _MyStatefulWidgetState extends State<BottomNavigateBar> {
+  _MyStatefulWidgetState() : super();
   int selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
@@ -37,8 +46,8 @@ class _MyStatefulWidgetState extends State<bottomNavigateBar> {
       'NOTIFICATIONS',
       style: optionStyle,
     ),
-    profile(
-      value: bottomNavigateBar().value,
+    Profile(
+      value: testValue,
     ),
   ];
   void _onItemTapped(int index) {
