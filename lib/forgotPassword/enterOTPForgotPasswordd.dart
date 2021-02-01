@@ -4,9 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
-class enterOTPForgotPassword extends StatelessWidget {
+class EnterOTPForgotPassword extends StatelessWidget {
   String phone;
-  enterOTPForgotPassword(String _phone) {
+  EnterOTPForgotPassword(String _phone) {
     phone = _phone;
   }
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
@@ -48,7 +48,7 @@ class enterOTPForgotPassword extends StatelessWidget {
       onPressed: () {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => enterNewPassword()),
+          MaterialPageRoute(builder: (context) => EnterNewPassword()),
           ModalRoute.withName('/'),
         );
       },

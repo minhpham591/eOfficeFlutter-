@@ -135,7 +135,7 @@ class MyHomePage extends StatelessWidget {
         onPressed: () {
           Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => forgotPassword()),
+            MaterialPageRoute(builder: (context) => ForgotPassword()),
             ModalRoute.withName('/'),
           );
         },

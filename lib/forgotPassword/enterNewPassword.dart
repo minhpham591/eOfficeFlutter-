@@ -1,7 +1,7 @@
 import 'package:EOfficeMobile/main.dart';
 import 'package:flutter/material.dart';
 
-class enterNewPassword extends StatelessWidget {
+class EnterNewPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String newPassword;

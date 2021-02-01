@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "585009035952-djv3sumegj2uosjerrgh5u4jqffst64t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.EOfficeMobile",
+            "certificate_hash": "6a6564742397547f7abf3452c6d0a00489be07d6"
+          }
+        },
+        {
           "client_id": "585009035952-5o058llpt3sjerc67kuap6097ihc5atg.apps.googleusercontent.com",
           "client_type": 3
         }

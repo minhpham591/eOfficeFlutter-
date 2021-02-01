@@ -4,7 +4,26 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 
-class forgotPassword extends StatelessWidget {
+void otp() async {
+  FirebaseAuth auth = FirebaseAuth.instance;
+
+  await auth.verifyPhoneNumber(
+    phoneNumber: '+84355324555',
+    codeSent: (String verificationId, int resendToken) async {
+      // Update the UI - wait for the user to enter the SMS code
+      String smsCode = 'xxxx';
+
+      // Create a PhoneAuthCredential with the code
+      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+          verificationId: verificationId, smsCode: smsCode);
+
+      // Sign the user in (or link) with the credential
+      await auth.signInWithCredential(phoneAuthCredential);
+    },
+  );
+}
+
+class ForgotPassword extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String phone;
@@ -19,9 +38,10 @@ class forgotPassword extends StatelessWidget {
         Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
-              builder: (context) => enterOTPForgotPassword(phone)),
+              builder: (context) => EnterOTPForgotPassword(phone)),
           ModalRoute.withName('/'),
         );
+        otp();
       },
     );
 
