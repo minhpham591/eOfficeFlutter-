@@ -4,8 +4,11 @@ import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
   runApp(
     MyApp(),
   );

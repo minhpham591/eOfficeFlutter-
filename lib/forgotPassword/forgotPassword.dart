@@ -1,5 +1,6 @@
 import 'dart:ui';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 
@@ -8,6 +9,7 @@ class forgotPassword extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   String phone;
   RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
+
   showAlertPhoneSuccess(BuildContext context) {
     // set up the button
     Widget okButton = FlatButton(
@@ -16,7 +18,8 @@ class forgotPassword extends StatelessWidget {
       onPressed: () {
         Navigator.pushAndRemoveUntil(
           context,
-          MaterialPageRoute(builder: (context) => enterOTPForgotPassword()),
+          MaterialPageRoute(
+              builder: (context) => enterOTPForgotPassword(phone)),
           ModalRoute.withName('/'),
         );
       },
@@ -25,7 +28,7 @@ class forgotPassword extends StatelessWidget {
     // set up the AlertDialog
     AlertDialog alert = AlertDialog(
       title: Text("Success"),
-      content: Text("Phone number and Username is correct!"),
+      content: Text("Phone number is correct!"),
       actions: [
         okButton,
       ],
@@ -42,24 +45,24 @@ class forgotPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final userNameField = TextFormField(
-      obscureText: false,
-      style: style,
-      decoration: InputDecoration(
-          contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Please enter Username",
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-      validator: (String value) {
-        value = value.trim();
-        if (value.isEmpty) {
-          return 'Please enter Username';
-        }
-        return null;
-      },
-      onSaved: (String value) {
-        phone = value;
-      },
-    );
+    // final userNameField = TextFormField(
+    //   obscureText: false,
+    //   style: style,
+    //   decoration: InputDecoration(
+    //       contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+    //       hintText: "Please enter Username",
+    //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
+    //   validator: (String value) {
+    //     value = value.trim();
+    //     if (value.isEmpty) {
+    //       return 'Please enter Username';
+    //     }
+    //     return null;
+    //   },
+    //   onSaved: (String value) {
+    //     phone = value;
+    //   },
+    // );
     final phoneField = TextFormField(
       obscureText: false,
       style: style,
@@ -73,11 +76,10 @@ class forgotPassword extends StatelessWidget {
           return 'Please enter phone number';
         } else if (!regexPhone.hasMatch(value)) {
           return 'Phone number is not correct';
+        } else {
+          phone = "+84" + value.substring(1);
         }
         return null;
-      },
-      onSaved: (String value) {
-        phone = value;
       },
     );
     final nextButton = Material(
@@ -92,6 +94,7 @@ class forgotPassword extends StatelessWidget {
             return;
           } else {
             showAlertPhoneSuccess(context);
+            print(phone);
           }
         },
         child: Text(
@@ -126,8 +129,8 @@ class forgotPassword extends StatelessWidget {
                     ),
                   ),
                   SizedBox(height: 30),
-                  userNameField,
-                  SizedBox(height: 15),
+                  // userNameField,
+                  // SizedBox(height: 15),
                   phoneField,
                   SizedBox(height: 15),
                   nextButton,

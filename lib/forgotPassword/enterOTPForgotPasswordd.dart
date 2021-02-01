@@ -1,9 +1,14 @@
 import 'package:EOfficeMobile/forgotPassword/enterNewPassword.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
 class enterOTPForgotPassword extends StatelessWidget {
+  String phone;
+  enterOTPForgotPassword(String _phone) {
+    phone = _phone;
+  }
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
@@ -98,8 +103,10 @@ class enterOTPForgotPassword extends StatelessWidget {
           } else {
             print("pass");
             pin = null;
+
             showAlertTrueOTP(context);
           }
+          print(phone);
         },
         child: Text(
           "Verifying",

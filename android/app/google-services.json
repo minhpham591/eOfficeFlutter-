@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "585009035952",
+    "project_id": "eoffice-a5e18",
+    "storage_bucket": "eoffice-a5e18.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:585009035952:android:89ca975f3648fa12d41975",
+        "android_client_info": {
+          "package_name": "com.example.EOfficeMobile"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "585009035952-5o058llpt3sjerc67kuap6097ihc5atg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB4MzpKStSwfhBxalREj0C6QBvkBiSid7A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "585009035952-5o058llpt3sjerc67kuap6097ihc5atg.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
