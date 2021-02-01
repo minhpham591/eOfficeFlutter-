@@ -4,23 +4,33 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 
-void otp() async {
+void otp(String phone) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   FirebaseAuth auth = FirebaseAuth.instance;
 
   await auth.verifyPhoneNumber(
-    phoneNumber: '+84355324555',
-    codeSent: (String verificationId, int resendToken) async {
-      // Update the UI - wait for the user to enter the SMS code
-      String smsCode = 'xxxx';
+      phoneNumber: phone,
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        await auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
+      },
+      codeSent: (String verificationId, int resendToken) async {
+        String smsCode = 'xxxx';
 
-      // Create a PhoneAuthCredential with the code
-      PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-          verificationId: verificationId, smsCode: smsCode);
+        // Create a PhoneAuthCredential with the code
+        PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: smsCode);
 
-      // Sign the user in (or link) with the credential
-      await auth.signInWithCredential(phoneAuthCredential);
-    },
-  );
+        // Sign the user in (or link) with the credential
+        await auth.signInWithCredential(phoneAuthCredential);
+      },
+      timeout: const Duration(seconds: 60),
+      codeAutoRetrievalTimeout: (String verificationId) {});
 }
 
 class ForgotPassword extends StatelessWidget {
@@ -41,7 +51,7 @@ class ForgotPassword extends StatelessWidget {
               builder: (context) => EnterOTPForgotPassword(phone)),
           ModalRoute.withName('/'),
         );
-        otp();
+        otp(phone);
       },
     );
 
