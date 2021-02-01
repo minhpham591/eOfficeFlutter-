@@ -5,29 +5,32 @@ import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
 
 void otp(String phone) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // WidgetsFlutterBinding.ensureInitialized();
+  // Firebase.initializeApp();
   FirebaseAuth auth = FirebaseAuth.instance;
-
   await auth.verifyPhoneNumber(
       phoneNumber: phone,
       verificationCompleted: (PhoneAuthCredential credential) async {
+        print("test1");
         await auth.signInWithCredential(credential);
+        print("test2");
       },
       verificationFailed: (FirebaseAuthException e) {
         if (e.code == 'invalid-phone-number') {
+          print("test3");
           print('The provided phone number is not valid.');
         }
       },
       codeSent: (String verificationId, int resendToken) async {
         String smsCode = 'xxxx';
-
+        print("test4");
         // Create a PhoneAuthCredential with the code
         PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
             verificationId: verificationId, smsCode: smsCode);
-
+        print("test5");
         // Sign the user in (or link) with the credential
         await auth.signInWithCredential(phoneAuthCredential);
+        print("test6");
       },
       timeout: const Duration(seconds: 60),
       codeAutoRetrievalTimeout: (String verificationId) {});
@@ -93,6 +96,7 @@ class ForgotPassword extends StatelessWidget {
     //     phone = value;
     //   },
     // );
+
     final phoneField = TextFormField(
       obscureText: false,
       style: style,
@@ -140,6 +144,7 @@ class ForgotPassword extends StatelessWidget {
       //   title: Text("Forgot Password"),
       //   backgroundColor: Colors.blue[900],
       // ),
+
       body: Center(
         child: Container(
           color: Color.fromRGBO(238, 237, 237, 0.5),

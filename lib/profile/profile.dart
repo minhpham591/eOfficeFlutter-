@@ -1,9 +1,45 @@
+import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 
+showAlertDialogLogout(BuildContext context) {
+  // set up the buttons
+  Widget cancelButton = FlatButton(
+    child: Text("No"),
+    onPressed: () {
+      Navigator.of(context, rootNavigator: true).pop();
+    },
+  );
+  Widget continueButton = FlatButton(
+      child: Text("Yes"),
+      onPressed: () {
+        Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
+      });
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text("Logout"),
+    content: Text("Do you want to logout?"),
+    actions: [
+      cancelButton,
+      continueButton,
+    ],
+  );
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
 class Profile extends StatelessWidget {
+  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   final LoginResponseModel value;
   Profile({this.value});
+
   @override
   Widget build(BuildContext context) {
     print(value.name);
@@ -89,6 +125,40 @@ class Profile extends StatelessWidget {
                     ],
                   ),
                 ],
+              ),
+              Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.blue[900],
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  onPressed: () {},
+                  child: Text(
+                    "Change Password",
+                    textAlign: TextAlign.center,
+                    style: style.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+              ),
+              Material(
+                elevation: 5,
+                borderRadius: BorderRadius.circular(30),
+                color: Colors.blue[900],
+                child: MaterialButton(
+                  minWidth: MediaQuery.of(context).size.width,
+                  padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                  onPressed: () {
+                    showAlertDialogLogout(context);
+                  },
+                  child: Text(
+                    "Logout",
+                    textAlign: TextAlign.center,
+                    style: style.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
               ),
             ],
           ),
