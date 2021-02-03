@@ -1,20 +1,20 @@
 {
   "project_info": {
-    "project_number": "585009035952",
-    "project_id": "eoffice-a5e18",
-    "storage_bucket": "eoffice-a5e18.appspot.com"
+    "project_number": "101882101334",
+    "project_id": "eoffice-4803f",
+    "storage_bucket": "eoffice-4803f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:585009035952:android:89ca975f3648fa12d41975",
+        "mobilesdk_app_id": "1:101882101334:android:afdfcae89afa986ee9c5f7",
         "android_client_info": {
           "package_name": "com.example.EOfficeMobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "585009035952-djv3sumegj2uosjerrgh5u4jqffst64t.apps.googleusercontent.com",
+          "client_id": "101882101334-du5325k0rbp07b7n0fb0d8rlp39094jp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.EOfficeMobile",
@@ -22,20 +22,20 @@
           }
         },
         {
-          "client_id": "585009035952-5o058llpt3sjerc67kuap6097ihc5atg.apps.googleusercontent.com",
+          "client_id": "101882101334-nkcl5ebtl5ggh5uuhbommudph1ftvd43.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB4MzpKStSwfhBxalREj0C6QBvkBiSid7A"
+          "current_key": "AIzaSyBRwAsNgUB9XY3lFoVQeSjcdC1kxgp12Ks"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "585009035952-5o058llpt3sjerc67kuap6097ihc5atg.apps.googleusercontent.com",
+              "client_id": "101882101334-nkcl5ebtl5ggh5uuhbommudph1ftvd43.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
