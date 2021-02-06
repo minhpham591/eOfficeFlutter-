@@ -1,7 +1,7 @@
 import 'dart:ui';
 import 'package:EOfficeMobile/dashboard/dashboard.dart';
-import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/notification/notification.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -42,10 +42,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
       'DOCUMENTS',
       style: optionStyle,
     ),
-    Text(
-      'NOTIFICATIONS',
-      style: optionStyle,
-    ),
+    MyNotification(),
     Profile(
       value: testValue,
     ),

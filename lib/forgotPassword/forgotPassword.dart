@@ -4,6 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:flutter/material.dart';
+import 'package:otp/otp.dart';
+import 'package:base32/base32.dart';
 
 class ForgotPassword extends StatefulWidget {
   ForgotPassword({Key key}) : super(key: key);
@@ -19,15 +21,18 @@ class _MyAppPageState extends State<ForgotPassword> {
   String smsOTP;
   String verificationId;
   int otp;
+  int forceCode;
+  int date;
   String errorMessage = '';
   RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
   FirebaseAuth _auth = FirebaseAuth.instance;
   Future<void> verifyPhone() async {
     final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
       this.verificationId = verId;
-
+      this.forceCode = forceCodeResend;
+      this.date = DateTime.now().millisecondsSinceEpoch;
       // Sign the user in (or link) with the credential
-
+      otp = OTP.generateTOTPCode(base32.encodeString(verificationId), date);
       smsOTPDialog(context).then((value) {
         print('sign in');
       });
@@ -91,6 +96,8 @@ class _MyAppPageState extends State<ForgotPassword> {
                 child: Text('Done'),
                 onPressed: () {
                   print(smsOTP);
+                  print(verificationId);
+                  print(otp);
                 },
               )
             ],
