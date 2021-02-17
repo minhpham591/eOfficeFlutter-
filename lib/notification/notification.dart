@@ -20,74 +20,104 @@ class _DropDownButtonState extends State<MyNotification> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 50,
-            ),
-            SizedBox(
-              height: 40,
-              child: Text(
-                'Activity Log',
-                style: style,
-                textAlign: TextAlign.start,
+        child: Padding(
+          padding: const EdgeInsets.all(36),
+          child: Column(
+            children: <Widget>[
+              SizedBox(
+                height: 50,
               ),
-            ),
-            Row(
-              children: [
-                Column(
-                  children: [
-                    DropdownButton(
-                        value: _value,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text('All'),
-                            value: 1,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Contract'),
-                            value: 2,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Invoice'),
-                            value: 3,
-                          ),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _value = value;
-                          });
-                        })
-                  ],
+              SizedBox(
+                height: 40,
+                child: Text(
+                  'Activity Log',
+                  style: style,
+                  textAlign: TextAlign.start,
                 ),
-                Column(
-                  children: [
-                    DropdownButton(
-                        value: _value1,
-                        items: [
-                          DropdownMenuItem(
-                            child: Text('All'),
-                            value: 1,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Signed'),
-                            value: 2,
-                          ),
-                          DropdownMenuItem(
-                            child: Text('Not signed yet'),
-                            value: 3,
-                          ),
-                        ],
-                        onChanged: (value) {
-                          setState(() {
-                            _value1 = value;
-                          });
-                        })
-                  ],
-                ),
-              ],
-            ),
-          ],
+              ),
+              Row(
+                children: [
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.0),
+                      border: Border.all(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                          width: 0.80),
+                    ),
+                    child: Column(
+                      children: [
+                        DropdownButton(
+                            value: _value,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text('All'),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Contract'),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Invoice'),
+                                value: 3,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _value = value;
+                              });
+                            })
+                      ],
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      SizedBox(
+                        width: 10,
+                      )
+                    ],
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(9.0),
+                      border: Border.all(
+                          color: Colors.grey,
+                          style: BorderStyle.solid,
+                          width: 0.80),
+                    ),
+                    child: Column(
+                      children: [
+                        DropdownButton(
+                            value: _value1,
+                            items: [
+                              DropdownMenuItem(
+                                child: Text('All'),
+                                value: 1,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Signed'),
+                                value: 2,
+                              ),
+                              DropdownMenuItem(
+                                child: Text('Not signed yet'),
+                                value: 3,
+                              ),
+                            ],
+                            onChanged: (value) {
+                              setState(() {
+                                _value1 = value;
+                              });
+                            })
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

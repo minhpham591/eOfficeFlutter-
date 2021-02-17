@@ -6,7 +6,7 @@ import 'package:EOfficeMobile/model/upload_model.dart';
 class APIService {
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net//api/accounts/loginstaff";
+        "https://datnxeoffice.azurewebsites.net/api/accounts/loginstaff";
     var body = json.encode(loginRequestModel.toJson());
     print(body);
     final response = await http.post(url,
