@@ -1,3 +1,4 @@
+import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
 import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
@@ -49,9 +50,9 @@ class Profile extends StatelessWidget {
           padding: const EdgeInsets.all(0),
           child: Column(
             children: [
-              Container(height: 100, color: Colors.blue),
+              Container(height: 100, color: Colors.white),
               Container(
-                color: Colors.blue,
+                color: Colors.white,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -62,69 +63,77 @@ class Profile extends StatelessWidget {
                   ],
                 ),
               ),
+              SizedBox(
+                height: 10,
+              ),
               Container(
-                color: Colors.blue,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      value.name,
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+                height: 45,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey)),
+                child: Center(
+                  child: Text(
+                    value.name,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
                     ),
-                  ],
+                    textAlign: TextAlign.center,
+                  ),
                 ),
               ),
-              Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.contact_mail_rounded, color: Colors.black),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("    " + value.email,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                ],
+              SizedBox(
+                height: 10,
               ),
-              Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.contact_phone_rounded, color: Colors.black),
-                    ],
+              Container(
+                height: 45,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey)),
+                child: Center(
+                  child: Text(
+                    value.email,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("    " + value.phone,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                ],
+                ),
               ),
-              Row(
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Icon(Icons.map_rounded, color: Colors.black),
-                    ],
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 45,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey)),
+                child: Center(
+                  child: Text(
+                    value.phone,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text("    " + value.token,
-                          style: TextStyle(fontWeight: FontWeight.bold)),
-                    ],
-                  ),
-                ],
+                ),
+              ),
+              SizedBox(
+                height: 15,
               ),
               Material(
                 elevation: 5,
@@ -133,7 +142,12 @@ class Profile extends StatelessWidget {
                 child: MaterialButton(
                   minWidth: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ChangeProfile()));
+                  },
                   child: Text(
                     "Change Password",
                     textAlign: TextAlign.center,
@@ -141,6 +155,9 @@ class Profile extends StatelessWidget {
                         color: Colors.white, fontWeight: FontWeight.bold),
                   ),
                 ),
+              ),
+              SizedBox(
+                height: 10,
               ),
               Material(
                 elevation: 5,

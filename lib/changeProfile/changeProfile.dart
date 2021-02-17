@@ -6,7 +6,15 @@ class ChangeProfile extends StatelessWidget {
   String oldPassword;
   String newPassword;
   String newPasswordConfirm;
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
+  TextStyle style = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+  );
+  TextStyle style1 = TextStyle(
+      fontFamily: 'Montserrat',
+      fontSize: 20,
+      color: Colors.blue,
+      fontWeight: FontWeight.bold);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   RegExp regexPassword =
       new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
@@ -97,90 +105,94 @@ class ChangeProfile extends StatelessWidget {
       ),
     );
     return Scaffold(
-      body: Center(
-        child: Container(
-          color: Color.fromRGBO(238, 237, 237, 0.5),
-          child: Form(
-            key: formKey,
-            child: Padding(
-              padding: const EdgeInsets.all(36),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  SizedBox(
-                    height: 90,
-                    child: Image.asset(
-                      "assets/images/logo.png",
-                      fit: BoxFit.contain,
-                    ),
+      body: Container(
+        color: Color.fromRGBO(238, 237, 237, 0.5),
+        child: Form(
+          key: formKey,
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 200,
+                  child: Image.asset(
+                    "assets/images/3.png",
+                    fit: BoxFit.contain,
                   ),
-                  TextFormField(
-                    obscureText: true,
-                    style: style,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "Old Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                    ),
-                    onSaved: (String value) {
-                      oldPassword = value;
-                    },
+                ),
+                SizedBox(
+                  child: Text(
+                    'Change the password',
+                    style: style1,
                   ),
-                  SizedBox(height: 15),
-                  TextFormField(
-                    obscureText: true,
-                    style: style,
-                    decoration: InputDecoration(
-                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                      hintText: "New Password",
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12)),
-                    ),
-                    validator: (String value) {
-                      value = value.trim();
-                      if (value.isEmpty) {
-                        return 'Password is not empty';
-                      } else if (!regexPassword.hasMatch(value)) {
-                        return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
-                      } else {
-                        newPassword = value;
-                      }
-                      return null;
-                    },
-                    onSaved: (String value) {
+                ),
+                TextFormField(
+                  obscureText: true,
+                  style: style,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "Old Password",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                  onSaved: (String value) {
+                    oldPassword = value;
+                  },
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  style: style,
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                    hintText: "New Password",
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12)),
+                  ),
+                  validator: (String value) {
+                    value = value.trim();
+                    if (value.isEmpty) {
+                      return 'Password is not empty';
+                    } else if (!regexPassword.hasMatch(value)) {
+                      return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
+                    } else {
                       newPassword = value;
-                    },
-                  ),
-                  SizedBox(height: 15),
-                  TextFormField(
-                    obscureText: true,
-                    style: style,
-                    decoration: InputDecoration(
-                        contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-                        hintText: "Confirm New Password",
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(12))),
-                    validator: (String value) {
-                      value = value.trim();
-                      if (value.isEmpty) {
-                        return 'Password is not empty';
-                      } else if (!regexPassword.hasMatch(value)) {
-                        return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
-                      } else {
-                        newPasswordConfirm = value;
-                      }
-                      return null;
-                    },
-                    onSaved: (String value) {
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    newPassword = value;
+                  },
+                ),
+                SizedBox(height: 10),
+                TextFormField(
+                  obscureText: true,
+                  style: style,
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+                      hintText: "Confirm New Password",
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12))),
+                  validator: (String value) {
+                    value = value.trim();
+                    if (value.isEmpty) {
+                      return 'Password is not empty';
+                    } else if (!regexPassword.hasMatch(value)) {
+                      return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
+                    } else {
                       newPasswordConfirm = value;
-                    },
-                  ),
-                  SizedBox(height: 10),
-                  nextButton,
-                ],
-              ),
+                    }
+                    return null;
+                  },
+                  onSaved: (String value) {
+                    newPasswordConfirm = value;
+                  },
+                ),
+                SizedBox(height: 10),
+                nextButton,
+              ],
             ),
           ),
         ),
