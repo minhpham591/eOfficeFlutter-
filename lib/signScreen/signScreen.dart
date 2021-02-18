@@ -1,187 +1,125 @@
-import 'dart:convert';
 import 'dart:typed_data';
+import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:painter/painter.dart';
-import 'package:EOfficeMobile/model/upload_model.dart';
-import 'package:EOfficeMobile/api/api_service.dart';
 
-class MySignScreen extends StatelessWidget {
+PictureRecorder recorder = new PictureRecorder();
+
+class MySignScreen extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return new MaterialApp(
-      title: 'Painter Example',
-      home: new ExamplePage(),
-    );
-  }
+  _HomePageState createState() => new _HomePageState();
 }
 
-class ExamplePage extends StatefulWidget {
-  @override
-  _ExamplePageState createState() => new _ExamplePageState();
-}
-
-class _ExamplePageState extends State<ExamplePage> {
-  bool _finished;
-  PainterController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _finished = false;
-    _controller = _newController();
-  }
-
-  PainterController _newController() {
-    PainterController controller = new PainterController();
-    controller.thickness = 5.0;
-    controller.backgroundColor = Colors.white;
-    return controller;
-  }
+class _HomePageState extends State<MySignScreen> {
+  List<Offset> _points = <Offset>[];
 
   @override
   Widget build(BuildContext context) {
-    UploadRequestModel requestModel = new UploadRequestModel();
-    List<Widget> actions;
-    if (_finished) {
-      actions = <Widget>[
-        new IconButton(
-          icon: new Icon(Icons.content_copy),
-          tooltip: 'New Painting',
-          onPressed: () => setState(() {
-            _finished = false;
-            _controller = _newController();
-          }),
-        ),
-      ];
-    } else {
-      actions = <Widget>[
-        new IconButton(
-            icon: new Icon(
-              Icons.undo,
-            ),
-            tooltip: 'Undo',
-            onPressed: () {
-              if (_controller.isEmpty) {
-                showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) =>
-                        new Text('Nothing to undo'));
-              } else {
-                _controller.undo();
-              }
-            }),
-        new IconButton(
-            icon: new Icon(Icons.delete),
-            tooltip: 'Clear',
-            onPressed: _controller.clear),
-        new IconButton(
-            icon: new Icon(Icons.check),
-            onPressed: () {
-              _controller.finish().toImage();
-              requestModel.name = "";
-              requestModel.image = _controller.finish().toPNG();
-
-              print(requestModel.image);
-              APIService apiService = APIService();
-              apiService.upload(requestModel);
-            }
-            //=> _show(_controller.finish(), context)
-            ),
-      ];
-    }
     return new Scaffold(
-      appBar: new AppBar(
-          title: const Text(''),
-          actions: actions,
-          bottom: new PreferredSize(
-            child: new DrawBar(_controller),
-            preferredSize: new Size(MediaQuery.of(context).size.width, 30.0),
-          )),
-      body: new Center(
-          child: new AspectRatio(
-              aspectRatio: 1.0, child: new Painter(_controller))),
-    );
-  }
-
-  void _show(PictureDetails picture, BuildContext context) {
-    setState(() {
-      _finished = true;
-    });
-    Navigator.of(context)
-        .push(new MaterialPageRoute(builder: (BuildContext context) {
-      return new Scaffold(
-        appBar: new AppBar(
-          title: const Text('View your image'),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(''),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.grey,
+            onPressed: () {},
+            child: Text("Sign"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+          FlatButton(
+            textColor: Colors.grey,
+            onPressed: () {
+              if (_points.isNotEmpty) {
+                showDialog(
+                  context: context,
+                  builder: (context) => new AlertDialog(
+                    content: new Text('Do you want to re-sign?'),
+                    actions: <Widget>[
+                      new FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: new Text('No'),
+                      ),
+                      new FlatButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          setState(() {
+                            _points.clear();
+                          });
+                        },
+                        child: new Text('Yes'),
+                      ),
+                    ],
+                  ),
+                );
+              }
+            },
+            child: Text("Re-sign"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+          FlatButton(
+            textColor: Colors.grey,
+            onPressed: () {
+              // showDialog(
+              //   context: context,
+              //   builder: (context) => new AlertDialog(
+              //     content: new Text('Do you want to cancel sign?'),
+              //     actions: <Widget>[
+              //       new FlatButton(
+              //         onPressed: () => Navigator.of(context).pop(false),
+              //         child: new Text('No'),
+              //       ),
+              //       new FlatButton(
+              //         onPressed: () => Navigator.of(context).pop(true),
+              //         child: new Text('Yes'),
+              //       ),
+              //     ],
+              //   ),
+              // );
+              Navigator.pop(context);
+            },
+            child: Text("Cancel"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+        ],
+      ),
+      body: new Container(
+        child: new GestureDetector(
+          onPanUpdate: (DragUpdateDetails details) {
+            setState(() {
+              RenderBox object = context.findRenderObject();
+              Offset _localPosition =
+                  object.globalToLocal(details.globalPosition);
+              _points = new List.from(_points)..add(_localPosition);
+            });
+          },
+          onPanEnd: (DragEndDetails details) => _points.add(null),
+          child: new CustomPaint(
+              painter: new Signature(points: _points), size: Size.infinite),
         ),
-        body: new Container(
-            alignment: Alignment.center,
-            child: new FutureBuilder<Uint8List>(
-              future: picture.toPNG(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<Uint8List> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.done:
-                    if (snapshot.hasError) {
-                      return new Text('Error: ${snapshot.error}');
-                    } else {
-                      return Image.memory(snapshot.data);
-                    }
-                    break;
-                  default:
-                    return new Container(
-                        child: new FractionallySizedBox(
-                      widthFactor: 0.1,
-                      child: new AspectRatio(
-                          aspectRatio: 1.0,
-                          child: new CircularProgressIndicator()),
-                      alignment: Alignment.center,
-                    ));
-                }
-              },
-            )),
-      );
-    }));
+      ),
+    );
   }
 }
 
-class DrawBar extends StatelessWidget {
-  final PainterController _controller;
+class Signature extends CustomPainter {
+  List<Offset> points;
 
-  DrawBar(this._controller);
+  Signature({this.points});
 
   @override
-  Widget build(BuildContext context) {
-    return new Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        new Flexible(child: new StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return new Container(
-              child: new Slider(
-            value: _controller.thickness,
-            onChanged: (double value) => setState(() {
-              _controller.thickness = value;
-            }),
-            min: 1.0,
-            max: 20.0,
-            activeColor: Colors.white,
-          ));
-        })),
-        new StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-          return new RotatedBox(
-              quarterTurns: _controller.eraseMode ? 2 : 0,
-              child: IconButton(
-                  icon: new Icon(Icons.create),
-                  tooltip: (_controller.eraseMode ? 'Disable' : 'Enable') +
-                      ' eraser',
-                  onPressed: () {
-                    setState(() {
-                      _controller.eraseMode = !_controller.eraseMode;
-                    });
-                  }));
-        }),
-      ],
-    );
+  void paint(canvas, Size size) {
+    Paint paint = new Paint()
+      ..color = Colors.black
+      ..strokeCap = StrokeCap.square
+      ..strokeWidth = 1.0;
+    for (int i = 0; i < points.length - 1; i++) {
+      if (points[i] != null && points[i + 1] != null) {
+        canvas.drawLine(points[i], points[i + 1], paint);
+      }
+    }
   }
+
+  @override
+  bool shouldRepaint(Signature oldDelegate) => oldDelegate.points != points;
 }

@@ -5,13 +5,47 @@ import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(
-    MyApp(),
+    RestartWidget(
+      child: MyApp(),
+    ),
   );
+}
+
+class RestartWidget extends StatefulWidget {
+  RestartWidget({this.child});
+
+  final Widget child;
+
+  static void restartApp(BuildContext context) {
+    context.findAncestorStateOfType<_RestartWidgetState>().restartApp();
+  }
+
+  @override
+  _RestartWidgetState createState() => _RestartWidgetState();
+}
+
+class _RestartWidgetState extends State<RestartWidget> {
+  Key key = UniqueKey();
+
+  void restartApp() {
+    setState(() {
+      key = UniqueKey();
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return KeyedSubtree(
+      key: key,
+      child: widget.child,
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -25,10 +59,10 @@ class MyApp extends StatelessWidget {
   }
 }
 
-showAlertLoginSuccess(BuildContext context) {
+showAlertLoginFail(BuildContext context) {
   // set up the button
   Widget okButton = FlatButton(
-    child: Text("Continue"),
+    child: Text("Close"),
     color: Colors.blue[900],
     onPressed: () {
       Navigator.pop(context);
@@ -37,8 +71,8 @@ showAlertLoginSuccess(BuildContext context) {
 
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
-    title: Text("Success"),
-    content: Text("login successfully!"),
+    title: Text("Failed"),
+    content: Text("Your username or password is wrong!!!"),
     actions: [
       okButton,
     ],
@@ -113,8 +147,8 @@ class MyHomePage extends StatelessWidget {
                   context,
                   MaterialPageRoute(builder: (context) => MyNavigateBar(value)),
                 );
-              } else {
-                print(value.error);
+              } else if (value == null) {
+                showAlertLoginFail(context);
               }
             });
           }

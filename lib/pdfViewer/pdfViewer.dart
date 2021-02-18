@@ -45,7 +45,9 @@ class _MyHomePageState extends State<MyPdfViewer> {
   @override
   void initState() {
     requestPersmission();
-    getFileFromUrl("http://www.africau.edu/images/default/sample.pdf").then(
+    getFileFromUrl(
+            "https://i.dell.com/sites/csdocuments/Merchandizing_Docs/en/3078_dell_ym_peripheral_15oct2020_en.pdf")
+        .then(
       (value) => {
         setState(() {
           if (value != null) {
@@ -72,8 +74,11 @@ class _MyHomePageState extends State<MyPdfViewer> {
             FlatButton(
               textColor: Colors.grey,
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => MySignScreen()));
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => MySignScreen()),
+                  ModalRoute.withName('/'),
+                );
               },
               child: Text("Sign"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),

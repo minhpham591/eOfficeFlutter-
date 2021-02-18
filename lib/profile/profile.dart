@@ -2,6 +2,7 @@ import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
 import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 showAlertDialogLogout(BuildContext context) {
   // set up the buttons
@@ -15,8 +16,10 @@ showAlertDialogLogout(BuildContext context) {
       child: Text("Yes"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
+        // Navigator.pushReplacement(
+        //     context, MaterialPageRoute(builder: (context) => MyApp()));
+        //Phoenix.rebirth(context);
+        RestartWidget.restartApp(context);
       });
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(

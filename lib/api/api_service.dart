@@ -19,7 +19,7 @@ class APIService {
     if (response.statusCode == 200) {
       return LoginResponseModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load data');
+      return null;
     }
   }
 
