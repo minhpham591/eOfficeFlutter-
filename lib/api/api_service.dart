@@ -5,21 +5,20 @@ import 'package:EOfficeMobile/model/upload_model.dart';
 
 class APIService {
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
-    String url =
-        "https://datnxeoffice.azurewebsites.net/api/accounts/loginstaff";
+    String url = "https://datnxeoffice.azurewebsites.net/api/accounts/login";
     var body = json.encode(loginRequestModel.toJson());
     print(body);
     final response = await http.post(url,
         headers: <String, String>{
-          "Accept": "application/json",
-          "content-type": "application/json"
+          "Accept": "*/*",
+          "content-type": "application/json-patch+json"
         },
         body: body);
     print("status code = " + response.statusCode.toString());
     if (response.statusCode == 200) {
       return LoginResponseModel.fromJson(json.decode(response.body));
     } else {
-      return null;
+      throw Exception('Failed to load data');
     }
   }
 

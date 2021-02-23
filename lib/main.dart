@@ -91,11 +91,10 @@ class MyHomePage extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  LoginRequestModel requestModel;
+  LoginRequestModel requestModel = new LoginRequestModel();
 
   @override
   Widget build(BuildContext context) {
-    requestModel = new LoginRequestModel();
     final emailField = TextFormField(
       obscureText: false,
       style: style,
@@ -140,7 +139,8 @@ class MyHomePage extends StatelessWidget {
             return;
           } else {
             formKey.currentState.save();
-            APIService apiService = APIService();
+            APIService apiService = null;
+            apiService = new APIService();
             apiService.login(requestModel).then((value) {
               if (value.token.isNotEmpty) {
                 Navigator.pushReplacement(

@@ -83,6 +83,12 @@ class _MyHomePageState extends State<MyPdfViewer> {
               child: Text("Sign"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
+            FlatButton(
+              textColor: Colors.grey,
+              onPressed: () {},
+              child: Text("Close"),
+              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+            ),
           ],
         ),
         body: PDFView(

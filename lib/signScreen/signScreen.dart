@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 
 PictureRecorder recorder = new PictureRecorder();
 
@@ -11,7 +12,7 @@ class MySignScreen extends StatefulWidget {
 
 class _HomePageState extends State<MySignScreen> {
   List<Offset> _points = <Offset>[];
-
+  List<int> _i = <int>[];
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -21,7 +22,15 @@ class _HomePageState extends State<MySignScreen> {
         actions: <Widget>[
           FlatButton(
             textColor: Colors.grey,
-            onPressed: () {},
+            onPressed: () {
+              _points.forEach((element) {
+                print(element.hashCode);
+                _i.add(element.hashCode);
+              });
+              //print(_points.hashCode);
+              String encode = base64.encode(_i);
+              //print(encode);
+            },
             child: Text("Sign"),
             shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           ),
