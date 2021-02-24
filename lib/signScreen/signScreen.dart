@@ -20,7 +20,7 @@ class _HomePageState extends State<MySignScreen> {
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
       print(boundary);
-      ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+      ui.Image image = await boundary.toImage(pixelRatio: 0.07);
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       var pngBytes = byteData.buffer.asUint8List();
@@ -107,10 +107,14 @@ class _HomePageState extends State<MySignScreen> {
         ),
         body: RepaintBoundary(
           key: _globalKey,
-          child: new Container(
-            height: 150,
-            width: 150,
-            child: new GestureDetector(
+          child: Container(
+            height: 200,
+            width: 460,
+            // height: 1920,
+            // width: 450,
+            color: Colors.white,
+
+            child: GestureDetector(
               onPanUpdate: (DragUpdateDetails details) {
                 setState(() {
                   RenderBox object = context.findRenderObject();
@@ -137,8 +141,8 @@ class Signature extends CustomPainter {
   void paint(canvas, Size size) {
     Paint paint = new Paint()
       ..color = Colors.black
-      ..strokeCap = StrokeCap.square
-      ..strokeWidth = 1.0;
+      ..strokeCap = StrokeCap.round
+      ..strokeWidth = 1.5;
     for (int i = 0; i < points.length - 1; i++) {
       if (points[i] != null && points[i + 1] != null) {
         canvas.drawLine(points[i], points[i + 1], paint);
