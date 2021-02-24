@@ -3,14 +3,14 @@ import 'package:crypto/crypto.dart';
 
 class LoginResponseModel {
   final String token;
-
+  final int id;
   final String name;
   final String email;
   final String avatar;
   final String phone;
 
   LoginResponseModel(
-      {this.token, this.avatar, this.email, this.name, this.phone});
+      {this.token, this.avatar, this.email, this.name, this.phone, this.id});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
@@ -19,6 +19,7 @@ class LoginResponseModel {
       email: json["Email"] != null ? json["Email"] : "",
       avatar: json["Avatar"] != null ? json["Avatar"] : "",
       phone: json["Phone"] != null ? json["Phone"] : "",
+      id: json["Id"] != null ? json["Id"] : "",
     );
   }
 }

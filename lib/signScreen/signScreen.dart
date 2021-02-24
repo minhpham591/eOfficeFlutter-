@@ -1,11 +1,19 @@
 import 'dart:typed_data';
 import 'dart:ui' as ui;
+import 'package:EOfficeMobile/api/api_service.dart';
+import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/rendering.dart';
 import 'package:painter/painter.dart';
 
+LoginResponseModel testvalue;
+
 class MySignScreen extends StatefulWidget {
+  MySignScreen(LoginResponseModel _value) {
+    testvalue = _value;
+  }
   @override
   _ExamplePageState createState() => new _ExamplePageState();
 }
@@ -14,7 +22,7 @@ class _ExamplePageState extends State<MySignScreen> {
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
   String base64;
-
+  Sign signModel = new Sign();
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -25,6 +33,11 @@ class _ExamplePageState extends State<MySignScreen> {
       Uint8List pngBytes = byteData.buffer.asUint8List();
       base64 = base64Encode(pngBytes);
       print(base64);
+      signModel.signEncode = base64;
+      signModel.signerId = testvalue.id;
+      print(testvalue.id);
+      APIService api = APIService();
+      api.addSign(signModel);
     } catch (e) {
       print(e);
     }

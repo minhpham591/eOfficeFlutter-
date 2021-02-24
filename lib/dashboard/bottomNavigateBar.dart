@@ -39,7 +39,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
 
   static List<Widget> _widgetOptions = <Widget>[
     dashboard(),
-    MyPdfViewer(),
+    MyPdfViewer(testValue),
     MyNotification(),
     Profile(
       value: testValue,

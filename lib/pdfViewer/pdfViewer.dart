@@ -1,3 +1,4 @@
+import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/signScreen/signScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_pdfview/flutter_pdfview.dart';
@@ -6,7 +7,12 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+LoginResponseModel testvalue;
+
 class MyPdfViewer extends StatefulWidget {
+  MyPdfViewer(LoginResponseModel _value) {
+    testvalue = _value;
+  }
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -32,6 +38,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
       File file = File("${dir.path}/" + fileName + ".pdf");
       print(dir.path);
       File urlFile = await file.writeAsBytes(bytes);
+
       return urlFile;
     } catch (e) {
       throw Exception("Error opening url file");
@@ -76,7 +83,8 @@ class _MyHomePageState extends State<MyPdfViewer> {
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => MySignScreen()),
+                  MaterialPageRoute(
+                      builder: (context) => MySignScreen(testvalue)),
                   ModalRoute.withName('/'),
                 );
               },
