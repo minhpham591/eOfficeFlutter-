@@ -3,153 +3,109 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/rendering.dart';
-
-//PictureRecorder recorder = new PictureRecorder();
+import 'package:painter/painter.dart';
 
 class MySignScreen extends StatefulWidget {
   @override
-  _HomePageState createState() => new _HomePageState();
+  _ExamplePageState createState() => new _ExamplePageState();
 }
 
-class _HomePageState extends State<MySignScreen> {
-  List<Offset> _points = <Offset>[];
+class _ExamplePageState extends State<MySignScreen> {
+  PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
-  var base64;
+  String base64;
+
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
-      print(boundary);
-      ui.Image image = await boundary.toImage(pixelRatio: 0.07);
-      ByteData byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      var pngBytes = byteData.buffer.asUint8List();
+      ui.Image image = await boundary.toImage(pixelRatio: 0.12);
+      ByteData byteData = new ByteData(1000000000);
+      byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+      Uint8List pngBytes = byteData.buffer.asUint8List();
       base64 = base64Encode(pngBytes);
       print(base64);
-      setState(() {});
     } catch (e) {
       print(e);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(''),
-          actions: <Widget>[
-            FlatButton(
-              textColor: Colors.grey,
-              onPressed: () {
-                _capturePng();
-              },
-              child: Text("Sign"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-            ),
-            FlatButton(
-              textColor: Colors.grey,
-              onPressed: () {
-                if (_points.isNotEmpty) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                      content: new Text('Do you want to re-sign?'),
-                      actions: <Widget>[
-                        new FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: new Text('No'),
-                        ),
-                        new FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            setState(() {
-                              _points.clear();
-                            });
-                          },
-                          child: new Text('Yes'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-              },
-              child: Text("Re-sign"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-            ),
-            FlatButton(
-              textColor: Colors.grey,
-              onPressed: () {
-                // showDialog(
-                //   context: context,
-                //   builder: (context) => new AlertDialog(
-                //     content: new Text('Do you want to cancel sign?'),
-                //     actions: <Widget>[
-                //       new FlatButton(
-                //         onPressed: () => Navigator.of(context).pop(false),
-                //         child: new Text('No'),
-                //       ),
-                //       new FlatButton(
-                //         onPressed: () => Navigator.of(context).pop(true),
-                //         child: new Text('Yes'),
-                //       ),
-                //     ],
-                //   ),
-                // );
-                Navigator.pop(context);
-              },
-              child: Text("Cancel"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
-            ),
-          ],
-        ),
-        body: RepaintBoundary(
-          key: _globalKey,
-          child: Container(
-            height: 200,
-            width: 460,
-            // height: 1920,
-            // width: 450,
-            color: Colors.white,
+  void initState() {
+    super.initState();
+    _controller = _newController();
+  }
 
-            child: GestureDetector(
-              onPanUpdate: (DragUpdateDetails details) {
-                setState(() {
-                  RenderBox object = context.findRenderObject();
-                  Offset _localPosition =
-                      object.globalToLocal(details.globalPosition);
-                  _points = new List.from(_points)..add(_localPosition);
-                });
-              },
-              onPanEnd: (DragEndDetails details) => _points.add(null),
-              child: new CustomPaint(
-                  painter: new Signature(points: _points), size: Size.infinite),
-            ),
-          ),
+  PainterController _newController() {
+    PainterController controller = new PainterController();
+    controller.thickness = 1.0;
+    controller.backgroundColor = Colors.white;
+    return controller;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    List<Widget> actions;
+    actions = <Widget>[
+      FlatButton(
+        textColor: Colors.grey,
+        onPressed: () {
+          _capturePng();
+        },
+        child: Text("Sign"),
+        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+      ),
+      FlatButton(
+        textColor: Colors.grey,
+        onPressed: () {
+          if (!_controller.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) => new AlertDialog(
+                content: new Text('Do you want to re-sign?'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: new Text('No'),
+                  ),
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                      setState(() {
+                        _controller.clear();
+                      });
+                    },
+                    child: new Text('Yes'),
+                  ),
+                ],
+              ),
+            );
+          }
+        },
+        child: Text("Re-sign"),
+        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+      ),
+      FlatButton(
+        textColor: Colors.grey,
+        onPressed: () {
+          Navigator.pop(context);
+        },
+        child: Text("Cancel"),
+        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+      ),
+    ];
+    return new Scaffold(
+        appBar: new AppBar(
+          backgroundColor: Colors.white,
+          actions: actions,
+        ),
+        body: Center(
+          child: RepaintBoundary(
+              key: _globalKey,
+              child: new AspectRatio(
+                  aspectRatio: 3, child: new Painter(_controller))),
         ));
   }
-}
-
-class Signature extends CustomPainter {
-  List<Offset> points;
-
-  Signature({this.points});
-
-  @override
-  void paint(canvas, Size size) {
-    Paint paint = new Paint()
-      ..color = Colors.black
-      ..strokeCap = StrokeCap.round
-      ..strokeWidth = 1.5;
-    for (int i = 0; i < points.length - 1; i++) {
-      if (points[i] != null && points[i + 1] != null) {
-        canvas.drawLine(points[i], points[i + 1], paint);
-      }
-    }
-  }
-
-  @override
-  bool shouldRepaint(Signature oldDelegate) => oldDelegate.points != points;
 }
