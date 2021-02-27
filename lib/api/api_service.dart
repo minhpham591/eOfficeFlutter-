@@ -21,21 +21,4 @@ class APIService {
       throw Exception('Failed to load data');
     }
   }
-
-  Future<void> addSign(Sign signModel) async {
-    String url = "https://datnxeoffice.azurewebsites.net/api/signs/addsign";
-    var body = json.encode(signModel.toJson());
-    final response = await http.post(url,
-        headers: <String, String>{
-          "Accept": "text/plain",
-          "content-type": "application/json-patch+json"
-        },
-        body: body);
-    print("status code for sign" + response.statusCode.toString());
-    if (response.statusCode == 200) {
-      print("add sign successful");
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
 }

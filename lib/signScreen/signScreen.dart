@@ -7,22 +7,64 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/rendering.dart';
 import 'package:painter/painter.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 LoginResponseModel testvalue;
+int contractId;
 
 class MySignScreen extends StatefulWidget {
-  MySignScreen(LoginResponseModel _value) {
+  MySignScreen(LoginResponseModel _value, int contractID) {
     testvalue = _value;
+    contractId = contractID;
   }
   @override
   _ExamplePageState createState() => new _ExamplePageState();
 }
 
 class _ExamplePageState extends State<MySignScreen> {
+  SignResponseModel jsonResponse;
+  Future<void> addSign(Sign signModel) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/contractsigns/addsign";
+    var body = json.encode(signModel.toJson());
+    final response = await http.post(url,
+        headers: <String, String>{
+          "Accept": "text/plain",
+          "content-type": "application/json-patch+json"
+        },
+        body: body);
+    print("status code for sign" + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      jsonResponse = SignResponseModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> addSignToContract(SignToContract signModel) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/contracts/addsigntocontract";
+    var body = json.encode(signModel.toJson());
+    final response = await http.post(url,
+        headers: <String, String>{
+          "Accept": "text/plain",
+          "content-type": "application/json-patch+json"
+        },
+        body: body);
+    print("status code for sign to contract" + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      print("add sign successful");
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
   String base64;
   Sign signModel = new Sign();
+  SignToContract adSign = new SignToContract();
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -35,9 +77,10 @@ class _ExamplePageState extends State<MySignScreen> {
       print(base64);
       signModel.signEncode = base64;
       signModel.signerId = testvalue.id;
-      print(testvalue.id);
-      APIService api = APIService();
-      api.addSign(signModel);
+      addSign(signModel);
+      adSign.contractId = contractId;
+      adSign.signId = jsonResponse.signID;
+      addSignToContract(adSign);
     } catch (e) {
       print(e);
     }

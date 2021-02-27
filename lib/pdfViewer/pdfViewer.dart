@@ -8,10 +8,14 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 LoginResponseModel testvalue;
+String urlTest;
+int contractId;
 
 class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(LoginResponseModel _value) {
+  MyPdfViewer(LoginResponseModel _value, String url, int contractID) {
     testvalue = _value;
+    urlTest = url;
+    contractId = contractID;
   }
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -52,9 +56,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
   @override
   void initState() {
     requestPersmission();
-    getFileFromUrl(
-            "https://i.dell.com/sites/csdocuments/Merchandizing_Docs/en/3078_dell_ym_peripheral_15oct2020_en.pdf")
-        .then(
+    getFileFromUrl(urlTest).then(
       (value) => {
         setState(() {
           if (value != null) {
@@ -84,7 +86,8 @@ class _MyHomePageState extends State<MyPdfViewer> {
                 Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(
-                      builder: (context) => MySignScreen(testvalue)),
+                      builder: (context) =>
+                          MySignScreen(testvalue, contractId)),
                   ModalRoute.withName('/'),
                 );
               },
@@ -93,7 +96,9 @@ class _MyHomePageState extends State<MyPdfViewer> {
             ),
             FlatButton(
               textColor: Colors.grey,
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+              },
               child: Text("Close"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),

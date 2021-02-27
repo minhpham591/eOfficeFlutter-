@@ -1,8 +1,8 @@
 import 'dart:ui';
 import 'package:EOfficeMobile/dashboard/dashboard.dart';
+import 'package:EOfficeMobile/document/storeDocument.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/notification/notification.dart';
-import 'package:EOfficeMobile/pdfViewer/pdfViewer.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +39,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
 
   static List<Widget> _widgetOptions = <Widget>[
     dashboard(),
-    MyPdfViewer(testValue),
+    StoreDocument(testValue),
     MyNotification(),
     Profile(
       value: testValue,
