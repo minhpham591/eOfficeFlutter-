@@ -4,6 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 LoginResponseModel testvalue;
+TextStyle style = TextStyle(
+    fontFamily: 'Montserrat',
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    color: Colors.grey);
 
 class StoreInvoice extends StatefulWidget {
   StoreInvoice(LoginResponseModel _value) {
@@ -45,6 +50,47 @@ class _MyHomePageState extends State<StoreInvoice> {
       );
     } else {
       return new Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.white,
+            title: Container(
+              margin: const EdgeInsets.all(2.0),
+              padding: const EdgeInsets.all(2.0),
+              child: Row(children: <Widget>[
+                Column(children: <Widget>[
+                  Container(
+                    width: 100,
+                    margin: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(10.0),
+                    child: Text(
+                      "Title",
+                      style: style,
+                    ),
+                  )
+                ]),
+                Column(children: <Widget>[
+                  Container(
+                    width: 100,
+                    margin: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      "Sign",
+                      style: style,
+                    ),
+                  )
+                ]),
+                Column(children: <Widget>[
+                  Container(
+                    width: 100,
+                    margin: const EdgeInsets.all(20.0),
+                    padding: const EdgeInsets.all(5.0),
+                    child: Text(
+                      "Date Expire",
+                      style: style,
+                    ),
+                  )
+                ]),
+              ]),
+            )),
         body: new ListView.builder(
           itemCount: jsonResponse == null ? 0 : jsonResponse.length,
           itemBuilder: (BuildContext context, int index) {
