@@ -30,27 +30,27 @@ class _MyHomePageState extends State<StoreContract> {
         "accept": "*/*",
       },
     );
-    print("status code for list = " + response.statusCode.toString());
     if (response.statusCode == 200) {
-      print('load success');
       //Contract.fromJson(json.decode(response.body));
       setState(() {
         jsonResponse = json.decode(response.body);
-        print(jsonResponse);
       });
     } else {
       throw Exception('Failed to load data');
     }
   }
 
-  @override
-  void initState() {
-    this.getContractByID(testvalue.id);
-    super.initState();
-  }
+  // @override
+  // void initState() {
+  //   this.getContractByID(testvalue.id);
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getContractByID(testvalue.id);
+    });
     int notSigned = 0;
     int signed = 1;
     return Scaffold(
@@ -88,13 +88,13 @@ class _MyHomePageState extends State<StoreContract> {
                     margin: const EdgeInsets.all(1.0),
                     padding: const EdgeInsets.all(1.0),
                     decoration: BoxDecoration(
-                        border: Border.all(color: Colors.black, width: 0.25)),
+                        border: Border.all(color: Colors.grey, width: 0.25)),
                     child: Row(children: <Widget>[
                       Column(children: <Widget>[
                         Container(
                           width: 100,
                           margin: const EdgeInsets.all(20.0),
-                          //padding: const EdgeInsets.all(5.0),
+                          //padding: const EdgeInsets.all(10.0),
                           child: Text(jsonResponse[index]["description"]),
                         )
                       ]),
@@ -106,7 +106,7 @@ class _MyHomePageState extends State<StoreContract> {
                             padding: const EdgeInsets.all(5.0),
                             decoration: BoxDecoration(
                                 border: Border.all(
-                                    color: Colors.green, width: 5.0)),
+                                    color: Colors.green, width: 10.0)),
                             child: Text("Signed"),
                           )
                         ]),
@@ -118,7 +118,7 @@ class _MyHomePageState extends State<StoreContract> {
                             padding: const EdgeInsets.all(5.0),
                             decoration: BoxDecoration(
                                 border:
-                                    Border.all(color: Colors.red, width: 5.0)),
+                                    Border.all(color: Colors.red, width: 10.0)),
                             child: Text(
                               "Not Signed",
                             ),
