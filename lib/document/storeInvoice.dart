@@ -31,7 +31,9 @@ class _MyHomePageState extends State<StoreInvoice> {
       },
     );
     if (response.statusCode == 200) {
-      jsonResponse = json.decode(response.body);
+      setState(() {
+        jsonResponse = json.decode(response.body);
+      });
     } else {
       throw Exception('Failed to load data');
     }
@@ -53,8 +55,8 @@ class _MyHomePageState extends State<StoreInvoice> {
         appBar: AppBar(
             backgroundColor: Colors.white,
             title: Container(
-              margin: const EdgeInsets.all(2.0),
-              padding: const EdgeInsets.all(2.0),
+              margin: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(1.0),
               child: Row(children: <Widget>[
                 Column(children: <Widget>[
                   Container(

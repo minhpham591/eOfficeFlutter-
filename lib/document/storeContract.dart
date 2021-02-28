@@ -41,12 +41,6 @@ class _MyHomePageState extends State<StoreContract> {
     }
   }
 
-  // @override
-  // void initState() {
-  //   this.getContractByID(testvalue.id);
-  //   super.initState();
-  // }
-
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -65,8 +59,10 @@ class _MyHomePageState extends State<StoreContract> {
         appBar: AppBar(
             backgroundColor: Colors.white,
             title: Container(
-              margin: const EdgeInsets.all(2.0),
-              padding: const EdgeInsets.all(2.0),
+              margin: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(1.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1)),
               child: Row(children: <Widget>[
                 Column(children: <Widget>[
                   Container(
@@ -82,7 +78,7 @@ class _MyHomePageState extends State<StoreContract> {
                 Column(children: <Widget>[
                   Container(
                     width: 100,
-                    margin: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(15.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Sign",
@@ -93,7 +89,7 @@ class _MyHomePageState extends State<StoreContract> {
                 Column(children: <Widget>[
                   Container(
                     width: 100,
-                    margin: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(15.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Date Expire",
