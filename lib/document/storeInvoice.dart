@@ -37,35 +37,43 @@ class _MyHomePageState extends State<StoreInvoice> {
     setState(() {
       getInvoiceByID();
     });
-    return new Scaffold(
-      body: new ListView.builder(
-        itemCount: jsonResponse == null ? 0 : jsonResponse.length,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => MyPdfViewer(
-              //           testvalue,
-              //           jsonResponse[index]["contractUrl"],
-              //           jsonResponse[index]["id"])),
-              // );
-            },
-            child: ListTile(
-                //return new ListTile(
-                onTap: null,
-                title: Row(children: <Widget>[
-                  Expanded(child: Text(jsonResponse[index]["description"])),
-                  if (jsonResponse[index]["sign"] == null)
-                    Expanded(child: Text("Not signed")),
-                  if (jsonResponse[index]["sign"] != null)
-                    Expanded(child: Text("Signed")),
-                  Expanded(child: Text(jsonResponse[index]["dateExpire"])),
-                ])),
-          );
-        },
-      ),
-    );
+    if (jsonResponse == null) {
+      return Scaffold(
+        body: Container(
+          child: Text('No invoice yet'),
+        ),
+      );
+    } else {
+      return new Scaffold(
+        body: new ListView.builder(
+          itemCount: jsonResponse == null ? 0 : jsonResponse.length,
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onTap: () {
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => MyPdfViewer(
+                //           testvalue,
+                //           jsonResponse[index]["contractUrl"],
+                //           jsonResponse[index]["id"])),
+                // );
+              },
+              child: ListTile(
+                  //return new ListTile(
+                  onTap: null,
+                  title: Row(children: <Widget>[
+                    Expanded(child: Text(jsonResponse[index]["description"])),
+                    if (jsonResponse[index]["sign"] == null)
+                      Expanded(child: Text("Not signed")),
+                    if (jsonResponse[index]["sign"] != null)
+                      Expanded(child: Text("Signed")),
+                    Expanded(child: Text(jsonResponse[index]["dateExpire"])),
+                  ])),
+            );
+          },
+        ),
+      );
+    }
   }
 }

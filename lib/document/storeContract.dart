@@ -49,89 +49,97 @@ class _MyHomePageState extends State<StoreContract> {
     });
     int notSigned = 0;
     int signed = 1;
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: jsonResponse != null ? jsonResponse.length : 0,
-        itemBuilder: (BuildContext context, int index) {
-          return InkWell(
-            onTap: () {
-              if (jsonResponse[index]["signs"].toString() == "[]") {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyPdfViewer(
-                        testvalue,
-                        jsonResponse[index]["contractUrl"],
-                        jsonResponse[index]["id"],
-                        notSigned),
-                  ),
-                );
-              } else {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => MyPdfViewer(
-                        testvalue,
-                        jsonResponse[index]["contractUrl"],
-                        jsonResponse[index]["id"],
-                        signed),
-                  ),
-                );
-              }
-            },
-            child: ListTile(
-                title: Container(
-                    margin: const EdgeInsets.all(1.0),
-                    padding: const EdgeInsets.all(1.0),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey, width: 0.25)),
-                    child: Row(children: <Widget>[
-                      Column(children: <Widget>[
-                        Container(
-                          width: 100,
-                          margin: const EdgeInsets.all(20.0),
-                          //padding: const EdgeInsets.all(10.0),
-                          child: Text(jsonResponse[index]["description"]),
-                        )
-                      ]),
-                      if (jsonResponse[index]["signs"].toString() != "[]")
+    if (jsonResponse == null) {
+      return Scaffold(
+        body: Container(
+          child: Text('No contract yet'),
+        ),
+      );
+    } else {
+      return Scaffold(
+        body: ListView.builder(
+          itemCount: jsonResponse != null ? jsonResponse.length : 0,
+          itemBuilder: (BuildContext context, int index) {
+            return InkWell(
+              onTap: () {
+                if (jsonResponse[index]["signs"].toString() == "[]") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewer(
+                          testvalue,
+                          jsonResponse[index]["contractUrl"],
+                          jsonResponse[index]["id"],
+                          notSigned),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewer(
+                          testvalue,
+                          jsonResponse[index]["contractUrl"],
+                          jsonResponse[index]["id"],
+                          signed),
+                    ),
+                  );
+                }
+              },
+              child: ListTile(
+                  title: Container(
+                      margin: const EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(1.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.25)),
+                      child: Row(children: <Widget>[
+                        Column(children: <Widget>[
+                          Container(
+                            width: 100,
+                            margin: const EdgeInsets.all(20.0),
+                            //padding: const EdgeInsets.all(10.0),
+                            child: Text(jsonResponse[index]["description"]),
+                          )
+                        ]),
+                        if (jsonResponse[index]["signs"].toString() != "[]")
+                          Column(children: <Widget>[
+                            Container(
+                              width: 100,
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.green, width: 10.0)),
+                              child: Text("Signed"),
+                            )
+                          ]),
+                        if (jsonResponse[index]["signs"].toString() == "[]")
+                          Column(children: <Widget>[
+                            Container(
+                              width: 100,
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.red, width: 10.0)),
+                              child: Text(
+                                "Not Signed",
+                              ),
+                            )
+                          ]),
                         Column(children: <Widget>[
                           Container(
                             width: 100,
                             margin: const EdgeInsets.all(15.0),
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.green, width: 10.0)),
-                            child: Text("Signed"),
+                            //padding: const EdgeInsets.all(5.0),
+                            child: Text(jsonResponse[index]["dateExpire"]),
                           )
                         ]),
-                      if (jsonResponse[index]["signs"].toString() == "[]")
-                        Column(children: <Widget>[
-                          Container(
-                            width: 100,
-                            margin: const EdgeInsets.all(15.0),
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                                border:
-                                    Border.all(color: Colors.red, width: 10.0)),
-                            child: Text(
-                              "Not Signed",
-                            ),
-                          )
-                        ]),
-                      Column(children: <Widget>[
-                        Container(
-                          width: 100,
-                          margin: const EdgeInsets.all(15.0),
-                          //padding: const EdgeInsets.all(5.0),
-                          child: Text(jsonResponse[index]["dateExpire"]),
-                        )
-                      ]),
-                    ]))),
-          );
-        },
-      ),
-    );
+                      ]))),
+            );
+          },
+        ),
+      );
+    }
   }
 }
