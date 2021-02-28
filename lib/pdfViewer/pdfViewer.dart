@@ -10,12 +10,15 @@ import 'package:permission_handler/permission_handler.dart';
 LoginResponseModel testvalue;
 String urlTest;
 int contractId;
+int status;
 
 class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(LoginResponseModel _value, String url, int contractID) {
+  MyPdfViewer(
+      LoginResponseModel _value, String url, int contractID, int statusSign) {
     testvalue = _value;
     urlTest = url;
     contractId = contractID;
+    status = statusSign;
   }
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -83,13 +86,30 @@ class _MyHomePageState extends State<MyPdfViewer> {
             FlatButton(
               textColor: Colors.grey,
               onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) =>
-                          MySignScreen(testvalue, contractId)),
-                  ModalRoute.withName('/'),
-                );
+                if (status == 0) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            MySignScreen(testvalue, contractId)),
+                    ModalRoute.withName('/'),
+                  );
+                } else {
+                  showDialog(
+                    context: context,
+                    builder: (context) => new AlertDialog(
+                      content: new Text('You have been already sign'),
+                      actions: <Widget>[
+                        new FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: new Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                }
               },
               child: Text("Sign"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),

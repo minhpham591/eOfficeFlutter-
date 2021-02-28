@@ -50,14 +50,14 @@ class _MyHomePageState extends State<StoreInvoice> {
         itemBuilder: (BuildContext context, int index) {
           return InkWell(
             onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => MyPdfViewer(
-                        testvalue,
-                        jsonResponse[index]["contractUrl"],
-                        jsonResponse[index]["id"])),
-              );
+              // Navigator.push(
+              //   context,
+              //   MaterialPageRoute(
+              //       builder: (context) => MyPdfViewer(
+              //           testvalue,
+              //           jsonResponse[index]["contractUrl"],
+              //           jsonResponse[index]["id"])),
+              // );
             },
             child: ListTile(
                 //return new ListTile(
