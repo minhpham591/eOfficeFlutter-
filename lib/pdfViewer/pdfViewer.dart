@@ -86,30 +86,30 @@ class _MyHomePageState extends State<MyPdfViewer> {
             FlatButton(
               textColor: Colors.grey,
               onPressed: () {
-                if (status == 0) {
-                  Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            MySignScreen(testvalue, contractId)),
-                    ModalRoute.withName('/'),
-                  );
-                } else {
-                  showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                      content: new Text('You have been already sign'),
-                      actions: <Widget>[
-                        new FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: new Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                }
+                //if (status == 0) {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          MySignScreen(testvalue, contractId)),
+                  ModalRoute.withName('/'),
+                );
+                // } else {
+                //   showDialog(
+                //     context: context,
+                //     builder: (context) => new AlertDialog(
+                //       content: new Text('You have been already sign'),
+                //       actions: <Widget>[
+                //         new FlatButton(
+                //           onPressed: () {
+                //             Navigator.pop(context);
+                //           },
+                //           child: new Text('OK'),
+                //         ),
+                //       ],
+                //     ),
+                //   );
+                // }
               },
               child: Text("Sign"),
               shape: CircleBorder(side: BorderSide(color: Colors.transparent)),

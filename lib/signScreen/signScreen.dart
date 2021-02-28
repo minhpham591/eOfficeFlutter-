@@ -62,8 +62,8 @@ class _ExamplePageState extends State<MySignScreen> {
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
   String base64;
-  Sign signModel = new Sign();
-  SignToContract adSign = new SignToContract();
+  Sign signModel = Sign();
+  SignToContract adSign = SignToContract();
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -76,12 +76,11 @@ class _ExamplePageState extends State<MySignScreen> {
       print(base64);
       signModel.signEncode = base64;
       signModel.signerId = testvalue.id;
-      addSign(signModel).then((value) => adSign.signId = value.signID);
-      print(adSign.signId);
-      if (adSign.signId != null) {
-        adSign.contractId = contractId;
-        addSignToContract(adSign);
-      }
+      addSign(signModel).then((value) => {
+            adSign.signId = value.signID,
+            adSign.contractId = contractId,
+            addSignToContract(adSign),
+          });
     } catch (e) {
       print(e);
     }

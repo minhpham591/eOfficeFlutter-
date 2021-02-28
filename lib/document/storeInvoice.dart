@@ -1,10 +1,6 @@
 import 'dart:convert';
-import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
-import 'package:EOfficeMobile/pdfViewer/pdfViewer.dart';
 import 'package:flutter/material.dart';
-import 'dart:io';
-import 'dart:ui';
 import 'package:http/http.dart' as http;
 
 LoginResponseModel testvalue;
@@ -20,7 +16,7 @@ class StoreInvoice extends StatefulWidget {
 
 class _MyHomePageState extends State<StoreInvoice> {
   List jsonResponse;
-  Future<void> getContractByID() async {
+  Future<void> getInvoiceByID() async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/invoices/getbysignerid?id=${testvalue.id}";
     final response = await http.get(
@@ -29,7 +25,6 @@ class _MyHomePageState extends State<StoreInvoice> {
         "accept": "*/*",
       },
     );
-    print("status code for list = " + response.statusCode.toString());
     if (response.statusCode == 200) {
       jsonResponse = json.decode(response.body);
     } else {
@@ -38,12 +33,10 @@ class _MyHomePageState extends State<StoreInvoice> {
   }
 
   @override
-  void initState() {
-    this.getContractByID();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    setState(() {
+      getInvoiceByID();
+    });
     return new Scaffold(
       body: new ListView.builder(
         itemCount: jsonResponse == null ? 0 : jsonResponse.length,
