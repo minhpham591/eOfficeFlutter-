@@ -23,8 +23,7 @@ class MySignScreen extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<MySignScreen> {
-  SignResponseModel jsonResponse;
-  Future<void> addSign(Sign signModel) async {
+  Future<SignResponseModel> addSign(Sign signModel) async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/contractsigns/addsign";
     var body = json.encode(signModel.toJson());
@@ -36,7 +35,7 @@ class _ExamplePageState extends State<MySignScreen> {
         body: body);
     print("status code for sign" + response.statusCode.toString());
     if (response.statusCode == 200) {
-      jsonResponse = SignResponseModel.fromJson(json.decode(response.body));
+      return SignResponseModel.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');
     }
@@ -77,10 +76,12 @@ class _ExamplePageState extends State<MySignScreen> {
       print(base64);
       signModel.signEncode = base64;
       signModel.signerId = testvalue.id;
-      addSign(signModel);
-      adSign.contractId = contractId;
-      adSign.signId = jsonResponse.signID;
-      addSignToContract(adSign);
+      addSign(signModel).then((value) => adSign.signId = value.signID);
+      print(adSign.signId);
+      if (adSign.signId != null) {
+        adSign.contractId = contractId;
+        addSignToContract(adSign);
+      }
     } catch (e) {
       print(e);
     }

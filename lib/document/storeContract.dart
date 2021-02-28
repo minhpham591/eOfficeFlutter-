@@ -20,9 +20,9 @@ class StoreContract extends StatefulWidget {
 
 class _MyHomePageState extends State<StoreContract> {
   List jsonResponse;
-  Future<void> getContractByID() async {
+  Future<void> getContractByID(int id) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/contracts/getcontractsbysignerid?id=${testvalue.id}";
+        "https://datnxeoffice.azurewebsites.net/api/contracts/getcontractsbysignerid?id=${id}";
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -31,6 +31,7 @@ class _MyHomePageState extends State<StoreContract> {
     );
     print("status code for list = " + response.statusCode.toString());
     if (response.statusCode == 200) {
+      print('load success');
       //Contract.fromJson(json.decode(response.body));
       jsonResponse = json.decode(response.body);
     } else {
@@ -38,13 +39,15 @@ class _MyHomePageState extends State<StoreContract> {
     }
   }
 
-  @override
-  void initState() {
-    this.getContractByID();
-  }
+  // @override
+  // void initState() {
+  //   this.getContractByID(testvalue.id);
+  // }
 
   @override
   Widget build(BuildContext context) {
+    getContractByID(testvalue.id);
+    print(jsonResponse);
     return new Scaffold(
       body: new ListView.builder(
         itemCount: jsonResponse == null ? 0 : jsonResponse.length,
