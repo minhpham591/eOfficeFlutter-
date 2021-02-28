@@ -2,7 +2,6 @@ import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
 import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
 
 showAlertDialogLogout(BuildContext context) {
   // set up the buttons

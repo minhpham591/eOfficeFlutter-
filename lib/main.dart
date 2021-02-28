@@ -2,10 +2,8 @@ import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
-import 'package:EOfficeMobile/profile/profile.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart';
+import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

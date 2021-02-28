@@ -1,11 +1,12 @@
 import 'dart:ui';
+
 import 'package:EOfficeMobile/forgotPassword/enterNewPassword.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/services.dart';
 import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
-import 'package:flutter/material.dart';
-import 'package:otp/otp.dart';
 import 'package:base32/base32.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:otp/otp.dart';
 
 class ForgotPassword extends StatefulWidget {
   ForgotPassword({Key key}) : super(key: key);

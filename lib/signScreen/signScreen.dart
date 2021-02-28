@@ -1,14 +1,13 @@
+import 'dart:convert';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:EOfficeMobile/api/api_service.dart';
+
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:flutter/rendering.dart';
-import 'package:painter/painter.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'package:painter/painter.dart';
 
 LoginResponseModel testvalue;
 int contractId;
