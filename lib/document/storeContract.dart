@@ -112,7 +112,9 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["signs"].toString() == "[]") {
+                if (jsonResponse[index]["signs"]
+                    .toString()
+                    .contains("signerId: ${testvalue.id}")) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -120,7 +122,7 @@ class _MyHomePageState extends State<StoreContract> {
                           testvalue,
                           jsonResponse[index]["contractUrl"],
                           jsonResponse[index]["id"],
-                          notSigned),
+                          signed),
                     ),
                   );
                 } else {
@@ -131,7 +133,7 @@ class _MyHomePageState extends State<StoreContract> {
                           testvalue,
                           jsonResponse[index]["contractUrl"],
                           jsonResponse[index]["id"],
-                          signed),
+                          notSigned),
                     ),
                   );
                 }
@@ -151,7 +153,9 @@ class _MyHomePageState extends State<StoreContract> {
                             child: Text(jsonResponse[index]["description"]),
                           )
                         ]),
-                        if (jsonResponse[index]["signs"].toString() != "[]")
+                        if (jsonResponse[index]["signs"]
+                            .toString()
+                            .contains("signerId: ${testvalue.id}"))
                           Column(children: <Widget>[
                             Container(
                               width: 100,
@@ -159,11 +163,13 @@ class _MyHomePageState extends State<StoreContract> {
                               padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.green, width: 10.0)),
-                              child: Text("Signed"),
+                                      color: Colors.yellow, width: 10.0)),
+                              child: Text("You've Signed"),
                             )
                           ]),
-                        if (jsonResponse[index]["signs"].toString() == "[]")
+                        if (!jsonResponse[index]["signs"]
+                            .toString()
+                            .contains("signerId: ${testvalue.id}"))
                           Column(children: <Widget>[
                             Container(
                               width: 100,
@@ -173,7 +179,7 @@ class _MyHomePageState extends State<StoreContract> {
                                   border: Border.all(
                                       color: Colors.red, width: 10.0)),
                               child: Text(
-                                "Not Signed",
+                                "You've not Signed",
                               ),
                             )
                           ]),

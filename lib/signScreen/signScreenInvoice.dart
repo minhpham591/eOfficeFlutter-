@@ -96,7 +96,7 @@ class _ExamplePageState extends State<MySignScreen> {
   PainterController _newController() {
     PainterController controller = new PainterController();
     controller.thickness = 1.0;
-    controller.backgroundColor = Colors.white;
+    //controller.backgroundColor = Colors.white;
     return controller;
   }
 

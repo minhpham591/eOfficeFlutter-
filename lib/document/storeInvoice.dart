@@ -108,7 +108,7 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["signs"].toString() == null) {
+                if (jsonResponse[index]["invoiceSign"] != null) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -116,7 +116,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                           testvalue,
                           jsonResponse[index]["invoiceURL"],
                           jsonResponse[index]["id"],
-                          notSigned),
+                          signed),
                     ),
                   );
                 } else {
@@ -127,7 +127,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                           testvalue,
                           jsonResponse[index]["invoiceURL"],
                           jsonResponse[index]["id"],
-                          signed),
+                          notSigned),
                     ),
                   );
                 }
@@ -147,8 +147,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                             child: Text(jsonResponse[index]["description"]),
                           )
                         ]),
-                        if (jsonResponse[index]["invoiceSign"].toString() !=
-                            null)
+                        if (jsonResponse[index]["invoiceSign"] != null)
                           Column(children: <Widget>[
                             Container(
                               width: 100,
@@ -160,8 +159,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                               child: Text("Signed"),
                             )
                           ]),
-                        if (jsonResponse[index]["invoiceSign"].toString() ==
-                            null)
+                        if (jsonResponse[index]["invoiceSign"] == null)
                           Column(children: <Widget>[
                             Container(
                               width: 100,
