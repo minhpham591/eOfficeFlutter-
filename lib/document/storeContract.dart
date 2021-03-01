@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:EOfficeMobile/model/login_model.dart';
-import 'package:EOfficeMobile/pdfViewer/pdfViewer.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerContract.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -49,10 +49,17 @@ class _MyHomePageState extends State<StoreContract> {
     });
     int notSigned = 0;
     int signed = 1;
+
     if (jsonResponse == null) {
       return Scaffold(
         body: Container(
-          child: Text('No contract yet'),
+          child: Text('Loading...'),
+        ),
+      );
+    } else if (jsonResponse.toString() == "[]") {
+      return Scaffold(
+        body: Container(
+          child: Text('Not contract yet'),
         ),
       );
     } else {

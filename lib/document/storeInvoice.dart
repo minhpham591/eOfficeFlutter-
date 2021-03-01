@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoice.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -24,7 +25,7 @@ class _MyHomePageState extends State<StoreInvoice> {
   List jsonResponse;
   Future<void> getInvoiceByID() async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/invoices/getbysignerid?id=${testvalue.id}";
+        "https://datnxeoffice.azurewebsites.net/api/invoices/getinvoicesbysignerid?signerId=${testvalue.id}";
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -45,10 +46,18 @@ class _MyHomePageState extends State<StoreInvoice> {
     setState(() {
       getInvoiceByID();
     });
+    int notSigned = 0;
+    int signed = 1;
     if (jsonResponse == null) {
       return Scaffold(
         body: Container(
-          child: Text('No invoice yet'),
+          child: Text('Loading...'),
+        ),
+      );
+    } else if (jsonResponse.toString() == "[]") {
+      return Scaffold(
+        body: Container(
+          child: Text('Not invoice yet'),
         ),
       );
     } else {
@@ -99,26 +108,82 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //       builder: (context) => MyPdfViewer(
-                //           testvalue,
-                //           jsonResponse[index]["contractUrl"],
-                //           jsonResponse[index]["id"])),
-                // );
+                if (jsonResponse[index]["signs"].toString() == null) {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewer(
+                          testvalue,
+                          jsonResponse[index]["invoiceURL"],
+                          jsonResponse[index]["id"],
+                          notSigned),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewer(
+                          testvalue,
+                          jsonResponse[index]["invoiceURL"],
+                          jsonResponse[index]["id"],
+                          signed),
+                    ),
+                  );
+                }
               },
               child: ListTile(
-                  //return new ListTile(
-                  onTap: null,
-                  title: Row(children: <Widget>[
-                    Expanded(child: Text(jsonResponse[index]["description"])),
-                    if (jsonResponse[index]["sign"] == null)
-                      Expanded(child: Text("Not signed")),
-                    if (jsonResponse[index]["sign"] != null)
-                      Expanded(child: Text("Signed")),
-                    Expanded(child: Text(jsonResponse[index]["dateExpire"])),
-                  ])),
+                  title: Container(
+                      margin: const EdgeInsets.all(1.0),
+                      padding: const EdgeInsets.all(1.0),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey, width: 0.25)),
+                      child: Row(children: <Widget>[
+                        Column(children: <Widget>[
+                          Container(
+                            width: 100,
+                            margin: const EdgeInsets.all(20.0),
+                            //padding: const EdgeInsets.all(10.0),
+                            child: Text(jsonResponse[index]["description"]),
+                          )
+                        ]),
+                        if (jsonResponse[index]["invoiceSign"].toString() !=
+                            null)
+                          Column(children: <Widget>[
+                            Container(
+                              width: 100,
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.green, width: 10.0)),
+                              child: Text("Signed"),
+                            )
+                          ]),
+                        if (jsonResponse[index]["invoiceSign"].toString() ==
+                            null)
+                          Column(children: <Widget>[
+                            Container(
+                              width: 100,
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: Colors.red, width: 10.0)),
+                              child: Text(
+                                "Not Signed",
+                              ),
+                            )
+                          ]),
+                        Column(children: <Widget>[
+                          Container(
+                            width: 100,
+                            margin: const EdgeInsets.all(15.0),
+                            //padding: const EdgeInsets.all(5.0),
+                            child: Text(jsonResponse[index]["dateExpire"]),
+                          )
+                        ]),
+                      ]))),
             );
           },
         ),

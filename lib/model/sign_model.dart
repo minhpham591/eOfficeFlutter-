@@ -14,6 +14,21 @@ class Sign {
   }
 }
 
+class SignInvoice {
+  String signEncode;
+  int signerId;
+  int invoiceId;
+  SignInvoice({this.invoiceId, this.signEncode, this.signerId});
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      'signEncode': signEncode.trim(),
+      'signerId': signerId,
+      'invoiceId': invoiceId,
+    };
+    return map;
+  }
+}
+
 class SignToContract {
   int signId;
   int contractId;
@@ -25,6 +40,22 @@ class SignToContract {
     Map<String, dynamic> map = {
       'signId': signId,
       'contractId': contractId,
+    };
+    return map;
+  }
+}
+
+class SignToInvoice {
+  int signId;
+  int invoiceId;
+  SignToInvoice({
+    this.invoiceId,
+    this.signId,
+  });
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      'signId': signId,
+      'invoiceId': invoiceId,
     };
     return map;
   }
