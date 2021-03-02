@@ -25,7 +25,7 @@ class _MyHomePageState extends State<StoreContract> {
   List jsonResponse;
   Future<void> getContractByID(int id) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/contracts/getcontractsbysignerid?id=${id}";
+        "https://datnxeoffice.azurewebsites.net/api/contracts/getbysignerid?id=${id}";
     final response = await http.get(
       url,
       headers: <String, String>{

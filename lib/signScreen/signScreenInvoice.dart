@@ -67,29 +67,36 @@ class _ExamplePageState extends State<MySignScreen> {
   String base64;
   SignInvoice signModel = SignInvoice();
   SignToInvoice adSign = SignToInvoice();
-  // Future<void> _capturePng() async {
-  //   try {
-  //     RenderRepaintBoundary boundary =
-  //         _globalKey.currentContext.findRenderObject();
-  //     ui.Image image = await boundary.toImage(pixelRatio: 0.1);
-  //     ByteData byteData = new ByteData(1000000000);
-  //     byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  //     Uint8List pngBytes = byteData.buffer.asUint8List();
-  //     base64 = base64Encode(pngBytes);
-  //     print(base64);
-  //     print(contractId);
-  //     signModel.signEncode = base64;
-  //     signModel.signerId = testvalue.id;
-  //     signModel.invoiceId = contractId;
-  //     addSign(signModel).then((value) => {
-  //           adSign.signId = value.signID,
-  //           adSign.invoiceId = contractId,
-  //           addSignToContract(adSign),
-  //         });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  List<int> point;
+  Uint8List pngBytes;
+  Future<void> _capturePng() async {
+    try {
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage(pixelRatio: 1);
+      ByteData byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      pngBytes = byteData.buffer.asUint8List();
+      // pngBytes.forEach((element) {
+      //   point.add(element);
+      // });
+
+      print(pngBytes);
+      base64 = base64Encode(pngBytes);
+      print(base64);
+      print(contractId);
+      signModel.signEncode = pngBytes.toString();
+      signModel.signerId = testvalue.id;
+      signModel.invoiceId = contractId;
+      addSign(signModel).then((value) => {
+            adSign.signId = value.signID,
+            adSign.invoiceId = contractId,
+            addSignToContract(adSign),
+          });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void initState() {
@@ -111,22 +118,21 @@ class _ExamplePageState extends State<MySignScreen> {
       FlatButton(
         textColor: Colors.grey,
         onPressed: () {
-          screenshotController
-              .capture(pixelRatio: 0.2)
-              .then((Uint8List image) async {
-            _imageFile = image;
-            print(image.toList());
-            base64 = base64Encode(_imageFile.toList());
-            print(base64);
-            signModel.signEncode = base64;
-            signModel.signerId = testvalue.id;
-            signModel.invoiceId = contractId;
-            addSign(signModel).then((value) => {
-                  adSign.signId = value.signID,
-                  adSign.invoiceId = contractId,
-                  addSignToContract(adSign),
-                });
-          });
+          _capturePng();
+          // screenshotController.capture(pixelRatio: 0.2).then((image) async {
+          //   _imageFile = image;
+          //   print(image.toList());
+          //   base64 = base64Encode(_imageFile.toList());
+          //   print(base64);
+          //   signModel.signEncode = base64;
+          //   signModel.signerId = testvalue.id;
+          //   signModel.invoiceId = contractId;
+          //   addSign(signModel).then((value) => {
+          //         adSign.signId = value.signID,
+          //         adSign.invoiceId = contractId,
+          //         addSignToContract(adSign),
+          //       });
+          // });
         },
         child: Text("Sign"),
         shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
@@ -173,22 +179,21 @@ class _ExamplePageState extends State<MySignScreen> {
       ),
     ];
     return new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.white,
-          actions: actions,
-        ),
-        body: Center(
-          // child: RepaintBoundary(
-          //     key: _globalKey,
-
-          child: new Container(
-              height: 300,
-              width: 300,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Screenshot(
-                  controller: screenshotController,
-                  child: new Painter(_controller))),
-        ));
+      appBar: new AppBar(
+        backgroundColor: Colors.white,
+        actions: actions,
+      ),
+      body: Center(
+        child: Container(
+            height: 50,
+            width: 300,
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            child: RepaintBoundary(
+                key: _globalKey,
+                // child: Screenshot(
+                //     controller: screenshotController,
+                child: new Painter(_controller))),
+      ),
+    );
   }
 }

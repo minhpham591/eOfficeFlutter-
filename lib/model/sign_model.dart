@@ -7,7 +7,7 @@ class Sign {
   });
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'signEncode': signEncode.trim(),
+      'signUrl': signEncode.trim(),
       'signerId': signerId,
     };
     return map;
@@ -21,7 +21,7 @@ class SignInvoice {
   SignInvoice({this.invoiceId, this.signEncode, this.signerId});
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'signEncode': signEncode.trim(),
+      'signUrl': signEncode.trim(),
       'signerId': signerId,
       'invoiceId': invoiceId,
     };

@@ -109,13 +109,14 @@ class _ExamplePageState extends State<MySignScreen> {
         textColor: Colors.grey,
         onPressed: () {
           screenshotController
-              .capture(pixelRatio: 0.2)
+              .capture(pixelRatio: 1)
               .then((Uint8List image) async {
-            _imageFile = image;
-            print(image.toList());
-            base64 = base64Encode(_imageFile.toList());
+            image.buffer.asUint64List().toList();
+            print(image.buffer.asUint64List().toList());
+            // print(image.toList());
+            base64 = base64Encode(image.buffer.asUint64List().toList());
             print(base64);
-            signModel.signEncode = base64;
+            signModel.signEncode = image.toString();
             signModel.signerId = testvalue.id;
             addSign(signModel).then((value) => {
                   adSign.signId = value.signID,

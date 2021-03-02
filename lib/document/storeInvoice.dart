@@ -25,7 +25,7 @@ class _MyHomePageState extends State<StoreInvoice> {
   List jsonResponse;
   Future<void> getInvoiceByID() async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/invoices/getinvoicesbysignerid?signerId=${testvalue.id}";
+        "https://datnxeoffice.azurewebsites.net/api/invoices/getbysignerid?signerId=${testvalue.id}";
     final response = await http.get(
       url,
       headers: <String, String>{
