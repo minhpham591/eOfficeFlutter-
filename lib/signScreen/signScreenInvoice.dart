@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
 
@@ -8,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:painter/painter.dart';
+import 'package:screenshot/screenshot.dart';
 
 LoginResponseModel testvalue;
 int contractId;
@@ -22,6 +24,8 @@ class MySignScreen extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<MySignScreen> {
+  Uint8List _imageFile;
+  ScreenshotController screenshotController = ScreenshotController();
   Future<SignResponseModel> addSign(SignInvoice signModel) async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign";
@@ -63,29 +67,29 @@ class _ExamplePageState extends State<MySignScreen> {
   String base64;
   SignInvoice signModel = SignInvoice();
   SignToInvoice adSign = SignToInvoice();
-  Future<void> _capturePng() async {
-    try {
-      RenderRepaintBoundary boundary =
-          _globalKey.currentContext.findRenderObject();
-      ui.Image image = await boundary.toImage(pixelRatio: 0.1);
-      ByteData byteData = new ByteData(1000000000);
-      byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List pngBytes = byteData.buffer.asUint8List();
-      base64 = base64Encode(pngBytes);
-      print(base64);
-      print(contractId);
-      signModel.signEncode = base64;
-      signModel.signerId = testvalue.id;
-      signModel.invoiceId = contractId;
-      addSign(signModel).then((value) => {
-            adSign.signId = value.signID,
-            adSign.invoiceId = contractId,
-            addSignToContract(adSign),
-          });
-    } catch (e) {
-      print(e);
-    }
-  }
+  // Future<void> _capturePng() async {
+  //   try {
+  //     RenderRepaintBoundary boundary =
+  //         _globalKey.currentContext.findRenderObject();
+  //     ui.Image image = await boundary.toImage(pixelRatio: 0.1);
+  //     ByteData byteData = new ByteData(1000000000);
+  //     byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  //     Uint8List pngBytes = byteData.buffer.asUint8List();
+  //     base64 = base64Encode(pngBytes);
+  //     print(base64);
+  //     print(contractId);
+  //     signModel.signEncode = base64;
+  //     signModel.signerId = testvalue.id;
+  //     signModel.invoiceId = contractId;
+  //     addSign(signModel).then((value) => {
+  //           adSign.signId = value.signID,
+  //           adSign.invoiceId = contractId,
+  //           addSignToContract(adSign),
+  //         });
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
   @override
   void initState() {
@@ -95,8 +99,8 @@ class _ExamplePageState extends State<MySignScreen> {
 
   PainterController _newController() {
     PainterController controller = new PainterController();
-    controller.thickness = 1.0;
-    controller.backgroundColor = Colors.white;
+    controller.thickness = 0.3;
+    controller.backgroundColor = Colors.transparent;
     return controller;
   }
 
@@ -107,7 +111,22 @@ class _ExamplePageState extends State<MySignScreen> {
       FlatButton(
         textColor: Colors.grey,
         onPressed: () {
-          _capturePng();
+          screenshotController
+              .capture(pixelRatio: 0.2)
+              .then((Uint8List image) async {
+            _imageFile = image;
+            print(image.toList());
+            base64 = base64Encode(_imageFile.toList());
+            print(base64);
+            signModel.signEncode = base64;
+            signModel.signerId = testvalue.id;
+            signModel.invoiceId = contractId;
+            addSign(signModel).then((value) => {
+                  adSign.signId = value.signID,
+                  adSign.invoiceId = contractId,
+                  addSignToContract(adSign),
+                });
+          });
         },
         child: Text("Sign"),
         shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
@@ -159,10 +178,17 @@ class _ExamplePageState extends State<MySignScreen> {
           actions: actions,
         ),
         body: Center(
-          child: RepaintBoundary(
-              key: _globalKey,
-              child: new AspectRatio(
-                  aspectRatio: 3, child: new Painter(_controller))),
+          // child: RepaintBoundary(
+          //     key: _globalKey,
+
+          child: new Container(
+              height: 300,
+              width: 300,
+              decoration:
+                  BoxDecoration(border: Border.all(color: Colors.black)),
+              child: Screenshot(
+                  controller: screenshotController,
+                  child: new Painter(_controller))),
         ));
   }
 }
