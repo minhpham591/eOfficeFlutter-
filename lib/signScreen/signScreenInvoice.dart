@@ -67,7 +67,7 @@ class _ExamplePageState extends State<MySignScreen> {
     try {
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
-      ui.Image image = await boundary.toImage(pixelRatio: 0.12);
+      ui.Image image = await boundary.toImage(pixelRatio: 0.1);
       ByteData byteData = new ByteData(1000000000);
       byteData = await image.toByteData(format: ui.ImageByteFormat.png);
       Uint8List pngBytes = byteData.buffer.asUint8List();
@@ -96,7 +96,7 @@ class _ExamplePageState extends State<MySignScreen> {
   PainterController _newController() {
     PainterController controller = new PainterController();
     controller.thickness = 1.0;
-    //controller.backgroundColor = Colors.white;
+    controller.backgroundColor = Colors.white;
     return controller;
   }
 
