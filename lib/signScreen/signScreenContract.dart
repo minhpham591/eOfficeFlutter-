@@ -1,7 +1,8 @@
 import 'dart:convert';
+import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
+import 'package:dio/dio.dart' as dio;
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +10,11 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:painter/painter.dart';
 import 'package:screenshot/screenshot.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:painter/painter.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 LoginResponseModel testvalue;
 int contractId;
@@ -64,29 +70,60 @@ class _ExamplePageState extends State<MySignScreen> {
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
   String base64;
-  Sign signModel = Sign();
+  SignInvoice signModel = SignInvoice();
   SignToContract adSign = SignToContract();
-  // Future<void> _capturePng() async {
-  //   try {
-  //     RenderRepaintBoundary boundary =
-  //         _globalKey.currentContext.findRenderObject();
-  //     ui.Image image = await boundary.toImage(pixelRatio: 0.1);
-  //     ByteData byteData = new ByteData(1000000000);
-  //     byteData = await image.toByteData(format: ui.ImageByteFormat.png);
-  //     Uint8List pngBytes = byteData.buffer.asUint8List();
-  //     base64 = base64Encode(pngBytes);
-  //     print(base64);
-  //     signModel.signEncode = base64;
-  //     signModel.signerId = testvalue.id;
-  //     addSign(signModel).then((value) => {
-  //           adSign.signId = value.signID,
-  //           adSign.contractId = contractId,
-  //           addSignToContract(adSign),
-  //         });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  Uint8List pngBytes;
+  DateTime now = DateTime.now();
+  Future<void> _createFileFromString(Uint8List png) async {
+    String dir = (await getTemporaryDirectory()).path;
+    String fullPath = '$dir/temp$now.png';
+    print("local file full path $fullPath");
+    File file = File(fullPath);
+    await file.writeAsBytes(png);
+    print(file.path);
+    String fileName = basename(file.path);
+    print(fileName);
+    dio.FormData formData = dio.FormData.fromMap({
+      "Id": 0,
+      "SignerId": testvalue.id,
+      "SignUrl":
+          await dio.MultipartFile.fromFile(file.path, filename: fileName),
+      "DateCreate": now,
+      "InvoiceId": contractId,
+    });
+    var response = await dio.Dio().post(
+        "https://datnxeoffice.azurewebsites.net/api/contractsigns/addsign",
+        data: formData);
+    print(response.data['id']);
+    adSign.signId = response.data['id'];
+    adSign.contractId = contractId;
+    addSignToContract(adSign);
+  }
+
+  Future<void> _capturePng() async {
+    try {
+      RenderRepaintBoundary boundary =
+          _globalKey.currentContext.findRenderObject();
+      ui.Image image = await boundary.toImage(pixelRatio: 1);
+      ByteData byteData =
+          await image.toByteData(format: ui.ImageByteFormat.png);
+      pngBytes = byteData.buffer.asUint8List();
+      // base64 = base64Encode(pngBytes);
+      // print(base64);
+      print(contractId);
+      _createFileFromString(pngBytes);
+      // signModel.signEncode = pngBytes;
+      //signModel.signerId = testvalue.id;
+      // signModel.invoiceId = contractId;
+      // addSign(signModel).then((value) => {
+      //       adSign.signId = value.signID,
+      //       adSign.invoiceId = contractId,
+      //       addSignToContract(adSign),
+      //     });
+    } catch (e) {
+      print(e);
+    }
+  }
 
   @override
   void initState() {
@@ -96,8 +133,9 @@ class _ExamplePageState extends State<MySignScreen> {
 
   PainterController _newController() {
     PainterController controller = new PainterController();
-    controller.thickness = 0.3;
-    controller.backgroundColor = Colors.white;
+    controller.thickness = 1;
+    controller.drawColor = Colors.black;
+    controller.backgroundColor = Colors.transparent;
     return controller;
   }
 
@@ -108,22 +146,21 @@ class _ExamplePageState extends State<MySignScreen> {
       FlatButton(
         textColor: Colors.grey,
         onPressed: () {
-          screenshotController
-              .capture(pixelRatio: 1)
-              .then((Uint8List image) async {
-            image.buffer.asUint64List().toList();
-            print(image.buffer.asUint64List().toList());
-            // print(image.toList());
-            base64 = base64Encode(image.buffer.asUint64List().toList());
-            print(base64);
-            signModel.signEncode = image.toString();
-            signModel.signerId = testvalue.id;
-            addSign(signModel).then((value) => {
-                  adSign.signId = value.signID,
-                  adSign.contractId = contractId,
-                  addSignToContract(adSign),
-                });
-          });
+          _capturePng();
+          // screenshotController.capture(pixelRatio: 0.2).then((image) async {
+          //   _imageFile = image;
+          //   print(image.toList());
+          //   base64 = base64Encode(_imageFile.toList());
+          //   print(base64);
+          //   signModel.signEncode = base64;
+          //   signModel.signerId = testvalue.id;
+          //   signModel.invoiceId = contractId;
+          //   addSign(signModel).then((value) => {
+          //         adSign.signId = value.signID,
+          //         adSign.invoiceId = contractId,
+          //         addSignToContract(adSign),
+          //       });
+          // });
         },
         child: Text("Sign"),
         shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
@@ -170,22 +207,21 @@ class _ExamplePageState extends State<MySignScreen> {
       ),
     ];
     return new Scaffold(
-        appBar: new AppBar(
-          backgroundColor: Colors.white,
-          actions: actions,
-        ),
-        body: Center(
-          // child: RepaintBoundary(
-          //     key: _globalKey,
-
-          child: new Container(
-              height: 300,
-              width: 300,
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              child: Screenshot(
-                  controller: screenshotController,
-                  child: new Painter(_controller))),
-        ));
+      appBar: new AppBar(
+        backgroundColor: Colors.white,
+        actions: actions,
+      ),
+      body: Center(
+        child: Container(
+            height: 100,
+            width: 100,
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            child: RepaintBoundary(
+                key: _globalKey,
+                // child: Screenshot(
+                //     controller: screenshotController,
+                child: new Painter(_controller))),
+      ),
+    );
   }
 }

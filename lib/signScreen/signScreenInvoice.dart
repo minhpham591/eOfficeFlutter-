@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
+import 'package:dio/dio.dart' as dio;
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +10,11 @@ import 'package:flutter/rendering.dart';
 import 'package:http/http.dart' as http;
 import 'package:painter/painter.dart';
 import 'package:screenshot/screenshot.dart';
+import 'dart:async';
+import 'package:flutter/services.dart';
+import 'package:painter/painter.dart';
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
 
 LoginResponseModel testvalue;
 int contractId;
@@ -33,7 +38,7 @@ class _ExamplePageState extends State<MySignScreen> {
     final response = await http.post(url,
         headers: <String, String>{
           "Accept": "text/plain",
-          "content-type": "application/json-patch+json"
+          "content-type": "application/json-patch+json",
         },
         body: body);
     print("status code for sign" + response.statusCode.toString());
@@ -67,8 +72,34 @@ class _ExamplePageState extends State<MySignScreen> {
   String base64;
   SignInvoice signModel = SignInvoice();
   SignToInvoice adSign = SignToInvoice();
-  List<int> point;
   Uint8List pngBytes;
+  DateTime now = DateTime.now();
+  Future<void> _createFileFromString(Uint8List png) async {
+    String dir = (await getTemporaryDirectory()).path;
+    String fullPath = '$dir/temp$now.png';
+    print("local file full path $fullPath");
+    File file = File(fullPath);
+    await file.writeAsBytes(png);
+    print(file.path);
+    String fileName = basename(file.path);
+    print(fileName);
+    dio.FormData formData = dio.FormData.fromMap({
+      "Id": 0,
+      "SignerId": testvalue.id,
+      "SignUrl":
+          await dio.MultipartFile.fromFile(file.path, filename: fileName),
+      "DateCreate": now,
+      "InvoiceId": contractId,
+    });
+    var response = await dio.Dio().post(
+        "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign",
+        data: formData);
+    print(response.data['id']);
+    adSign.invoiceId = contractId;
+    adSign.signId = response.data['id'];
+    addSignToContract(adSign);
+  }
+
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -77,22 +108,18 @@ class _ExamplePageState extends State<MySignScreen> {
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       pngBytes = byteData.buffer.asUint8List();
-      // pngBytes.forEach((element) {
-      //   point.add(element);
-      // });
-
-      print(pngBytes);
-      base64 = base64Encode(pngBytes);
-      print(base64);
+      // base64 = base64Encode(pngBytes);
+      // print(base64);
       print(contractId);
-      signModel.signEncode = pngBytes.toString();
-      signModel.signerId = testvalue.id;
-      signModel.invoiceId = contractId;
-      addSign(signModel).then((value) => {
-            adSign.signId = value.signID,
-            adSign.invoiceId = contractId,
-            addSignToContract(adSign),
-          });
+      _createFileFromString(pngBytes);
+      // signModel.signEncode = pngBytes;
+      //signModel.signerId = testvalue.id;
+      // signModel.invoiceId = contractId;
+      // addSign(signModel).then((value) => {
+      //       adSign.signId = value.signID,
+      //       adSign.invoiceId = contractId,
+      //       addSignToContract(adSign),
+      //     });
     } catch (e) {
       print(e);
     }
@@ -106,7 +133,8 @@ class _ExamplePageState extends State<MySignScreen> {
 
   PainterController _newController() {
     PainterController controller = new PainterController();
-    controller.thickness = 0.3;
+    controller.thickness = 1;
+    controller.drawColor = Colors.black;
     controller.backgroundColor = Colors.transparent;
     return controller;
   }
@@ -185,8 +213,8 @@ class _ExamplePageState extends State<MySignScreen> {
       ),
       body: Center(
         child: Container(
-            height: 50,
-            width: 300,
+            height: 100,
+            width: 100,
             decoration: BoxDecoration(border: Border.all(color: Colors.black)),
             child: RepaintBoundary(
                 key: _globalKey,

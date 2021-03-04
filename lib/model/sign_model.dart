@@ -15,13 +15,13 @@ class Sign {
 }
 
 class SignInvoice {
-  String signEncode;
+  dynamic signEncode;
   int signerId;
   int invoiceId;
   SignInvoice({this.invoiceId, this.signEncode, this.signerId});
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
-      'signUrl': signEncode.trim(),
+      'signUrl': signEncode,
       'signerId': signerId,
       'invoiceId': invoiceId,
     };

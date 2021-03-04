@@ -108,7 +108,7 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["invoiceSign"] != null) {
+                if (jsonResponse[index]["status"].toString() == '3') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -147,7 +147,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                             child: Text(jsonResponse[index]["description"]),
                           )
                         ]),
-                        if (jsonResponse[index]["invoiceSign"] != null)
+                        if (jsonResponse[index]["status"].toString() == '3')
                           Column(children: <Widget>[
                             Container(
                               width: 100,
@@ -159,7 +159,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                               child: Text("Signed"),
                             )
                           ]),
-                        if (jsonResponse[index]["invoiceSign"] == null)
+                        if (jsonResponse[index]["status"].toString() != '3')
                           Column(children: <Widget>[
                             Container(
                               width: 100,
