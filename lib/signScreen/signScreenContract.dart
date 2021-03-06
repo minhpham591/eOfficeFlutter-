@@ -104,7 +104,7 @@ class _ExamplePageState extends State<MySignScreen> {
     try {
       RenderRepaintBoundary boundary =
           _globalKey.currentContext.findRenderObject();
-      ui.Image image = await boundary.toImage(pixelRatio: 1);
+      ui.Image image = await boundary.toImage(pixelRatio: 0.25);
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       pngBytes = byteData.buffer.asUint8List();
@@ -133,7 +133,7 @@ class _ExamplePageState extends State<MySignScreen> {
 
   PainterController _newController() {
     PainterController controller = new PainterController();
-    controller.thickness = 1;
+    controller.thickness = 3;
     controller.drawColor = Colors.black;
     controller.backgroundColor = Colors.transparent;
     return controller;
@@ -147,6 +147,7 @@ class _ExamplePageState extends State<MySignScreen> {
         textColor: Colors.grey,
         onPressed: () {
           _capturePng();
+          _showToast(context);
           // screenshotController.capture(pixelRatio: 0.2).then((image) async {
           //   _imageFile = image;
           //   print(image.toList());
@@ -213,14 +214,29 @@ class _ExamplePageState extends State<MySignScreen> {
       ),
       body: Center(
         child: Container(
-            height: 100,
-            width: 100,
+            height: 300,
+            width: 400,
             decoration: BoxDecoration(border: Border.all(color: Colors.black)),
             child: RepaintBoundary(
                 key: _globalKey,
                 // child: Screenshot(
                 //     controller: screenshotController,
                 child: new Painter(_controller))),
+      ),
+    );
+  }
+
+  void _showToast(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        duration: const Duration(minutes: 1, seconds: 30),
+        content: const Text('Sign successfully'),
+        action: SnackBarAction(
+            label: 'OK',
+            onPressed: () {
+              Navigator.pop(context);
+            }),
       ),
     );
   }

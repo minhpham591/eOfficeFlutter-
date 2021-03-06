@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:EOfficeMobile/model/document_model.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/signScreen/signScreenContract.dart';
 import 'package:flutter/material.dart';
@@ -9,15 +11,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 LoginResponseModel testvalue;
-String urlTest;
 int contractId;
 int status;
+String _url;
 
 class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(
-      LoginResponseModel _value, String url, int contractID, int statusSign) {
+  MyPdfViewer(LoginResponseModel _value, int contractID, int statusSign) {
     testvalue = _value;
-    urlTest = url;
     contractId = contractID;
     status = statusSign;
   }
@@ -26,6 +26,26 @@ class MyPdfViewer extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyPdfViewer> {
+  Future<void> getContractByID() async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/contracts/$contractId";
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        "accept": "text/plain",
+      },
+    );
+    if (response.statusCode == 200) {
+      //Contract.fromJson(json.decode(response.body));
+      setState(() {
+        _url =
+            DocContractResponseModel.fromJson(json.decode(response.body)).url;
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   String urlPDFPath = "";
   bool exists = true;
   int _totalPages = 0;
@@ -44,7 +64,6 @@ class _MyHomePageState extends State<MyPdfViewer> {
       var bytes = data.bodyBytes;
       var dir = await getApplicationDocumentsDirectory();
       File file = File("${dir.path}/" + fileName + ".pdf");
-      print(dir.path);
       File urlFile = await file.writeAsBytes(bytes);
 
       return urlFile;
@@ -58,26 +77,24 @@ class _MyHomePageState extends State<MyPdfViewer> {
   }
 
   @override
-  void initState() {
-    requestPersmission();
-    getFileFromUrl(urlTest).then(
-      (value) => {
-        setState(() {
-          if (value != null) {
-            urlPDFPath = value.path;
-            loaded = true;
-            exists = true;
-          } else {
-            exists = false;
-          }
-        })
-      },
-    );
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    setState(() {
+      requestPersmission();
+      getContractByID();
+      getFileFromUrl(_url).then(
+        (value) => {
+          setState(() {
+            if (value != null) {
+              urlPDFPath = value.path;
+              loaded = true;
+              exists = true;
+            } else {
+              exists = false;
+            }
+          })
+        },
+      );
+    });
     if (loaded) {
       return Scaffold(
         appBar: AppBar(
@@ -88,12 +105,11 @@ class _MyHomePageState extends State<MyPdfViewer> {
               textColor: Colors.grey,
               onPressed: () {
                 if (status == 0) {
-                  Navigator.pushAndRemoveUntil(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
-                    ModalRoute.withName('/'),
                   );
                 } else {
                   showDialog(

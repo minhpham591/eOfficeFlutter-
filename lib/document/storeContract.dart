@@ -119,10 +119,7 @@ class _MyHomePageState extends State<StoreContract> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => MyPdfViewer(
-                          testvalue,
-                          jsonResponse[index]["contractUrl"],
-                          jsonResponse[index]["id"],
-                          signed),
+                          testvalue, jsonResponse[index]["id"], signed),
                     ),
                   );
                 } else {
@@ -130,10 +127,7 @@ class _MyHomePageState extends State<StoreContract> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => MyPdfViewer(
-                          testvalue,
-                          jsonResponse[index]["contractUrl"],
-                          jsonResponse[index]["id"],
-                          notSigned),
+                          testvalue, jsonResponse[index]["id"], notSigned),
                     ),
                   );
                 }
