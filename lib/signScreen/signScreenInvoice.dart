@@ -39,6 +39,7 @@ class _ExamplePageState extends State<MySignScreen> {
         headers: <String, String>{
           "Accept": "text/plain",
           "content-type": "application/json-patch+json",
+          'Authorization': 'Bearer ${testvalue.token}'
         },
         body: body);
     print("status code for sign" + response.statusCode.toString());
@@ -56,7 +57,8 @@ class _ExamplePageState extends State<MySignScreen> {
     final response = await http.post(url,
         headers: <String, String>{
           "Accept": "text/plain",
-          "content-type": "application/json-patch+json"
+          "content-type": "application/json-patch+json",
+          'Authorization': 'Bearer ${testvalue.token}'
         },
         body: body);
     print("status code for sign to contract" + response.statusCode.toString());
@@ -91,7 +93,10 @@ class _ExamplePageState extends State<MySignScreen> {
       "DateCreate": now,
       "InvoiceId": contractId,
     });
-    var response = await dio.Dio().post(
+    dio.Dio d = new dio.Dio();
+
+    d.options.headers["Authorization"] = "Bearer ${testvalue.token}";
+    var response = await d.post(
         "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign",
         data: formData);
     print(response.data['id']);

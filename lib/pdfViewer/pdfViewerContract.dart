@@ -33,6 +33,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
       url,
       headers: <String, String>{
         "accept": "text/plain",
+        'Authorization': 'Bearer ${testvalue.token}'
       },
     );
     if (response.statusCode == 200) {
@@ -111,11 +112,26 @@ class _MyHomePageState extends State<MyPdfViewer> {
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
                   );
-                } else {
+                } else if (status == 1) {
                   showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(
                       content: new Text('You have been already sign'),
+                      actions: <Widget>[
+                        new FlatButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: new Text('OK'),
+                        ),
+                      ],
+                    ),
+                  );
+                } else if (status == 2) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => new AlertDialog(
+                      content: new Text('You have been assign to view'),
                       actions: <Widget>[
                         new FlatButton(
                           onPressed: () {

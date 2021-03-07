@@ -12,8 +12,8 @@ TextStyle style = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 
-class StoreContract extends StatefulWidget {
-  StoreContract(LoginResponseModel _value) {
+class StoreContractByCompanyId extends StatefulWidget {
+  StoreContractByCompanyId(LoginResponseModel _value) {
     testvalue = _value;
   }
 
@@ -21,11 +21,11 @@ class StoreContract extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<StoreContract> {
+class _MyHomePageState extends State<StoreContractByCompanyId> {
   List jsonResponse;
   Future<void> getContractByID(int id) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/contracts/getbysignerid?id=${id}";
+        "https://datnxeoffice.azurewebsites.net/api/contracts/getbycompany?id=${id}";
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -46,10 +46,11 @@ class _MyHomePageState extends State<StoreContract> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      getContractByID(testvalue.id);
+      getContractByID(testvalue.companyId);
     });
     int notSigned = 0;
     int signed = 1;
+    int notAssign = 2;
 
     if (jsonResponse == null) {
       return Scaffold(
@@ -113,22 +114,34 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["signs"]
+                if (jsonResponse[index]["contractSigners"]
                     .toString()
                     .contains("signerId: ${testvalue.id}")) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], signed),
-                    ),
-                  );
+                  if (jsonResponse[index]["signs"]
+                      .toString()
+                      .contains("signerId: ${testvalue.id}")) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPdfViewer(
+                            testvalue, jsonResponse[index]["id"], signed),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPdfViewer(
+                            testvalue, jsonResponse[index]["id"], notSigned),
+                      ),
+                    );
+                  }
                 } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
                       builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], notSigned),
+                          testvalue, jsonResponse[index]["id"], notAssign),
                     ),
                   );
                 }
@@ -159,7 +172,7 @@ class _MyHomePageState extends State<StoreContract> {
                               decoration: BoxDecoration(
                                   border: Border.all(
                                       color: Colors.yellow, width: 10.0)),
-                              child: Text("You've Signed"),
+                              child: Text("Have been Signed"),
                             )
                           ]),
                         if (!jsonResponse[index]["signs"]
@@ -174,7 +187,7 @@ class _MyHomePageState extends State<StoreContract> {
                                   border: Border.all(
                                       color: Colors.red, width: 10.0)),
                               child: Text(
-                                "You've not Signed",
+                                "Have not been Signed",
                               ),
                             )
                           ]),

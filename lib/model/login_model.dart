@@ -9,9 +9,18 @@ class LoginResponseModel {
   final String email;
   final String avatar;
   final String phone;
+  final String role;
+  final int companyId;
 
   LoginResponseModel(
-      {this.token, this.avatar, this.email, this.name, this.phone, this.id});
+      {this.token,
+      this.avatar,
+      this.email,
+      this.name,
+      this.phone,
+      this.id,
+      this.role,
+      this.companyId});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
     return LoginResponseModel(
@@ -21,6 +30,8 @@ class LoginResponseModel {
       avatar: json["Avatar"] != null ? json["Avatar"] : "",
       phone: json["Phone"] != null ? json["Phone"] : "",
       id: json["Id"] != null ? json["Id"] : "",
+      role: json["Role"] != null ? json["Role"] : "",
+      companyId: json["CompanyId"] != null ? json["CompanyId"] : "",
     );
   }
 }
