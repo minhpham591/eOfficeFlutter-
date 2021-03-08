@@ -1,16 +1,20 @@
-import 'package:EOfficeMobile/forgotPassword/enterNewPassword.dart';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
-class EnterOTPForgotPassword extends StatelessWidget {
+class EnterOTPToSignInvoice extends StatelessWidget {
   String phone;
   String verificationId;
-  EnterOTPForgotPassword(String _phone, String _vertificationId) {
+  EnterOTPToSignInvoice(String _phone, String _vertificationId) {
     phone = _phone;
     verificationId = _vertificationId;
   }
+
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
@@ -44,10 +48,7 @@ class EnterOTPForgotPassword extends StatelessWidget {
                   verificationId: verificationId, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => EnterNewPassword()),
-                  (route) => false);
+              Navigator.pop(context);
             } else {
               _showToast(context);
             }

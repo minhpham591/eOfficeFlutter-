@@ -29,26 +29,7 @@ class MySignScreen extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<MySignScreen> {
-  Uint8List _imageFile;
   ScreenshotController screenshotController = ScreenshotController();
-  Future<SignResponseModel> addSign(Sign signModel) async {
-    String url =
-        "https://datnxeoffice.azurewebsites.net/api/contractsigns/addsign";
-    var body = json.encode(signModel.toJson());
-    final response = await http.post(url,
-        headers: <String, String>{
-          "Accept": "text/plain",
-          "content-type": "application/json-patch+json",
-          'Authorization': 'Bearer ${testvalue.token}'
-        },
-        body: body);
-    print("status code for sign" + response.statusCode.toString());
-    if (response.statusCode == 200) {
-      return SignResponseModel.fromJson(json.decode(response.body));
-    } else {
-      throw Exception('Failed to load data');
-    }
-  }
 
   Future<void> addSignToContract(SignToContract signModel) async {
     String url =
@@ -113,18 +94,8 @@ class _ExamplePageState extends State<MySignScreen> {
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
       pngBytes = byteData.buffer.asUint8List();
-      // base64 = base64Encode(pngBytes);
-      // print(base64);
-      print(contractId);
+
       _createFileFromString(pngBytes);
-      // signModel.signEncode = pngBytes;
-      //signModel.signerId = testvalue.id;
-      // signModel.invoiceId = contractId;
-      // addSign(signModel).then((value) => {
-      //       adSign.signId = value.signID,
-      //       adSign.invoiceId = contractId,
-      //       addSignToContract(adSign),
-      //     });
     } catch (e) {
       print(e);
     }
@@ -152,21 +123,7 @@ class _ExamplePageState extends State<MySignScreen> {
         textColor: Colors.grey,
         onPressed: () {
           _capturePng();
-          _showToast(context);
-          // screenshotController.capture(pixelRatio: 0.2).then((image) async {
-          //   _imageFile = image;
-          //   print(image.toList());
-          //   base64 = base64Encode(_imageFile.toList());
-          //   print(base64);
-          //   signModel.signEncode = base64;
-          //   signModel.signerId = testvalue.id;
-          //   signModel.invoiceId = contractId;
-          //   addSign(signModel).then((value) => {
-          //         adSign.signId = value.signID,
-          //         adSign.invoiceId = contractId,
-          //         addSignToContract(adSign),
-          //       });
-          // });
+          //_showToast(context);
         },
         child: Text("Sign"),
         shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
