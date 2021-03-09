@@ -13,7 +13,7 @@ import 'package:permission_handler/permission_handler.dart';
 LoginResponseModel testvalue;
 int contractId;
 int status;
-String _url;
+String _url = "";
 
 class MyPdfViewer extends StatefulWidget {
   MyPdfViewer(LoginResponseModel _value, int contractID, int statusSign) {
@@ -38,10 +38,21 @@ class _MyHomePageState extends State<MyPdfViewer> {
     );
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
-      setState(() {
-        _url =
-            DocContractResponseModel.fromJson(json.decode(response.body)).url;
-      });
+
+      _url = DocContractResponseModel.fromJson(json.decode(response.body)).url;
+      getFileFromUrl(_url).then(
+        (value) => {
+          setState(() {
+            if (value != null) {
+              urlPDFPath = value.path;
+              loaded = true;
+              exists = true;
+            } else {
+              exists = false;
+            }
+          })
+        },
+      );
     } else {
       throw Exception('Failed to load data');
     }
@@ -82,19 +93,6 @@ class _MyHomePageState extends State<MyPdfViewer> {
     setState(() {
       requestPersmission();
       getContractByID();
-      getFileFromUrl(_url).then(
-        (value) => {
-          setState(() {
-            if (value != null) {
-              urlPDFPath = value.path;
-              loaded = true;
-              exists = true;
-            } else {
-              exists = false;
-            }
-          })
-        },
-      );
     });
     if (loaded) {
       return Scaffold(
