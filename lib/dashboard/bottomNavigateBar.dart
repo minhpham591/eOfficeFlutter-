@@ -7,24 +7,12 @@ import 'package:EOfficeMobile/notification/notification.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
 
-class MyNavigateBar extends StatelessWidget {
-  final LoginResponseModel value;
-  MyNavigateBar(this.value);
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: BottomNavigateBar(value),
-    );
-  }
-}
-
-LoginResponseModel testValue = null;
+LoginResponseModel testValue;
 
 class BottomNavigateBar extends StatefulWidget {
   // bottomNavigateBar({Key key}) : super(key: key);
-  LoginResponseModel value;
+
   BottomNavigateBar(LoginResponseModel _value) {
-    value = _value;
     testValue = _value;
   }
 
@@ -42,9 +30,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
     dashboard(),
     StoreDocument(testValue),
     MyNotification(),
-    Profile(
-      value: testValue,
-    ),
+    Profile(testValue),
   ];
   void _onItemTapped(int index) {
     setState(() {

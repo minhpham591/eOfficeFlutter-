@@ -11,7 +11,8 @@ class LoginResponseModel {
   final String phone;
   final String role;
   final int companyId;
-
+  final String company;
+  final String address;
   LoginResponseModel(
       {this.token,
       this.avatar,
@@ -20,10 +21,12 @@ class LoginResponseModel {
       this.phone,
       this.id,
       this.role,
-      this.companyId});
+      this.companyId,
+      this.company,
+      this.address});
 
   factory LoginResponseModel.fromJson(Map<String, dynamic> json) {
-    return LoginResponseModel(
+    return new LoginResponseModel(
       token: json["IdToken"] != null ? json["IdToken"] : "",
       name: json["Name"] != null ? json["Name"] : "",
       email: json["Email"] != null ? json["Email"] : "",
@@ -32,6 +35,8 @@ class LoginResponseModel {
       id: json["Id"] != null ? json["Id"] : "",
       role: json["Role"] != null ? json["Role"] : "",
       companyId: json["CompanyId"] != null ? json["CompanyId"] : "",
+      company: json["company"] != null ? json["company"] : "",
+      address: json["address"] != null ? json["address"] : "",
     );
   }
 }

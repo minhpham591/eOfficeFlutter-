@@ -53,11 +53,11 @@ class ChangeProfile extends StatelessWidget {
       child: Text("OK"),
       color: Colors.blue[900],
       onPressed: () {
-        Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => Profile()),
-          ModalRoute.withName('/MyApp'),
-        );
+        // Navigator.pushAndRemoveUntil(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => Profile()),
+        //   ModalRoute.withName('/MyApp'),
+        // );
       },
     );
     AlertDialog alert = AlertDialog(

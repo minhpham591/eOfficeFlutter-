@@ -9,7 +9,6 @@ class MyHomePage extends StatelessWidget {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   LoginRequestModel requestModel = new LoginRequestModel();
-
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
@@ -64,7 +63,7 @@ class MyHomePage extends StatelessWidget {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => MyNavigateBar(value)),
+                        builder: (context) => BottomNavigateBar(value)),
                   );
                 }
               } else {

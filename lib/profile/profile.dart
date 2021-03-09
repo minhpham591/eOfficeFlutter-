@@ -3,6 +3,7 @@ import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 
+LoginResponseModel value;
 showAlertDialogLogout(BuildContext context) {
   // set up the buttons
   Widget cancelButton = FlatButton(
@@ -15,10 +16,9 @@ showAlertDialogLogout(BuildContext context) {
       child: Text("Yes"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
-        // Navigator.pushReplacement(
-        //     context, MaterialPageRoute(builder: (context) => MyApp()));
-        //Phoenix.rebirth(context);
-        RestartWidget.restartApp(context);
+
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => MyApp()));
       });
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
@@ -40,8 +40,10 @@ showAlertDialogLogout(BuildContext context) {
 
 class Profile extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
-  final LoginResponseModel value;
-  Profile({this.value});
+
+  Profile(LoginResponseModel _value) {
+    value = _value;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,6 +126,52 @@ class Profile extends StatelessWidget {
                 child: Center(
                   child: Text(
                     value.phone,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 45,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey)),
+                child: Center(
+                  child: Text(
+                    value.address,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                      color: Colors.black,
+                      height: 1,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 45,
+                width: 350,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15.0),
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey)),
+                child: Center(
+                  child: Text(
+                    value.company,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 18,
