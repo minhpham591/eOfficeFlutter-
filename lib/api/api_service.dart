@@ -4,6 +4,7 @@ import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:http/http.dart' as http;
 
 class APIService {
+  int statusCode;
   Future<LoginResponseModel> login(LoginRequestModel loginRequestModel) async {
     String url = "https://datnxeoffice.azurewebsites.net/api/accounts/login";
     var body = json.encode(loginRequestModel.toJson());
@@ -18,7 +19,7 @@ class APIService {
     if (response.statusCode == 200) {
       return LoginResponseModel.fromJson(json.decode(response.body));
     } else {
-      throw Exception('Failed to load data');
+      statusCode = response.statusCode;
     }
   }
 }
