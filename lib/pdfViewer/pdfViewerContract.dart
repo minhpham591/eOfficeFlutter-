@@ -106,11 +106,12 @@ class _MyHomePageState extends State<MyPdfViewer> {
               textColor: Colors.grey,
               onPressed: () {
                 if (status == 0) {
-                  Navigator.push(
+                  Navigator.pushAndRemoveUntil(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
+                    ModalRoute.withName('/'),
                   );
                 } else if (status == 1) {
                   showDialog(

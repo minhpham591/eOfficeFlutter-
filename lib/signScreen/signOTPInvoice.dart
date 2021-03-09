@@ -1,23 +1,91 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui' as ui;
+
+import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/model/sign_model.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
+import 'package:http/http.dart' as http;
+import 'package:dio/dio.dart' as dio;
+import 'package:path/path.dart';
+import 'package:path_provider/path_provider.dart';
+
+LoginResponseModel testvalue;
+int contractId;
+String phone;
+String verificationId;
+Uint8List png;
 
 class EnterOTPToSignInvoice extends StatelessWidget {
-  String phone;
-  String verificationId;
-  EnterOTPToSignInvoice(String _phone, String _vertificationId) {
+  EnterOTPToSignInvoice(String _phone, String _vertificationId, Uint8List _png,
+      LoginResponseModel _value, int id) {
     phone = _phone;
     verificationId = _vertificationId;
+    png = _png;
+    testvalue = _value;
+    contractId = id;
   }
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
+  Future<void> addSignToContract(
+      SignToInvoice signModel, BuildContext context) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/invoices/addsigntoinvoice";
+    var body = json.encode(signModel.toJson());
+    final response = await http.post(url,
+        headers: <String, String>{
+          "Accept": "text/plain",
+          "content-type": "application/json-patch+json",
+          'Authorization': 'Bearer ${testvalue.token}'
+        },
+        body: body);
+    print("status code for sign to contract" + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      _showToastSuccess(context);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  SignToInvoice adSign = SignToInvoice();
+
+  DateTime now = DateTime.now();
+  Future<void> _createFileFromString(
+      Uint8List png, BuildContext context) async {
+    String dir = (await getTemporaryDirectory()).path;
+    String fullPath = '$dir/temp$now.png';
+    print("local file full path $fullPath");
+    File file = File(fullPath);
+    await file.writeAsBytes(png);
+    print(file.path);
+    String fileName = basename(file.path);
+    print(fileName);
+    dio.FormData formData = dio.FormData.fromMap({
+      "Id": 0,
+      "SignerId": testvalue.id,
+      "SignUrl":
+          await dio.MultipartFile.fromFile(file.path, filename: fileName),
+      "DateCreate": now,
+      "InvoiceId": contractId,
+    });
+    dio.Dio d = new dio.Dio();
+
+    d.options.headers["Authorization"] = "Bearer ${testvalue.token}";
+    var response = await d.post(
+        "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign",
+        data: formData);
+    print(response.data['id']);
+    print(response.data);
+    adSign.invoiceId = contractId;
+    adSign.signId = response.data['id'];
+    addSignToContract(adSign, context);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +116,7 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                   verificationId: verificationId, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
-              Navigator.pop(context);
+              _createFileFromString(png, context);
             } else {
               _showToast(context);
             }
@@ -63,10 +131,20 @@ class EnterOTPToSignInvoice extends StatelessWidget {
       ),
     );
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Forgot Password"),
-      //   backgroundColor: Colors.blue[900],
-      // ),
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(''),
+        actions: <Widget>[
+          FlatButton(
+            textColor: Colors.grey,
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Text("Close"),
+            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
+          ),
+        ],
+      ),
       body: Center(
         child: Container(
           color: Color.fromRGBO(238, 237, 237, 0.5),
@@ -96,14 +174,6 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                 OTPtextField,
                 SizedBox(height: 25),
                 nextButton,
-                SizedBox(height: 15),
-                SizedBox(
-                  height: 15,
-                  child: Text(
-                    "-------------step 2 of 3-------------",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
                 SizedBox(
                   height: 32,
                   child: Text(
@@ -129,6 +199,26 @@ class EnterOTPToSignInvoice extends StatelessWidget {
             label: "",
             onPressed: () {
               Navigator.pop(context);
+            }),
+      ),
+    );
+  }
+
+  void _showToastSuccess(BuildContext context) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        duration: const Duration(minutes: 1, seconds: 45),
+        content: const Text('Signed'),
+        action: SnackBarAction(
+            label: "OK",
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MyPdfViewer(testvalue, contractId)),
+                ModalRoute.withName('/'),
+              );
             }),
       ),
     );

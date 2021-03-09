@@ -1,20 +1,14 @@
-import 'dart:convert';
-import 'dart:io';
+import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-import 'package:dio/dio.dart' as dio;
+
 import 'package:EOfficeMobile/model/login_model.dart';
-import 'package:EOfficeMobile/model/sign_model.dart';
+import 'package:EOfficeMobile/signScreen/signOTPInvoice.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:http/http.dart' as http;
-import 'package:painter/painter.dart';
-import 'package:screenshot/screenshot.dart';
-import 'dart:async';
 import 'package:flutter/services.dart';
 import 'package:painter/painter.dart';
-import 'package:path/path.dart';
-import 'package:path_provider/path_provider.dart';
 
 LoginResponseModel testvalue;
 int contractId;
@@ -29,63 +23,30 @@ class MySignScreen extends StatefulWidget {
 }
 
 class _ExamplePageState extends State<MySignScreen> {
-  ScreenshotController screenshotController = ScreenshotController();
-
-  Future<void> addSignToContract(SignToInvoice signModel) async {
-    String url =
-        "https://datnxeoffice.azurewebsites.net/api/invoices/addsigntoinvoice";
-    var body = json.encode(signModel.toJson());
-    final response = await http.post(url,
-        headers: <String, String>{
-          "Accept": "text/plain",
-          "content-type": "application/json-patch+json",
-          'Authorization': 'Bearer ${testvalue.token}'
+  String verificationId;
+  _verifyPhone(Uint8List png) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: testvalue.phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {},
+        verificationFailed: (FirebaseAuthException e) {
+          print(e.message);
         },
-        body: body);
-    print("status code for sign to contract" + response.statusCode.toString());
-    if (response.statusCode == 200) {
-      print("add sign successful");
-    } else {
-      throw Exception('Failed to load data');
-    }
+        codeSent: (String verficationID, int resendToken) {
+          verificationId = verficationID;
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EnterOTPToSignInvoice(testvalue.phone,
+                    verificationId, png, testvalue, contractId)),
+            ModalRoute.withName('/'),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {},
+        timeout: Duration(seconds: 120));
   }
 
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
-  String base64;
-  SignInvoice signModel = SignInvoice();
-  SignToInvoice adSign = SignToInvoice();
-  Uint8List pngBytes;
-  DateTime now = DateTime.now();
-  Future<void> _createFileFromString(Uint8List png) async {
-    String dir = (await getTemporaryDirectory()).path;
-    String fullPath = '$dir/temp$now.png';
-    print("local file full path $fullPath");
-    File file = File(fullPath);
-    await file.writeAsBytes(png);
-    print(file.path);
-    String fileName = basename(file.path);
-    print(fileName);
-    dio.FormData formData = dio.FormData.fromMap({
-      "Id": 0,
-      "SignerId": testvalue.id,
-      "SignUrl":
-          await dio.MultipartFile.fromFile(file.path, filename: fileName),
-      "DateCreate": now,
-      "InvoiceId": contractId,
-    });
-    dio.Dio d = new dio.Dio();
-
-    d.options.headers["Authorization"] = "Bearer ${testvalue.token}";
-    var response = await d.post(
-        "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign",
-        data: formData);
-    print(response.data['id']);
-    print(response.data);
-    adSign.invoiceId = contractId;
-    adSign.signId = response.data['id'];
-    addSignToContract(adSign);
-  }
 
   Future<void> _capturePng() async {
     try {
@@ -94,9 +55,9 @@ class _ExamplePageState extends State<MySignScreen> {
       ui.Image image = await boundary.toImage(pixelRatio: 0.25);
       ByteData byteData =
           await image.toByteData(format: ui.ImageByteFormat.png);
-      pngBytes = byteData.buffer.asUint8List();
+      Uint8List pngBytes = byteData.buffer.asUint8List();
 
-      _createFileFromString(pngBytes);
+      _verifyPhone(pngBytes);
     } catch (e) {
       print(e);
     }
@@ -124,6 +85,7 @@ class _ExamplePageState extends State<MySignScreen> {
         textColor: Colors.grey,
         onPressed: () {
           _capturePng();
+
           //_showToast(context);
         },
         child: Text("Sign"),
