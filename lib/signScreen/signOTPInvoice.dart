@@ -147,7 +147,7 @@ class EnterOTPToSignInvoice extends StatelessWidget {
       ),
       body: Center(
         child: Container(
-          color: Color.fromRGBO(238, 237, 237, 0.5),
+          color: Colors.white,
           child: Padding(
             padding: const EdgeInsets.all(36),
             child: Column(
@@ -174,13 +174,6 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                 OTPtextField,
                 SizedBox(height: 25),
                 nextButton,
-                SizedBox(
-                  height: 32,
-                  child: Text(
-                    "If you do not see a letter with a code in your mail, please check your SPAM folder or SEND OTP AGAIN?",
-                    textAlign: TextAlign.center,
-                  ),
-                ),
               ],
             ),
           ),

@@ -61,51 +61,48 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
 
   @override
   Widget build(BuildContext context) {
-    return new WillPopScope(
-      onWillPop: _onWillPop,
-      child: Scaffold(
-        body: Center(
-          child: _widgetOptions.elementAt(selectedIndex),
-        ),
-        bottomNavigationBar: BottomNavigationBar(
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.home_rounded,
-                color: Colors.grey,
-              ),
-              label: 'Home',
-              backgroundColor: Colors.white,
+    return Scaffold(
+      body: Center(
+        child: _widgetOptions.elementAt(selectedIndex),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home_rounded,
+              color: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.insert_drive_file_rounded,
-                color: Colors.grey,
-              ),
-              label: 'Document',
-              backgroundColor: Colors.white,
+            label: 'Home',
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.insert_drive_file_rounded,
+              color: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.notifications_rounded,
-                color: Colors.grey,
-              ),
-              label: 'Notification',
-              backgroundColor: Colors.white,
+            label: 'Document',
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.notifications_rounded,
+              color: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                Icons.person_rounded,
-                color: Colors.grey,
-              ),
-              label: 'Profile',
-              backgroundColor: Colors.white,
+            label: 'Notification',
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.person_rounded,
+              color: Colors.grey,
             ),
-          ],
-          currentIndex: selectedIndex,
-          selectedItemColor: Colors.blue,
-          onTap: _onItemTapped,
-        ),
+            label: 'Profile',
+            backgroundColor: Colors.white,
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: Colors.blue,
+        onTap: _onItemTapped,
       ),
     );
   }
