@@ -44,6 +44,7 @@ class EnterOTPForgotPassword extends StatelessWidget {
                   verificationId: verificationId, smsCode: pin))
               .then((value) async {
             if (value.user != null) {
+              print(value.toString());
               Navigator.pushAndRemoveUntil(
                   context,
                   MaterialPageRoute(builder: (context) => EnterNewPassword()),
@@ -122,8 +123,12 @@ class EnterOTPForgotPassword extends StatelessWidget {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
+        backgroundColor: Colors.red,
         duration: const Duration(seconds: 45),
         content: const Text('OTP is wrong!!!'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         action: SnackBarAction(
             label: "",
             onPressed: () {

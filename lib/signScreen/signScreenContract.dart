@@ -81,18 +81,20 @@ class _ExamplePageState extends State<MySignScreen> {
   Widget build(BuildContext context) {
     List<Widget> actions;
     actions = <Widget>[
-      FlatButton(
-        textColor: Colors.grey,
+      IconButton(
+        icon: Icon(Icons.add_box),
+        color: Colors.grey,
+        iconSize: 35,
         onPressed: () {
           _capturePng();
 
           //_showToast(context);
         },
-        child: Text("Sign"),
-        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
       ),
-      FlatButton(
-        textColor: Colors.grey,
+      IconButton(
+        icon: Icon(Icons.repeat_sharp),
+        color: Colors.grey,
+        iconSize: 35,
         onPressed: () {
           if (!_controller.isEmpty) {
             showDialog(
@@ -119,17 +121,19 @@ class _ExamplePageState extends State<MySignScreen> {
               ),
             );
           }
+
+          //_showToast(context);
         },
-        child: Text("Re-sign"),
-        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
       ),
-      FlatButton(
-        textColor: Colors.grey,
+      IconButton(
+        icon: Icon(Icons.cancel),
+        color: Colors.grey,
+        iconSize: 35,
         onPressed: () {
           Navigator.pop(context);
+
+          //_showToast(context);
         },
-        child: Text("Cancel"),
-        shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
       ),
     ];
     return new Scaffold(
@@ -155,8 +159,12 @@ class _ExamplePageState extends State<MySignScreen> {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
+        backgroundColor: Colors.green,
         duration: const Duration(minutes: 1, seconds: 30),
         content: const Text('Sign successfully'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         action: SnackBarAction(
             label: 'OK',
             onPressed: () {

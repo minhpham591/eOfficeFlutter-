@@ -135,13 +135,15 @@ class EnterOTPToSignInvoice extends StatelessWidget {
         backgroundColor: Colors.white,
         title: Text(''),
         actions: <Widget>[
-          FlatButton(
-            textColor: Colors.grey,
+          IconButton(
+            icon: Icon(Icons.cancel),
+            color: Colors.grey,
+            iconSize: 35,
             onPressed: () {
               Navigator.pop(context);
+
+              //_showToast(context);
             },
-            child: Text("Close"),
-            shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
           ),
         ],
       ),
@@ -186,8 +188,12 @@ class EnterOTPToSignInvoice extends StatelessWidget {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
+        backgroundColor: Colors.red,
         duration: const Duration(seconds: 45),
         content: const Text('OTP is wrong!!!'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         action: SnackBarAction(
             label: "",
             onPressed: () {
@@ -201,8 +207,12 @@ class EnterOTPToSignInvoice extends StatelessWidget {
     final scaffold = Scaffold.of(context);
     scaffold.showSnackBar(
       SnackBar(
+        backgroundColor: Colors.green,
         duration: const Duration(minutes: 1, seconds: 45),
         content: const Text('Signed'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
         action: SnackBarAction(
             label: "OK",
             onPressed: () {

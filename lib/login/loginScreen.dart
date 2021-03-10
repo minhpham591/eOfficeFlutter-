@@ -145,6 +145,9 @@ class MyHomePage extends StatelessWidget {
         backgroundColor: Colors.red,
         duration: const Duration(seconds: 10),
         content: const Text('Login failed!!! Please check email and password'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
       ),
     );
   }

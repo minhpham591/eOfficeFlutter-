@@ -7,9 +7,6 @@ class MyNotification extends StatefulWidget {
   _DropDownButtonState createState() => _DropDownButtonState();
 }
 
-int _value = 1;
-int _value1 = 1;
-
 TextStyle style = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,

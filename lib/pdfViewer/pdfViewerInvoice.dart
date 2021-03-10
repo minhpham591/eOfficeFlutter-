@@ -100,8 +100,10 @@ class _MyHomePageState extends State<MyPdfViewer> {
           backgroundColor: Colors.white,
           title: Text(''),
           actions: <Widget>[
-            FlatButton(
-              textColor: Colors.grey,
+            IconButton(
+              icon: Icon(Icons.add_box),
+              color: Colors.grey,
+              iconSize: 35,
               onPressed: () {
                 if (status == 0) {
                   Navigator.pushAndRemoveUntil(
@@ -143,16 +145,16 @@ class _MyHomePageState extends State<MyPdfViewer> {
                   );
                 }
               },
-              child: Text("Sign"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
-            FlatButton(
-              textColor: Colors.grey,
+            IconButton(
+              icon: Icon(Icons.cancel),
+              color: Colors.grey,
+              iconSize: 35,
               onPressed: () {
                 Navigator.pop(context);
+
+                //_showToast(context);
               },
-              child: Text("Close"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
           ],
         ),

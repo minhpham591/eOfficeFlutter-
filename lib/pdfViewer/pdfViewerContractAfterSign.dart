@@ -97,13 +97,15 @@ class _MyHomePageState extends State<MyPdfViewer> {
           backgroundColor: Colors.white,
           title: Text(''),
           actions: <Widget>[
-            FlatButton(
-              textColor: Colors.grey,
+            IconButton(
+              color: Colors.grey,
+              iconSize: 35,
+              icon: Icon(Icons.cancel),
               onPressed: () {
                 Navigator.pop(context);
+
+                //_showToast(context);
               },
-              child: Text("Close"),
-              shape: CircleBorder(side: BorderSide(color: Colors.transparent)),
             ),
           ],
         ),
