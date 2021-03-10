@@ -2,6 +2,7 @@ import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
 import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restart/flutter_restart.dart';
 
 LoginResponseModel value;
 showAlertDialogLogout(BuildContext context) {
@@ -16,9 +17,7 @@ showAlertDialogLogout(BuildContext context) {
       child: Text("Yes"),
       onPressed: () {
         Navigator.of(context, rootNavigator: true).pop();
-
-        Navigator.pushReplacement(
-            context, MaterialPageRoute(builder: (context) => MyApp()));
+        FlutterRestart.restartApp();
       });
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
