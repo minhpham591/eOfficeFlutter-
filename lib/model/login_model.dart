@@ -36,7 +36,7 @@ class LoginResponseModel {
       role: json["Role"] != null ? json["Role"] : "",
       companyId: json["CompanyId"] != null ? json["CompanyId"] : "",
       company: json["company"] != null ? json["company"] : "",
-      address: json["address"] != null ? json["address"] : "",
+      address: json["Address"] != null ? json["Address"] : "",
     );
   }
 }

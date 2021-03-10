@@ -1,12 +1,109 @@
+import 'dart:convert';
 import 'dart:ui';
 
-import 'package:EOfficeMobile/profile/profile.dart';
+import 'package:EOfficeMobile/model/account_model.dart';
+import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_restart/flutter_restart.dart';
+import 'package:http/http.dart' as http;
+
+LoginResponseModel value;
+AccountRequestModel _accountRequestModel = new AccountRequestModel();
 
 class ChangeProfile extends StatelessWidget {
+  ChangeProfile(LoginResponseModel _value) {
+    value = _value;
+  }
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   String oldPassword;
   String newPassword;
   String newPasswordConfirm;
+
+  Future<void> getContractByID(BuildContext context) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/accounts/${value.id}";
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        "accept": "text/plain",
+        'Authorization': 'Bearer ${value.token}'
+      },
+    );
+    if (response.statusCode == 200) {
+      String pass =
+          AccountResponseModel.fromJson(json.decode(response.body)).password;
+      int id = AccountResponseModel.fromJson(json.decode(response.body)).id;
+      String address =
+          AccountResponseModel.fromJson(json.decode(response.body)).address;
+      String avatar =
+          AccountResponseModel.fromJson(json.decode(response.body)).avatar;
+      int companyId =
+          AccountResponseModel.fromJson(json.decode(response.body)).companyId;
+      int subDepartmentId =
+          AccountResponseModel.fromJson(json.decode(response.body))
+              .subDepartmentId;
+      int departmentId =
+          AccountResponseModel.fromJson(json.decode(response.body))
+              .departmentId;
+      String phone = AccountResponseModel.fromJson(json.decode(response.body))
+          .phone
+          .toString();
+      String role = AccountResponseModel.fromJson(json.decode(response.body))
+          .role
+          .toString();
+      int status =
+          AccountResponseModel.fromJson(json.decode(response.body)).status;
+      if (md5.convert(utf8.encode(oldPassword.trim())).toString() ==
+          pass.toString()) {
+        if (newPassword != newPasswordConfirm) {
+          showAlertWrongConfirmPassword(context);
+        } else {
+          _accountRequestModel.id = id;
+
+          _accountRequestModel.address = address;
+
+          _accountRequestModel.avatar = avatar;
+
+          _accountRequestModel.companyId = companyId;
+          _accountRequestModel.subDepartmentId = subDepartmentId;
+          _accountRequestModel.departmentId = departmentId;
+          _accountRequestModel.phone = phone;
+          _accountRequestModel.role = role;
+          _accountRequestModel.status = status;
+          _accountRequestModel.password =
+              md5.convert(utf8.encode(newPassword.trim())).toString();
+          updatePassword(_accountRequestModel, context);
+        }
+      } else {
+        _showToast(context);
+      }
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> updatePassword(
+      AccountRequestModel accountRequestModel, BuildContext context) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/accounts/updateaccount";
+    var body = json.encode(accountRequestModel.toJson());
+    print(body);
+    final response = await http.post(url,
+        headers: <String, String>{
+          "Accept": "*/*",
+          "content-type": "application/json-patch+json",
+          'Authorization': 'Bearer ${value.token}'
+        },
+        body: body);
+    print("status code = " + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      showAlertSuccessUpdatePassword(context);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   TextStyle style = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
@@ -53,11 +150,7 @@ class ChangeProfile extends StatelessWidget {
       child: Text("OK"),
       color: Colors.blue[900],
       onPressed: () {
-        // Navigator.pushAndRemoveUntil(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => Profile()),
-        //   ModalRoute.withName('/MyApp'),
-        // );
+        FlutterRestart.restartApp();
       },
     );
     AlertDialog alert = AlertDialog(
@@ -90,11 +183,7 @@ class ChangeProfile extends StatelessWidget {
           if (!formKey.currentState.validate()) {
             return;
           } else {
-            if (newPassword != newPasswordConfirm) {
-              showAlertWrongConfirmPassword(context);
-            } else {
-              showAlertSuccessUpdatePassword(context);
-            }
+            getContractByID(context);
           }
         },
         child: Text(
@@ -106,6 +195,7 @@ class ChangeProfile extends StatelessWidget {
       ),
     );
     return Scaffold(
+      key: _scaffoldKey,
       body: Container(
         color: Color.fromRGBO(238, 237, 237, 0.5),
         child: Form(
@@ -138,8 +228,11 @@ class ChangeProfile extends StatelessWidget {
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12)),
                   ),
+                  validator: (String value) {
+                    oldPassword = value.trim();
+                  },
                   onSaved: (String value) {
-                    oldPassword = value;
+                    oldPassword = value.trim();
                   },
                 ),
                 SizedBox(height: 10),
@@ -153,18 +246,17 @@ class ChangeProfile extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12)),
                   ),
                   validator: (String value) {
-                    value = value.trim();
-                    if (value.isEmpty) {
+                    if (value.trim().isEmpty) {
                       return 'Password is not empty';
-                    } else if (!regexPassword.hasMatch(value)) {
+                    } else if (!regexPassword.hasMatch(value.trim())) {
                       return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
                     } else {
-                      newPassword = value;
+                      newPassword = value.trim();
                     }
                     return null;
                   },
                   onSaved: (String value) {
-                    newPassword = value;
+                    newPassword = value.trim();
                   },
                 ),
                 SizedBox(height: 10),
@@ -177,18 +269,17 @@ class ChangeProfile extends StatelessWidget {
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(12))),
                   validator: (String value) {
-                    value = value.trim();
-                    if (value.isEmpty) {
+                    if (value.trim().isEmpty) {
                       return 'Password is not empty';
-                    } else if (!regexPassword.hasMatch(value)) {
+                    } else if (!regexPassword.hasMatch(value.trim())) {
                       return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
                     } else {
-                      newPasswordConfirm = value;
+                      newPasswordConfirm = value.trim();
                     }
                     return null;
                   },
                   onSaved: (String value) {
-                    newPasswordConfirm = value;
+                    newPasswordConfirm = value.trim();
                   },
                 ),
                 SizedBox(height: 10),
@@ -197,6 +288,15 @@ class ChangeProfile extends StatelessWidget {
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _showToast(BuildContext context) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        duration: const Duration(seconds: 20),
+        content: const Text('Old Password is wrong!!!'),
       ),
     );
   }

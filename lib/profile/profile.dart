@@ -1,5 +1,4 @@
 import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
-import 'package:EOfficeMobile/main.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restart/flutter_restart.dart';
@@ -195,7 +194,7 @@ class Profile extends StatelessWidget {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ChangeProfile()));
+                            builder: (context) => ChangeProfile(value)));
                   },
                   child: Text(
                     "Change Password",
