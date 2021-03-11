@@ -2,13 +2,24 @@ import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
+  MyHomePage({Key key, this.title}) : super(key: key);
+
+  final String title;
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   LoginRequestModel requestModel = new LoginRequestModel();
+
   @override
   Widget build(BuildContext context) {
     final emailField = TextFormField(
