@@ -47,7 +47,7 @@ class _ExamplePageState extends State<MySignScreen> {
 
   PainterController _controller;
   GlobalKey _globalKey = new GlobalKey();
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<void> _capturePng() async {
     try {
       RenderRepaintBoundary boundary =
@@ -86,9 +86,11 @@ class _ExamplePageState extends State<MySignScreen> {
         color: Colors.grey,
         iconSize: 35,
         onPressed: () {
-          _capturePng();
-
-          //_showToast(context);
+          if (!_controller.isEmpty) {
+            _capturePng();
+          } else {
+            _showToast(context);
+          }
         },
       ),
       IconButton(
@@ -137,6 +139,7 @@ class _ExamplePageState extends State<MySignScreen> {
       ),
     ];
     return new Scaffold(
+      key: _scaffoldKey,
       appBar: new AppBar(
         backgroundColor: Colors.white,
         actions: actions,
@@ -156,20 +159,14 @@ class _ExamplePageState extends State<MySignScreen> {
   }
 
   void _showToast(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
+    _scaffoldKey.currentState.showSnackBar(
       SnackBar(
-        backgroundColor: Colors.green,
-        duration: const Duration(minutes: 1, seconds: 30),
-        content: const Text('Sign successfully'),
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 15),
+        content: const Text('You have not draw sign'),
         behavior: SnackBarBehavior.floating,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
-        action: SnackBarAction(
-            label: 'OK',
-            onPressed: () {
-              Navigator.pop(context);
-            }),
       ),
     );
   }

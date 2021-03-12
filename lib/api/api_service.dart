@@ -22,4 +22,21 @@ class APIService {
       statusCode = response.statusCode;
     }
   }
+
+  Future<void> testUser() async {
+    String url = "https://datnxeoffice.azurewebsites.net/api/accounts/testuser";
+
+    final response = await http.post(
+      url,
+      headers: <String, String>{
+        "Accept": "*/*",
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print(response.body);
+    } else {
+      statusCode = response.statusCode;
+    }
+  }
 }

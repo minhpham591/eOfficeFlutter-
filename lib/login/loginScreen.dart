@@ -5,11 +5,9 @@ import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
+String _token;
+
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -19,9 +17,14 @@ class _MyHomePageState extends State<MyHomePage> {
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   LoginRequestModel requestModel = new LoginRequestModel();
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   Widget build(BuildContext context) {
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      _token = token;
+    });
     final emailField = TextFormField(
       obscureText: false,
       style: style,
@@ -68,6 +71,8 @@ class _MyHomePageState extends State<MyHomePage> {
             formKey.currentState.save();
             APIService apiService;
             apiService = new APIService();
+            requestModel.token = _token;
+            apiService.testUser();
             apiService.login(requestModel).then((value) {
               if (apiService.statusCode.toString() == "null") {
                 if (value.token.isNotEmpty) {

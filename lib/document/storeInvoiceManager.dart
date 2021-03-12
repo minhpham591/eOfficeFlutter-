@@ -61,7 +61,7 @@ class _MyHomePageState extends State<StoreInvoiceByCompanyID> {
     } else if (jsonResponse.toString() == "[]") {
       return Scaffold(
         body: Container(
-          child: Text('Not contract yet'),
+          child: Text('Not invoice yet'),
         ),
       );
     } else {
@@ -158,7 +158,7 @@ class _MyHomePageState extends State<StoreInvoiceByCompanyID> {
                             width: 100,
                             margin: const EdgeInsets.all(20.0),
                             //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["description"]),
+                            child: Text(jsonResponse[index]["title"]),
                           )
                         ]),
                         if (jsonResponse[index]["status"].toString() == '3')

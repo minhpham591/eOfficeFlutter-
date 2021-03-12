@@ -35,7 +35,7 @@ class LoginResponseModel {
       id: json["Id"] != null ? json["Id"] : "",
       role: json["Role"] != null ? json["Role"] : "",
       companyId: json["CompanyId"] != null ? json["CompanyId"] : "",
-      company: json["company"] != null ? json["company"] : "",
+      company: json["CompanyName"] != null ? json["CompanyName"] : "",
       address: json["Address"] != null ? json["Address"] : "",
     );
   }
@@ -44,16 +44,19 @@ class LoginResponseModel {
 class LoginRequestModel {
   String userName;
   String password;
+  String token;
 
   LoginRequestModel({
     this.userName,
     this.password,
+    this.token,
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       'email': userName.trim(),
       'password': md5.convert(utf8.encode(password.trim())).toString(),
+      'reqToken': token,
     };
 
     return map;

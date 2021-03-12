@@ -30,29 +30,15 @@ class _MyHomePageState extends State<MyApp> {
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
-      onMessage: (Map<String, dynamic> message) async {
-        print("onMessage: $message");
-      },
+      onMessage: myBackgroundMessageHandler,
       onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: (Map<String, dynamic> message) async {
-        print("onLaunch: $message");
-      },
-      onResume: (Map<String, dynamic> message) async {
-        print("onResume: $message");
-      },
+      onLaunch: myBackgroundMessageHandler,
+      onResume: myBackgroundMessageHandler,
     );
-    _firebaseMessaging.requestNotificationPermissions(
-        const IosNotificationSettings(
-            sound: true, badge: true, alert: true, provisional: true));
-    _firebaseMessaging.onIosSettingsRegistered
-        .listen((IosNotificationSettings settings) {
-      print("Settings registered: $settings");
-    });
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
       print("Push Messaging token: $token");
     });
-    _firebaseMessaging.subscribeToTopic("matchscore");
   }
 
   notification() async {

@@ -13,8 +13,7 @@ class AccountResponseModel {
   int subDepartmentId;
   int departmentId;
   int status;
-  int companyId;
-  String role;
+
   String company;
 
   AccountResponseModel(
@@ -23,11 +22,9 @@ class AccountResponseModel {
       this.password,
       this.phone,
       this.address,
-      this.companyId,
       this.departmentId,
       this.subDepartmentId,
       this.status,
-      this.role,
       this.name,
       this.company});
   factory AccountResponseModel.fromJson(Map<String, dynamic> json) {
@@ -41,8 +38,6 @@ class AccountResponseModel {
           json["subDepartmentId"] != null ? json["subDepartmentId"] : "",
       departmentId: json["departmentId"] != null ? json["departmentId"] : "",
       status: json["status"] != null ? json["status"] : "",
-      companyId: json["companyId"] != null ? json["companyId"] : "",
-      role: json["role"] != null ? json["role"] : "",
       name: json["name"] != null ? json["name"] : "",
       company: json["company"] != null ? json["company"] : "",
     );
@@ -58,20 +53,17 @@ class AccountRequestModel {
   int subDepartmentId;
   int departmentId;
   int status;
-  int companyId;
-  String role;
 
-  AccountRequestModel(
-      {this.id,
-      this.avatar,
-      this.password,
-      this.phone,
-      this.address,
-      this.companyId,
-      this.departmentId,
-      this.subDepartmentId,
-      this.status,
-      this.role});
+  AccountRequestModel({
+    this.id,
+    this.avatar,
+    this.password,
+    this.phone,
+    this.address,
+    this.departmentId,
+    this.subDepartmentId,
+    this.status,
+  });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
@@ -82,9 +74,7 @@ class AccountRequestModel {
       "address": address,
       "subDepartmentId": subDepartmentId,
       "departmentId": departmentId,
-      "companyId": companyId,
       "status": status,
-      "role": role,
     };
     return map;
   }

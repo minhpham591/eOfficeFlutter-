@@ -145,7 +145,7 @@ class _MyHomePageState extends State<StoreContract> {
                             width: 100,
                             margin: const EdgeInsets.all(20.0),
                             //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["description"]),
+                            child: Text(jsonResponse[index]["title"]),
                           )
                         ]),
                         if (jsonResponse[index]["signs"]

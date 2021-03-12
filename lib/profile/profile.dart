@@ -61,6 +61,7 @@ class Profile extends StatelessWidget {
                     CircleAvatar(
                       backgroundImage: NetworkImage(value.avatar),
                       radius: 80,
+                      //child: FlatButton(),
                     ),
                   ],
                 ),

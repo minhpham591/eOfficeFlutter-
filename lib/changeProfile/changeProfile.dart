@@ -38,8 +38,7 @@ class ChangeProfile extends StatelessWidget {
           AccountResponseModel.fromJson(json.decode(response.body)).address;
       String avatar =
           AccountResponseModel.fromJson(json.decode(response.body)).avatar;
-      int companyId =
-          AccountResponseModel.fromJson(json.decode(response.body)).companyId;
+
       int subDepartmentId =
           AccountResponseModel.fromJson(json.decode(response.body))
               .subDepartmentId;
@@ -48,9 +47,6 @@ class ChangeProfile extends StatelessWidget {
               .departmentId;
       String phone = AccountResponseModel.fromJson(json.decode(response.body))
           .phone
-          .toString();
-      String role = AccountResponseModel.fromJson(json.decode(response.body))
-          .role
           .toString();
       int status =
           AccountResponseModel.fromJson(json.decode(response.body)).status;
@@ -65,11 +61,9 @@ class ChangeProfile extends StatelessWidget {
 
           _accountRequestModel.avatar = avatar;
 
-          _accountRequestModel.companyId = companyId;
           _accountRequestModel.subDepartmentId = subDepartmentId;
           _accountRequestModel.departmentId = departmentId;
           _accountRequestModel.phone = phone;
-          _accountRequestModel.role = role;
           _accountRequestModel.status = status;
           _accountRequestModel.password =
               md5.convert(utf8.encode(newPassword.trim())).toString();
