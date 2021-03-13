@@ -45,11 +45,16 @@ class LoginRequestModel {
   String userName;
   String password;
   String token;
-
+  String device;
+  String osVer;
+  String appVer;
   LoginRequestModel({
     this.userName,
     this.password,
     this.token,
+    this.appVer,
+    this.device,
+    this.osVer,
   });
 
   Map<String, dynamic> toJson() {
@@ -57,6 +62,9 @@ class LoginRequestModel {
       'email': userName.trim(),
       'password': md5.convert(utf8.encode(password.trim())).toString(),
       'reqToken': token,
+      'device': device,
+      'osVersion': osVer,
+      'appVersion': appVer,
     };
 
     return map;

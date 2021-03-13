@@ -1,11 +1,19 @@
+import 'dart:io';
+
 import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:package_info/package_info.dart';
+import 'package:device_info/device_info.dart';
 
 String _token;
+String _device;
+String _osVer;
+String _appVer;
 
 class MyHomePage extends StatefulWidget {
   @override
@@ -18,6 +26,21 @@ class _MyHomePageState extends State<MyHomePage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   LoginRequestModel requestModel = new LoginRequestModel();
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  static final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+  void initPlatformState() async {
+    AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
+    _device = androidInfo.model;
+    _osVer = androidInfo.device;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initPlatformState();
+    PackageInfo.fromPlatform().then((PackageInfo packageInfo) {
+      _appVer = packageInfo.version;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +88,9 @@ class _MyHomePageState extends State<MyHomePage> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
+          print(_appVer);
+          print(_device);
+          print(_osVer);
           if (!formKey.currentState.validate()) {
             return;
           } else {
@@ -72,6 +98,9 @@ class _MyHomePageState extends State<MyHomePage> {
             APIService apiService;
             apiService = new APIService();
             requestModel.token = _token;
+            requestModel.appVer = _appVer;
+            requestModel.device = _device;
+            requestModel.osVer = _osVer;
             apiService.testUser();
             apiService.login(requestModel).then((value) {
               if (apiService.statusCode.toString() == "null") {

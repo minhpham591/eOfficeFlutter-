@@ -132,7 +132,18 @@ class _MyHomePageState extends State<StoreInvoice> {
                       margin: const EdgeInsets.all(1.0),
                       padding: const EdgeInsets.all(1.0),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.25)),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey, width: 0.25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset:
+                                  Offset(4, 8), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10)),
                       child: Row(children: <Widget>[
                         Column(children: <Widget>[
                           Container(
@@ -150,7 +161,8 @@ class _MyHomePageState extends State<StoreInvoice> {
                               padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.green, width: 10.0)),
+                                      color: Colors.green, width: 5.0),
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Text("Signed"),
                             )
                           ]),
@@ -161,8 +173,9 @@ class _MyHomePageState extends State<StoreInvoice> {
                               margin: const EdgeInsets.all(15.0),
                               padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.red, width: 10.0)),
+                                  border:
+                                      Border.all(color: Colors.red, width: 5.0),
+                                  borderRadius: BorderRadius.circular(10)),
                               child: Text(
                                 "Not Signed",
                               ),
@@ -173,7 +186,9 @@ class _MyHomePageState extends State<StoreInvoice> {
                             width: 100,
                             margin: const EdgeInsets.all(15.0),
                             //padding: const EdgeInsets.all(5.0),
-                            child: Text(jsonResponse[index]["dateExpire"]),
+                            child: Text(jsonResponse[index]["dateExpire"]
+                                .toString()
+                                .substring(0, 10)),
                           )
                         ]),
                       ]))),

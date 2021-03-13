@@ -33,40 +33,14 @@ class ChangeProfile extends StatelessWidget {
     if (response.statusCode == 200) {
       String pass =
           AccountResponseModel.fromJson(json.decode(response.body)).password;
-      int id = AccountResponseModel.fromJson(json.decode(response.body)).id;
-      String address =
-          AccountResponseModel.fromJson(json.decode(response.body)).address;
-      String avatar =
-          AccountResponseModel.fromJson(json.decode(response.body)).avatar;
-
-      int subDepartmentId =
-          AccountResponseModel.fromJson(json.decode(response.body))
-              .subDepartmentId;
-      int departmentId =
-          AccountResponseModel.fromJson(json.decode(response.body))
-              .departmentId;
-      String phone = AccountResponseModel.fromJson(json.decode(response.body))
-          .phone
-          .toString();
-      int status =
-          AccountResponseModel.fromJson(json.decode(response.body)).status;
       if (md5.convert(utf8.encode(oldPassword.trim())).toString() ==
           pass.toString()) {
         if (newPassword != newPasswordConfirm) {
           showAlertWrongConfirmPassword(context);
         } else {
-          _accountRequestModel.id = id;
-
-          _accountRequestModel.address = address;
-
-          _accountRequestModel.avatar = avatar;
-
-          _accountRequestModel.subDepartmentId = subDepartmentId;
-          _accountRequestModel.departmentId = departmentId;
-          _accountRequestModel.phone = phone;
-          _accountRequestModel.status = status;
-          _accountRequestModel.password =
-              md5.convert(utf8.encode(newPassword.trim())).toString();
+          _accountRequestModel.id = value.id;
+          _accountRequestModel.oldPassword = oldPassword;
+          _accountRequestModel.newPassword = newPassword;
           updatePassword(_accountRequestModel, context);
         }
       } else {
@@ -83,7 +57,7 @@ class ChangeProfile extends StatelessWidget {
         "https://datnxeoffice.azurewebsites.net/api/accounts/updateaccount";
     var body = json.encode(accountRequestModel.toJson());
     print(body);
-    final response = await http.post(url,
+    final response = await http.put(url,
         headers: <String, String>{
           "Accept": "*/*",
           "content-type": "application/json-patch+json",

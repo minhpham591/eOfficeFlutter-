@@ -138,7 +138,18 @@ class _MyHomePageState extends State<StoreContract> {
                       margin: const EdgeInsets.all(1.0),
                       padding: const EdgeInsets.all(1.0),
                       decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey, width: 0.25)),
+                          color: Colors.white,
+                          border: Border.all(color: Colors.grey, width: 0.25),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.grey.withOpacity(0.1),
+                              spreadRadius: 1,
+                              blurRadius: 3,
+                              offset:
+                                  Offset(4, 8), // changes position of shadow
+                            ),
+                          ],
+                          borderRadius: BorderRadius.circular(10)),
                       child: Row(children: <Widget>[
                         Column(children: <Widget>[
                           Container(
@@ -148,9 +159,9 @@ class _MyHomePageState extends State<StoreContract> {
                             child: Text(jsonResponse[index]["title"]),
                           )
                         ]),
-                        if (jsonResponse[index]["signs"]
+                        if (jsonResponse[index]["status"]
                             .toString()
-                            .contains("signerId: ${testvalue.id}"))
+                            .contains('3'))
                           Column(children: <Widget>[
                             Container(
                               width: 100,
@@ -158,32 +169,57 @@ class _MyHomePageState extends State<StoreContract> {
                               padding: const EdgeInsets.all(5.0),
                               decoration: BoxDecoration(
                                   border: Border.all(
-                                      color: Colors.yellow, width: 10.0)),
-                              child: Text("You've Signed"),
+                                      color: Colors.green, width: 5.0),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Text("Signed"),
                             )
                           ]),
-                        if (!jsonResponse[index]["signs"]
+                        if (!jsonResponse[index]["status"]
                             .toString()
-                            .contains("signerId: ${testvalue.id}"))
-                          Column(children: <Widget>[
-                            Container(
-                              width: 100,
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.red, width: 10.0)),
-                              child: Text(
-                                "You've not Signed",
-                              ),
-                            )
-                          ]),
+                            .contains('3'))
+                          if (jsonResponse[index]["signs"]
+                              .toString()
+                              .contains("signerId: ${testvalue.id}"))
+                            Column(children: <Widget>[
+                              Container(
+                                width: 100,
+                                margin: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.yellow, width: 5.0),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Text("You've Signed"),
+                              )
+                            ]),
+                        if (!jsonResponse[index]["status"]
+                            .toString()
+                            .contains('3'))
+                          if (!jsonResponse[index]["signs"]
+                              .toString()
+                              .contains("signerId: ${testvalue.id}"))
+                            Column(children: <Widget>[
+                              Container(
+                                width: 100,
+                                margin: const EdgeInsets.all(15.0),
+                                padding: const EdgeInsets.all(5.0),
+                                decoration: BoxDecoration(
+                                    border: Border.all(
+                                        color: Colors.red, width: 5.0),
+                                    borderRadius: BorderRadius.circular(10)),
+                                child: Text(
+                                  "You've not Signed",
+                                ),
+                              )
+                            ]),
                         Column(children: <Widget>[
                           Container(
                             width: 100,
                             margin: const EdgeInsets.all(15.0),
                             //padding: const EdgeInsets.all(5.0),
-                            child: Text(jsonResponse[index]["dateExpire"]),
+                            child: Text(jsonResponse[index]["dateExpire"]
+                                .toString()
+                                .substring(0, 10)),
                           )
                         ]),
                       ]))),

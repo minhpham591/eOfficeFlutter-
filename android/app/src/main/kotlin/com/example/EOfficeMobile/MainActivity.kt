@@ -7,12 +7,4 @@ import io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin
 import io.flutter.plugins.firebasemessaging.FlutterFirebaseMessagingService
 
 class MainActivity: FlutterActivity() {
-//    fun onCreate() {
-//        FlutterFirebaseMessagingService.setPluginRegistrant(this)
-//        // ...
-//    }
-//    override fun registerWith(registry: PluginRegistry?) {
-//        FirebaseMessagingPlugin.registerWith(registry?.registrarFor("io.flutter.plugins.firebasemessaging.FirebaseMessagingPlugin"))
-//        // ...
-//    }
 }

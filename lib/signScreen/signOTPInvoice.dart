@@ -159,7 +159,7 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                 SizedBox(
                   height: 110,
                   child: Image.asset(
-                    "assets/images/logo.png",
+                    "assets/images/17.png",
                     fit: BoxFit.contain,
                   ),
                 ),

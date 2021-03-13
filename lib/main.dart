@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:EOfficeMobile/login/loginScreen.dart';
 import 'dart:async';
 import 'package:EOfficeMobile/push_notification.dart';
@@ -30,10 +32,16 @@ class _MyHomePageState extends State<MyApp> {
   void initState() {
     super.initState();
     _firebaseMessaging.configure(
-      onMessage: myBackgroundMessageHandler,
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
       onBackgroundMessage: myBackgroundMessageHandler,
-      onLaunch: myBackgroundMessageHandler,
-      onResume: myBackgroundMessageHandler,
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+      },
     );
     _firebaseMessaging.getToken().then((String token) {
       assert(token != null);
@@ -44,13 +52,7 @@ class _MyHomePageState extends State<MyApp> {
   notification() async {
     FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
         new FlutterLocalNotificationsPlugin();
-    var initializationSettingsAndroid =
-        new AndroidInitializationSettings('logo');
-    var initializationSettings =
-        new InitializationSettings(android: initializationSettingsAndroid);
-    flutterLocalNotificationsPlugin.initialize(
-      initializationSettings,
-    );
+
     var androidPlatformChannelSpecifics = AndroidNotificationDetails(
         'your channel id', 'your channel name', 'your channel description',
         importance: Importance.max, priority: Priority.high, ticker: 'ticker');
@@ -59,8 +61,11 @@ class _MyHomePageState extends State<MyApp> {
       android: androidPlatformChannelSpecifics,
     );
     await flutterLocalNotificationsPlugin.show(
-        0, 'plain title', 'plain body', platformChannelSpecifics,
-        payload: 'item x');
+      0,
+      'plain title',
+      'plain body',
+      platformChannelSpecifics,
+    );
   }
 
   @override
@@ -68,6 +73,21 @@ class _MyHomePageState extends State<MyApp> {
     return MaterialApp(
       title: 'EOffice',
       home: MyHomePage(),
+    );
+  }
+
+  void _showToast(BuildContext context, String mess) {
+    final scaffold = Scaffold.of(context);
+    scaffold.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.yellow,
+        duration: const Duration(seconds: 20),
+        content: Text(mess),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+        action: SnackBarAction(label: "", onPressed: () {}),
+      ),
     );
   }
 }

@@ -46,35 +46,21 @@ class AccountResponseModel {
 
 class AccountRequestModel {
   int id;
-  String avatar;
-  String password;
-  String phone;
-  String address;
-  int subDepartmentId;
-  int departmentId;
-  int status;
+
+  String newPassword;
+  String oldPassword;
 
   AccountRequestModel({
     this.id,
-    this.avatar,
-    this.password,
-    this.phone,
-    this.address,
-    this.departmentId,
-    this.subDepartmentId,
-    this.status,
+    this.newPassword,
+    this.oldPassword,
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {
       "id": id,
-      "avatar": avatar,
-      "password": md5.convert(utf8.encode(password.trim())).toString(),
-      "phone": phone,
-      "address": address,
-      "subDepartmentId": subDepartmentId,
-      "departmentId": departmentId,
-      "status": status,
+      "newPassword": md5.convert(utf8.encode(newPassword.trim())).toString(),
+      "oldPassword": md5.convert(utf8.encode(oldPassword.trim())).toString(),
     };
     return map;
   }

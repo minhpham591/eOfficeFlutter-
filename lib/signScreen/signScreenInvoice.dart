@@ -12,6 +12,7 @@ import 'package:painter/painter.dart';
 
 LoginResponseModel testvalue;
 int contractId;
+TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 
 class MySignScreen extends StatefulWidget {
   MySignScreen(LoginResponseModel _value, int contractID) {
@@ -134,7 +135,24 @@ class _ExamplePageState extends State<MySignScreen> {
         color: Colors.grey,
         iconSize: 35,
         onPressed: () {
-          Navigator.pop(context);
+          if (!_controller.isEmpty) {
+            showDialog(
+              context: context,
+              builder: (context) => new AlertDialog(
+                content: new Text('Please clear your sign before cancel'),
+                actions: <Widget>[
+                  new FlatButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: new Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          } else {
+            Navigator.pop(context);
+          }
 
           //_showToast(context);
         },
@@ -147,15 +165,41 @@ class _ExamplePageState extends State<MySignScreen> {
         actions: actions,
       ),
       body: Center(
-        child: Container(
-            height: 300,
-            width: 400,
-            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
-            child: RepaintBoundary(
-                key: _globalKey,
-                // child: Screenshot(
-                //     controller: screenshotController,
-                child: new Painter(_controller))),
+        child: Padding(
+          padding: const EdgeInsets.all(36),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 300,
+                child: Image.asset(
+                  "assets/images/17.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Text(
+                "Please write your signature",
+                textAlign: TextAlign.center,
+                style: style.copyWith(
+                    color: Colors.black, fontWeight: FontWeight.bold),
+              ),
+              Container(
+                  height: 300,
+                  width: 400,
+                  decoration:
+                      BoxDecoration(border: Border.all(color: Colors.black)),
+                  child: RepaintBoundary(
+                      key: _globalKey,
+                      // child: Screenshot(
+                      //     controller: screenshotController,
+                      child: new Painter(_controller))),
+            ],
+          ),
+        ),
       ),
     );
   }
