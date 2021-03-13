@@ -38,7 +38,7 @@ class EnterOTPToSignInvoice extends StatelessWidget {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/invoices/addsigntoinvoice";
     var body = json.encode(signModel.toJson());
-    final response = await http.post(url,
+    final response = await http.put(url,
         headers: <String, String>{
           "Accept": "text/plain",
           "content-type": "application/json-patch+json",
@@ -111,16 +111,18 @@ class EnterOTPToSignInvoice extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
-          FirebaseAuth.instance
-              .signInWithCredential(PhoneAuthProvider.credential(
-                  verificationId: verificationId, smsCode: pin))
-              .then((value) async {
-            if (value.user != null) {
-              _createFileFromString(png, context);
-            } else {
-              _showToast(context);
-            }
-          });
+          try {
+            FirebaseAuth.instance
+                .signInWithCredential(PhoneAuthProvider.credential(
+                    verificationId: verificationId, smsCode: pin))
+                .then((value) async {
+              if (value.user != null) {
+                _createFileFromString(png, context);
+              }
+            });
+          } on FirebaseAuthException catch (_) {
+            _showToast(context);
+          }
         },
         child: Text(
           "Verifying",

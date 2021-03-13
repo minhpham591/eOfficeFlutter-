@@ -39,20 +39,22 @@ class EnterOTPForgotPassword extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
-          FirebaseAuth.instance
-              .signInWithCredential(PhoneAuthProvider.credential(
-                  verificationId: verificationId, smsCode: pin))
-              .then((value) async {
-            if (value.user != null) {
-              print(value.toString());
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => EnterNewPassword()),
-                  (route) => false);
-            } else {
-              _showToast(context);
-            }
-          });
+          try {
+            FirebaseAuth.instance
+                .signInWithCredential(PhoneAuthProvider.credential(
+                    verificationId: verificationId, smsCode: pin))
+                .then((value) async {
+              if (value.user != null) {
+                print(value.toString());
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => EnterNewPassword()),
+                    (route) => false);
+              }
+            });
+          } on FirebaseAuthException catch (_) {
+            _showToast(context);
+          }
         },
         child: Text(
           "Verifying",
