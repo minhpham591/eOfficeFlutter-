@@ -52,7 +52,7 @@ class EnterOTPForgotPassword extends StatelessWidget {
                     (route) => false);
               }
             });
-          } on FirebaseAuthException catch (_) {
+          } catch (FirebaseAuthException) {
             _showToast(context);
           }
         },

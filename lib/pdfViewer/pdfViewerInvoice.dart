@@ -106,12 +106,11 @@ class _MyHomePageState extends State<MyPdfViewer> {
               iconSize: 35,
               onPressed: () {
                 if (status == 0) {
-                  Navigator.pushAndRemoveUntil(
+                  Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
-                    ModalRoute.withName('/'),
                   );
                 } else if (status == 1) {
                   showDialog(

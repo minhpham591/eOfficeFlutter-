@@ -80,90 +80,90 @@ class _ExamplePageState extends State<MySignScreen> {
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> actions;
-    actions = <Widget>[
-      IconButton(
-        icon: Icon(Icons.add_box),
-        color: Colors.grey,
-        iconSize: 35,
-        onPressed: () {
-          if (!_controller.isEmpty) {
-            _capturePng();
-          } else {
-            _showToast(context);
-          }
+    // List<Widget> actions;
+    // actions = <Widget>[
+    //   IconButton(
+    //     icon: Icon(Icons.add_box),
+    //     color: Colors.grey,
+    //     iconSize: 35,
+    //     onPressed: () {
+    //       if (!_controller.isEmpty) {
+    //         _capturePng();
+    //       } else {
+    //         _showToast(context);
+    //       }
 
-          //_showToast(context);
-        },
-      ),
-      IconButton(
-        icon: Icon(Icons.repeat_sharp),
-        color: Colors.grey,
-        iconSize: 35,
-        onPressed: () {
-          if (!_controller.isEmpty) {
-            showDialog(
-              context: context,
-              builder: (context) => new AlertDialog(
-                content: new Text('Do you want to re-sign?'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: new Text('No'),
-                  ),
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                      setState(() {
-                        _controller.clear();
-                      });
-                    },
-                    child: new Text('Yes'),
-                  ),
-                ],
-              ),
-            );
-          }
+    //       //_showToast(context);
+    //     },
+    //   ),
+    //   IconButton(
+    //     icon: Icon(Icons.repeat_sharp),
+    //     color: Colors.grey,
+    //     iconSize: 35,
+    //     onPressed: () {
+    //       if (!_controller.isEmpty) {
+    //         showDialog(
+    //           context: context,
+    //           builder: (context) => new AlertDialog(
+    //             content: new Text('Do you want to re-sign?'),
+    //             actions: <Widget>[
+    //               new FlatButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context);
+    //                 },
+    //                 child: new Text('No'),
+    //               ),
+    //               new FlatButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context);
+    //                   setState(() {
+    //                     _controller.clear();
+    //                   });
+    //                 },
+    //                 child: new Text('Yes'),
+    //               ),
+    //             ],
+    //           ),
+    //         );
+    //       }
 
-          //_showToast(context);
-        },
-      ),
-      IconButton(
-        icon: Icon(Icons.cancel),
-        color: Colors.grey,
-        iconSize: 35,
-        onPressed: () {
-          if (!_controller.isEmpty) {
-            showDialog(
-              context: context,
-              builder: (context) => new AlertDialog(
-                content: new Text('Please clear your sign before cancel'),
-                actions: <Widget>[
-                  new FlatButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: new Text('OK'),
-                  ),
-                ],
-              ),
-            );
-          } else {
-            Navigator.pop(context);
-          }
+    //       //_showToast(context);
+    //     },
+    //   ),
+    //   IconButton(
+    //     icon: Icon(Icons.cancel),
+    //     color: Colors.grey,
+    //     iconSize: 35,
+    //     onPressed: () {
+    //       if (!_controller.isEmpty) {
+    //         showDialog(
+    //           context: context,
+    //           builder: (context) => new AlertDialog(
+    //             content: new Text('Please clear your sign before cancel'),
+    //             actions: <Widget>[
+    //               new FlatButton(
+    //                 onPressed: () {
+    //                   Navigator.pop(context);
+    //                 },
+    //                 child: new Text('OK'),
+    //               ),
+    //             ],
+    //           ),
+    //         );
+    //       } else {
+    //         Navigator.pop(context);
+    //       }
 
-          //_showToast(context);
-        },
-      ),
-    ];
+    //       //_showToast(context);
+    //     },
+    //   ),
+    // ];
     return new Scaffold(
       key: _scaffoldKey,
-      appBar: new AppBar(
-        backgroundColor: Colors.white,
-        actions: actions,
-      ),
+      // appBar: new AppBar(
+      //   backgroundColor: Colors.white,
+      //   actions: actions,
+      // ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(36),
@@ -197,6 +197,139 @@ class _ExamplePageState extends State<MySignScreen> {
                       // child: Screenshot(
                       //     controller: screenshotController,
                       child: new Painter(_controller))),
+              SizedBox(
+                height: 50,
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Column(
+                    children: [
+                      FlatButton(
+                        onPressed: () {
+                          if (!_controller.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => new AlertDialog(
+                                content: new Text(
+                                    'Please clear your sign before cancel'),
+                                actions: <Widget>[
+                                  new FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: new Text('OK'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else {
+                            Navigator.pop(context);
+                          }
+
+                          //_showToast(context);
+                        },
+                        height: 60,
+                        child: Text('CANCEL',
+                            style: TextStyle(
+                              color: Colors.blueAccent[700],
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.blueAccent[700],
+                                width: 1,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50)),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    children: [
+                      FlatButton(
+                        onPressed: () {
+                          if (!_controller.isEmpty) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => new AlertDialog(
+                                content: new Text('Do you want to re-sign?'),
+                                actions: <Widget>[
+                                  new FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: new Text('No'),
+                                  ),
+                                  new FlatButton(
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      setState(() {
+                                        _controller.clear();
+                                      });
+                                    },
+                                    child: new Text('Yes'),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }
+
+                          //_showToast(context);
+                        },
+                        height: 60,
+                        child: Text('RE-SIGN',
+                            style: TextStyle(
+                              color: Colors.blueAccent[700],
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.blueAccent[700],
+                                width: 1,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50)),
+                      )
+                    ],
+                  ),
+                  SizedBox(
+                    width: 50,
+                  ),
+                  Column(
+                    children: [
+                      FlatButton(
+                        onPressed: () {
+                          if (!_controller.isEmpty) {
+                            _capturePng();
+                          } else {
+                            _showToast(context);
+                          }
+
+                          //_showToast(context);
+                        },
+                        height: 60,
+                        child: Text('SIGN',
+                            style: TextStyle(
+                              color: Colors.blueAccent[700],
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                            )),
+                        shape: RoundedRectangleBorder(
+                            side: BorderSide(
+                                color: Colors.blueAccent[700],
+                                width: 1,
+                                style: BorderStyle.solid),
+                            borderRadius: BorderRadius.circular(50)),
+                      )
+                    ],
+                  )
+                ],
+              )
             ],
           ),
         ),

@@ -54,7 +54,7 @@ class ChangeProfile extends StatelessWidget {
   Future<void> updatePassword(
       AccountRequestModel accountRequestModel, BuildContext context) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/accounts/updateaccount";
+        "https://datnxeoffice.azurewebsites.net/api/accounts/changepassword";
     var body = json.encode(accountRequestModel.toJson());
     print(body);
     final response = await http.put(url,
