@@ -112,7 +112,7 @@ class EnterNewPassword extends StatelessWidget {
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
           _accountRequestModel.email = _email;
-          _accountRequestModel.newPassword = newPassword;
+
           if (!formKey.currentState.validate()) {
             return;
           } else {
@@ -172,8 +172,8 @@ class EnterNewPassword extends StatelessWidget {
                         return 'Password is had more than 8 character, at least 1\n uppercase, not contain special character!!!';
                       } else {
                         newPassword = value;
+                        _accountRequestModel.newPassword = value;
                       }
-                      return null;
                     },
                     onSaved: (String value) {
                       newPassword = value;

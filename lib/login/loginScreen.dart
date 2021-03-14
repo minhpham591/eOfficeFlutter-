@@ -30,7 +30,9 @@ class _MyHomePageState extends State<MyHomePage> {
   void initPlatformState() async {
     AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
     _device = androidInfo.model;
-    _osVer = androidInfo.device;
+    if (androidInfo.version.sdkInt.toString() == '29') {
+      _osVer = "Android 10";
+    }
   }
 
   @override
