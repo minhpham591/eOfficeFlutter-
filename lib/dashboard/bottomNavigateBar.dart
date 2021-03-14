@@ -70,7 +70,6 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_rounded,
-              color: Colors.grey,
             ),
             label: 'Home',
             backgroundColor: Colors.white,
@@ -78,7 +77,6 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.insert_drive_file_rounded,
-              color: Colors.grey,
             ),
             label: 'Document',
             backgroundColor: Colors.white,
@@ -86,7 +84,6 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.notifications_rounded,
-              color: Colors.grey,
             ),
             label: 'Notification',
             backgroundColor: Colors.white,
@@ -94,7 +91,6 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
           BottomNavigationBarItem(
             icon: Icon(
               Icons.person_rounded,
-              color: Colors.grey,
             ),
             label: 'Profile',
             backgroundColor: Colors.white,
@@ -102,6 +98,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
         ],
         currentIndex: selectedIndex,
         selectedItemColor: Colors.blue,
+        unselectedItemColor: Colors.grey,
         onTap: _onItemTapped,
       ),
     );
