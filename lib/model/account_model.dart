@@ -65,3 +65,20 @@ class AccountRequestModel {
     return map;
   }
 }
+
+class ForgotPasswordRequestModel {
+  String email;
+  String newPassword;
+
+  ForgotPasswordRequestModel({
+    this.email,
+    this.newPassword,
+  });
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "email": email,
+      "newPassword": md5.convert(utf8.encode(newPassword.trim())).toString(),
+    };
+    return map;
+  }
+}

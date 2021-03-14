@@ -45,10 +45,12 @@ class EnterOTPForgotPassword extends StatelessWidget {
                     verificationId: verificationId, smsCode: pin))
                 .then((value) async {
               if (value.user != null) {
-                print(value.toString());
+                print(value.user.email.toString());
                 Navigator.pushAndRemoveUntil(
                     context,
-                    MaterialPageRoute(builder: (context) => EnterNewPassword()),
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            EnterNewPassword(value.user.email.toString())),
                     (route) => false);
               }
             });

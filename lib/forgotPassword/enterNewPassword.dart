@@ -1,11 +1,23 @@
+import 'dart:convert';
+
 import 'package:EOfficeMobile/main.dart';
 import 'package:flutter/material.dart';
+import 'package:EOfficeMobile/model/account_model.dart';
+import 'package:http/http.dart' as http;
+
+String _email;
+ForgotPasswordRequestModel _accountRequestModel =
+    new ForgotPasswordRequestModel();
+String newPassword;
+String newPasswordConfirm;
 
 class EnterNewPassword extends StatelessWidget {
+  EnterNewPassword(String email) {
+    _email = email;
+  }
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   GlobalKey<FormState> formKey = GlobalKey<FormState>();
-  String newPassword;
-  String newPasswordConfirm;
+
   RegExp regexPassword =
       new RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,}$');
 
@@ -69,6 +81,26 @@ class EnterNewPassword extends StatelessWidget {
     );
   }
 
+  Future<void> updatePassword(ForgotPasswordRequestModel accountRequestModel,
+      BuildContext context) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/accounts/forgotpassword";
+    var body = json.encode(accountRequestModel.toJson());
+    print(body);
+    final response = await http.put(url,
+        headers: <String, String>{
+          "Accept": "*/*",
+          "content-type": "application/json-patch+json",
+        },
+        body: body);
+    print("status code = " + response.statusCode.toString());
+    if (response.statusCode == 200) {
+      showAlertSuccessUpdatePassword(context);
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final nextButton = Material(
@@ -79,13 +111,15 @@ class EnterNewPassword extends StatelessWidget {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
+          _accountRequestModel.email = _email;
+          _accountRequestModel.newPassword = newPassword;
           if (!formKey.currentState.validate()) {
             return;
           } else {
             if (newPassword != newPasswordConfirm) {
               showAlertWrongConfirmPassword(context);
             } else {
-              showAlertSuccessUpdatePassword(context);
+              updatePassword(_accountRequestModel, context);
             }
           }
         },

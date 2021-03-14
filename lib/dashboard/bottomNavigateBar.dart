@@ -6,6 +6,7 @@ import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/notification/notification.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:flutter/material.dart';
+import 'package:badges/badges.dart';
 
 LoginResponseModel testValue;
 
@@ -66,7 +67,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
         child: _widgetOptions.elementAt(selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        items: const <BottomNavigationBarItem>[
+        items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(
               Icons.home_rounded,
@@ -82,8 +83,18 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(
-            icon: Icon(
-              Icons.notifications_rounded,
+            // icon: Icon(
+            //   Icons.notifications_rounded,
+            // ),
+            icon: Badge(
+              child: Icon(Icons.notifications_rounded),
+              badgeContent: Text(
+                '1',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold),
+              ),
             ),
             label: 'Notification',
             backgroundColor: Colors.white,
