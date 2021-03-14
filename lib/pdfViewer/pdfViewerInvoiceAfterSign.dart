@@ -138,7 +138,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
           onPageError: (page, e) {},
         ),
         floatingActionButton: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             IconButton(
               icon: Icon(Icons.chevron_left),

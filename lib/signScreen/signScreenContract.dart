@@ -228,13 +228,24 @@ class _ExamplePageState extends State<MySignScreen> {
 
                           //_showToast(context);
                         },
-                        height: 60,
-                        child: Text('CANCEL',
-                            style: TextStyle(
-                              color: Colors.blueAccent[700],
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        height: 90,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.cancel_outlined,
+                              color: Colors.redAccent[700],
+                              size: 40,
+                            ),
+                            Text('CANCEL',
+                                style: TextStyle(
+                                  color: Colors.blueAccent[700],
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                         shape: RoundedRectangleBorder(
                             side: BorderSide(
                                 color: Colors.blueAccent[700],
@@ -245,7 +256,7 @@ class _ExamplePageState extends State<MySignScreen> {
                     ],
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 30,
                   ),
                   Column(
                     children: [
@@ -279,13 +290,24 @@ class _ExamplePageState extends State<MySignScreen> {
 
                           //_showToast(context);
                         },
-                        height: 60,
-                        child: Text('RE-SIGN',
-                            style: TextStyle(
-                              color: Colors.blueAccent[700],
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        height: 90,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.repeat,
+                              color: Colors.redAccent[700],
+                              size: 40,
+                            ),
+                            Text('RE-SIGN',
+                                style: TextStyle(
+                                  color: Colors.blueAccent[700],
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                         shape: RoundedRectangleBorder(
                             side: BorderSide(
                                 color: Colors.blueAccent[700],
@@ -296,7 +318,7 @@ class _ExamplePageState extends State<MySignScreen> {
                     ],
                   ),
                   SizedBox(
-                    width: 50,
+                    width: 30,
                   ),
                   Column(
                     children: [
@@ -308,13 +330,24 @@ class _ExamplePageState extends State<MySignScreen> {
                             _showToast(context);
                           }
                         },
-                        height: 60,
-                        child: Text('SIGN',
-                            style: TextStyle(
-                              color: Colors.blueAccent[700],
-                              fontSize: 30,
-                              fontWeight: FontWeight.bold,
-                            )),
+                        height: 90,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image.asset(
+                              "assets/images/signButton.png",
+                              height: 40,
+                              width: 40,
+                            ),
+                            Text('SIGN',
+                                style: TextStyle(
+                                  color: Colors.blueAccent[700],
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          ],
+                        ),
                         shape: RoundedRectangleBorder(
                             side: BorderSide(
                                 color: Colors.blueAccent[700],
