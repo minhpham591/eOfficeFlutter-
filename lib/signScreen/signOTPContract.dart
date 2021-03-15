@@ -228,7 +228,7 @@ class EnterOTPToSignContract extends StatelessWidget {
                 ),
                 SizedBox(height: 45),
                 OTPtextField,
-                SizedBox(height: 25),
+                SizedBox(height: 10),
                 nextButton,
                 SizedBox(
                   height: 5,

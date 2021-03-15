@@ -170,7 +170,7 @@ class _ExamplePageState extends State<MySignScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               SizedBox(
-                height: 300,
+                height: 250,
                 child: Image.asset(
                   "assets/images/17.png",
                   fit: BoxFit.contain,
@@ -196,7 +196,7 @@ class _ExamplePageState extends State<MySignScreen> {
                       //     controller: screenshotController,
                       child: new Painter(_controller))),
               SizedBox(
-                height: 50,
+                height: 25,
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
