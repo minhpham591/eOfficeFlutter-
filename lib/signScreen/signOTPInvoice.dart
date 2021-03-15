@@ -5,6 +5,7 @@ import 'dart:typed_data';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
+import 'package:EOfficeMobile/signScreen/signOTPResendInvoice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -19,15 +20,17 @@ int contractId;
 String phone;
 String verificationId;
 Uint8List png;
+int countResend;
 
 class EnterOTPToSignInvoice extends StatelessWidget {
   EnterOTPToSignInvoice(String _phone, String _vertificationId, Uint8List _png,
-      LoginResponseModel _value, int id) {
+      LoginResponseModel _value, int id, int _countResend) {
     phone = _phone;
     verificationId = _vertificationId;
     png = _png;
     testvalue = _value;
     contractId = id;
+    countResend = _countResend;
   }
 
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
@@ -51,6 +54,34 @@ class EnterOTPToSignInvoice extends StatelessWidget {
     } else {
       throw Exception('Failed to load data');
     }
+  }
+
+  _verifyPhone(
+      Uint8List png,
+      BuildContext context,
+      int count,
+      String phone,
+      String verificationId,
+      LoginResponseModel testvalue,
+      int contractId) async {
+    await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: phone,
+        verificationCompleted: (PhoneAuthCredential credential) async {},
+        verificationFailed: (FirebaseAuthException e) {
+          print(e.message);
+        },
+        codeSent: (String verficationID, int resendToken) {
+          verificationId = verficationID;
+          Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+                builder: (context) => EnterOTPResendToSignInvoice(
+                    phone, verificationId, png, testvalue, contractId, count)),
+            ModalRoute.withName('/'),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationID) {},
+        timeout: Duration(seconds: 120));
   }
 
   SignToInvoice adSign = SignToInvoice();
@@ -132,6 +163,28 @@ class EnterOTPToSignInvoice extends StatelessWidget {
         ),
       ),
     );
+    final resendButton = Material(
+      elevation: 5,
+      borderRadius: BorderRadius.circular(30),
+      color: Colors.blue[900],
+      child: MaterialButton(
+        minWidth: MediaQuery.of(context).size.width,
+        padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
+        onPressed: () {
+          if (countResend <= 3) {
+            countResend++;
+            _verifyPhone(png, context, countResend, phone, verificationId,
+                testvalue, contractId);
+          }
+        },
+        child: Text(
+          "Resend $countResend /3",
+          textAlign: TextAlign.center,
+          style:
+              style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+        ),
+      ),
+    );
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -178,6 +231,10 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                 OTPtextField,
                 SizedBox(height: 25),
                 nextButton,
+                SizedBox(
+                  height: 5,
+                ),
+                resendButton,
               ],
             ),
           ),

@@ -4,8 +4,8 @@ import 'dart:typed_data';
 
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
-import 'package:EOfficeMobile/pdfViewer/pdfViewerContractAfterSign.dart';
-import 'package:EOfficeMobile/signScreen/signOTPResendContract.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
+import 'package:EOfficeMobile/signScreen/signOTPInvoice.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -22,9 +22,9 @@ String verificationId;
 Uint8List png;
 int countResend;
 
-class EnterOTPToSignContract extends StatelessWidget {
-  EnterOTPToSignContract(String _phone, String _vertificationId, Uint8List _png,
-      LoginResponseModel _value, int id, int _countResend) {
+class EnterOTPResendToSignInvoice extends StatelessWidget {
+  EnterOTPResendToSignInvoice(String _phone, String _vertificationId,
+      Uint8List _png, LoginResponseModel _value, int id, int _countResend) {
     phone = _phone;
     verificationId = _vertificationId;
     png = _png;
@@ -37,9 +37,9 @@ class EnterOTPToSignContract extends StatelessWidget {
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
   Future<void> addSignToContract(
-      SignToContract signModel, BuildContext context) async {
+      SignToInvoice signModel, BuildContext context) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/contracts/addsigntocontract";
+        "https://datnxeoffice.azurewebsites.net/api/invoices/addsigntoinvoice";
     var body = json.encode(signModel.toJson());
     final response = await http.put(url,
         headers: <String, String>{
@@ -75,7 +75,7 @@ class EnterOTPToSignContract extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context) => EnterOTPResendToSignContract(
+                builder: (context) => EnterOTPToSignInvoice(
                     phone, verificationId, png, testvalue, contractId, count)),
             ModalRoute.withName('/'),
           );
@@ -84,7 +84,8 @@ class EnterOTPToSignContract extends StatelessWidget {
         timeout: Duration(seconds: 120));
   }
 
-  SignToContract adSign = SignToContract();
+  SignToInvoice adSign = SignToInvoice();
+
   DateTime now = DateTime.now();
   Future<void> _createFileFromString(
       Uint8List png, BuildContext context) async {
@@ -105,14 +106,15 @@ class EnterOTPToSignContract extends StatelessWidget {
       "InvoiceId": contractId,
     });
     dio.Dio d = new dio.Dio();
+
     d.options.headers["Authorization"] = "Bearer ${testvalue.token}";
     var response = await d.post(
-        "https://datnxeoffice.azurewebsites.net/api/contractsigns/addsign",
+        "https://datnxeoffice.azurewebsites.net/api/invoicesigns/addinvoicesign",
         data: formData);
-
     print(response.data['id']);
+    print(response.data);
+    adSign.invoiceId = contractId;
     adSign.signId = response.data['id'];
-    adSign.contractId = contractId;
     addSignToContract(adSign, context);
   }
 
@@ -145,7 +147,6 @@ class EnterOTPToSignContract extends StatelessWidget {
                 .signInWithCredential(PhoneAuthProvider.credential(
                     verificationId: verificationId, smsCode: pin))
                 .then((value) async {
-              print(value);
               if (value.user != null) {
                 _createFileFromString(png, context);
               }

@@ -18,7 +18,7 @@ class _MyAppPageState extends State<ForgotPassword> {
   String verificationId;
   String errorMessage = '';
   RegExp regexPhone = new RegExp(r'(^(?:[+0]9)?[0-9]{10,10}$)');
-  _verifyPhone() async {
+  _verifyPhone(String phone) async {
     await FirebaseAuth.instance.verifyPhoneNumber(
         phoneNumber: phone,
         verificationCompleted: (PhoneAuthCredential credential) async {},
@@ -31,7 +31,7 @@ class _MyAppPageState extends State<ForgotPassword> {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    EnterOTPForgotPassword(phone, verificationId)),
+                    EnterOTPForgotPassword(phone, verificationId, 0)),
             ModalRoute.withName('/'),
           );
         },
@@ -43,7 +43,6 @@ class _MyAppPageState extends State<ForgotPassword> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _verifyPhone();
   }
 
   // set up the AlertDialog
@@ -81,7 +80,8 @@ class _MyAppPageState extends State<ForgotPassword> {
             return;
           } else {
             //showAlertPhoneSuccess(context);
-            _verifyPhone();
+            print(phone);
+            _verifyPhone(phone);
           }
         },
         child: Text(

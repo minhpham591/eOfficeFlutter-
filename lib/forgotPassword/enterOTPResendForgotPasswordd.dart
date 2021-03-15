@@ -1,20 +1,21 @@
 import 'package:EOfficeMobile/forgotPassword/enterNewPassword.dart';
-import 'package:EOfficeMobile/forgotPassword/enterOTPResendForgotPasswordd.dart';
+import 'package:EOfficeMobile/forgotPassword/enterOTPForgotPasswordd.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 
-class EnterOTPForgotPassword extends StatelessWidget {
+class EnterOTPResendForgotPassword extends StatelessWidget {
   String phone;
   String verificationId;
   int countResend;
-  EnterOTPForgotPassword(
+  EnterOTPResendForgotPassword(
       String _phone, String _vertificationId, int _countResend) {
     phone = _phone;
     verificationId = _vertificationId;
     countResend = _countResend;
   }
+
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
   String pin = null;
   RegExp regexPin = new RegExp(r'(^(?:[+0]9)?[0-9]{6,6}$)');
@@ -31,8 +32,8 @@ class EnterOTPForgotPassword extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context) => EnterOTPResendForgotPassword(
-                    phone, verificationId, countResend)),
+                builder: (context) =>
+                    EnterOTPForgotPassword(phone, verificationId, countResend)),
             ModalRoute.withName('/'),
           );
         },

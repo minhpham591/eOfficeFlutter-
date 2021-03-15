@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/model/sign_model.dart';
 import 'package:EOfficeMobile/pdfViewer/pdfViewerContractAfterSign.dart';
-import 'package:EOfficeMobile/signScreen/signOTPResendContract.dart';
+import 'package:EOfficeMobile/signScreen/signOTPContract.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:otp_text_field/otp_field.dart';
@@ -22,9 +22,9 @@ String verificationId;
 Uint8List png;
 int countResend;
 
-class EnterOTPToSignContract extends StatelessWidget {
-  EnterOTPToSignContract(String _phone, String _vertificationId, Uint8List _png,
-      LoginResponseModel _value, int id, int _countResend) {
+class EnterOTPResendToSignContract extends StatelessWidget {
+  EnterOTPResendToSignContract(String _phone, String _vertificationId,
+      Uint8List _png, LoginResponseModel _value, int id, int _countResend) {
     phone = _phone;
     verificationId = _vertificationId;
     png = _png;
@@ -75,7 +75,7 @@ class EnterOTPToSignContract extends StatelessWidget {
           Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-                builder: (context) => EnterOTPResendToSignContract(
+                builder: (context) => EnterOTPToSignContract(
                     phone, verificationId, png, testvalue, contractId, count)),
             ModalRoute.withName('/'),
           );

@@ -1,14 +1,11 @@
-import 'dart:io';
-
 import 'package:EOfficeMobile/api/api_service.dart';
 import 'package:EOfficeMobile/dashboard/bottomNavigateBar.dart';
 import 'package:EOfficeMobile/forgotPassword/forgotPassword.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:device_info/device_info.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:package_info/package_info.dart';
-import 'package:device_info/device_info.dart';
 
 String _token;
 String _device;

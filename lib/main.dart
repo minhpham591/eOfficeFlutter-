@@ -1,11 +1,9 @@
-import 'dart:io';
+import 'dart:async';
 
 import 'package:EOfficeMobile/login/loginScreen.dart';
-import 'dart:async';
-import 'package:EOfficeMobile/push_notification.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
 void main() async {
@@ -28,6 +26,7 @@ class MyApp extends StatefulWidget {
 class _MyHomePageState extends State<MyApp> {
   // This widget is the root of your application.
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+
   @override
   void initState() {
     super.initState();

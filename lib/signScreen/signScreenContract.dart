@@ -38,7 +38,7 @@ class _ExamplePageState extends State<MySignScreen> {
             context,
             MaterialPageRoute(
                 builder: (context) => EnterOTPToSignContract(testvalue.phone,
-                    verificationId, png, testvalue, contractId)),
+                    verificationId, png, testvalue, contractId, 0)),
             ModalRoute.withName('/'),
           );
         },
