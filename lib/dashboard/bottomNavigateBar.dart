@@ -30,7 +30,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
   static List<Widget> _widgetOptions = <Widget>[
     dashboard(),
     StoreDocument(testValue),
-    MyNotification(),
+    MyNotification(testValue),
     Profile(testValue),
   ];
   void _onItemTapped(int index) {

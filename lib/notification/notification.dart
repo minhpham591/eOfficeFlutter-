@@ -1,8 +1,17 @@
 import 'dart:ui';
 
+import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/notification/notificationAll.dart';
+import 'package:EOfficeMobile/notification/notificationSign.dart';
+import 'package:EOfficeMobile/notification/notificationView.dart';
 import 'package:flutter/material.dart';
 
+LoginResponseModel testvalue;
+
 class MyNotification extends StatefulWidget {
+  MyNotification(LoginResponseModel _value) {
+    testvalue = _value;
+  }
   @override
   _DropDownButtonState createState() => _DropDownButtonState();
 }
@@ -11,29 +20,51 @@ TextStyle style = TextStyle(
     fontFamily: 'Montserrat',
     fontSize: 20,
     fontWeight: FontWeight.bold,
-    color: Colors.blue);
+    color: Colors.grey);
 
 class _DropDownButtonState extends State<MyNotification> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(36),
-        child: Column(
-          children: <Widget>[
-            SizedBox(
-              height: 50,
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 3,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Notification",
+              style: style,
             ),
-            SizedBox(
-              height: 40,
-              child: Text(
-                'Activity Log',
-                style: style,
-                textAlign: TextAlign.start,
-              ),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    'All',
+                    style: style,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Sign',
+                    style: style,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'View',
+                    style: style,
+                  ),
+                ),
+              ],
             ),
-            SingleChildScrollView(),
-          ],
+            backgroundColor: Colors.white,
+          ),
+          body: TabBarView(
+            children: [
+              StoreAllNotification(testvalue),
+              StoreSignerNotification(testvalue),
+              StoreViewerNotification(testvalue),
+            ],
+          ),
         ),
       ),
     );
