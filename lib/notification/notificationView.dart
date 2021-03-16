@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 LoginResponseModel testvalue;
 TextStyle style = TextStyle(
@@ -70,48 +71,78 @@ class _MyHomePageState extends State<StoreViewerNotification> {
             return InkWell(
               onTap: () {},
               child: ListTile(
-                  title: Container(
-                      margin: const EdgeInsets.all(1.0),
-                      padding: const EdgeInsets.all(1.0),
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          border: Border.all(color: Colors.grey, width: 0.25),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.1),
-                              spreadRadius: 1,
-                              blurRadius: 3,
-                              offset:
-                                  Offset(4, 8), // changes position of shadow
-                            ),
-                          ],
-                          borderRadius: BorderRadius.circular(10)),
-                      child: Row(children: <Widget>[
-                        Column(
-                          children: <Widget>[
-                            Container(
-                              height: 100,
-                              width: 100,
-                              child: Image(
-                                image:
-                                    NetworkImage(jsonResponse[index]["image"]),
-                              ),
-                            ),
-                          ],
+                  title: Slidable(
+                      actionPane: SlidableDrawerActionPane(),
+                      actionExtentRatio: 0.25,
+                      secondaryActions: <Widget>[
+                        FlatButton.icon(
+                          height: 100,
+                          onPressed: () {
+                            print('ok');
+                          },
+                          icon: Icon(
+                            Icons.read_more,
+                            color: Colors.blue,
+                          ),
+                          label: Text('OPEN'),
                         ),
-                        Column(children: <Widget>[
-                          Container(
-                            margin: const EdgeInsets.all(20.0),
-                            //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["title"]),
+                        FlatButton.icon(
+                          height: 100,
+                          onPressed: () {
+                            print('delete');
+                          },
+                          icon: Icon(
+                            Icons.delete,
+                            color: Colors.red,
                           ),
-                          Container(
-                            margin: const EdgeInsets.all(20.0),
-                            //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["createdDate"]),
+                          label: Text(
+                            'DELETE',
                           ),
-                        ]),
-                      ]))),
+                        ),
+                      ],
+                      child: Container(
+                          margin: const EdgeInsets.all(1.0),
+                          padding: const EdgeInsets.all(1.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              border:
+                                  Border.all(color: Colors.grey, width: 0.25),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.1),
+                                  spreadRadius: 1,
+                                  blurRadius: 3,
+                                  offset: Offset(
+                                      4, 8), // changes position of shadow
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(10)),
+                          child: Row(children: <Widget>[
+                            Column(
+                              children: <Widget>[
+                                Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: Image(
+                                    image: NetworkImage(
+                                        jsonResponse[index]["image"]),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Column(children: <Widget>[
+                              Container(
+                                margin: const EdgeInsets.all(20.0),
+                                //padding: const EdgeInsets.all(10.0),
+                                child: Text(jsonResponse[index]["title"]),
+                              ),
+                              Container(
+                                margin: const EdgeInsets.all(20.0),
+                                //padding: const EdgeInsets.all(10.0),
+                                child: Text(jsonResponse[index]["createdDate"]),
+                              ),
+                            ]),
+                          ])))),
             );
           },
         ),
