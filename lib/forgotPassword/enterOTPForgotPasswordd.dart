@@ -142,7 +142,7 @@ class EnterOTPForgotPassword extends StatelessWidget {
                   style: style.copyWith(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 45),
+                SizedBox(height: 30),
                 OTPtextField,
                 SizedBox(height: 25),
                 nextButton,

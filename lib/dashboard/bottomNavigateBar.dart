@@ -9,12 +9,14 @@ import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
 LoginResponseModel testValue;
+String device;
 
 class BottomNavigateBar extends StatefulWidget {
   // bottomNavigateBar({Key key}) : super(key: key);
 
-  BottomNavigateBar(LoginResponseModel _value) {
+  BottomNavigateBar(LoginResponseModel _value, String _device) {
     testValue = _value;
+    device = _device;
   }
 
   @override
@@ -31,7 +33,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
     dashboard(),
     StoreDocument(testValue),
     MyNotification(testValue),
-    Profile(testValue),
+    Profile(testValue, device),
   ];
   void _onItemTapped(int index) {
     setState(() {

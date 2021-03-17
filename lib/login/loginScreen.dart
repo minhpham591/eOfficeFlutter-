@@ -107,7 +107,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => BottomNavigateBar(value)),
+                        builder: (context) =>
+                            BottomNavigateBar(value, _device)),
                   );
                 }
               } else {

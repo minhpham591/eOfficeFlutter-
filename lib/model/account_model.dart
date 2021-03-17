@@ -82,3 +82,19 @@ class ForgotPasswordRequestModel {
     return map;
   }
 }
+
+class LogoutRequestModel {
+  int id;
+  String device;
+  LogoutRequestModel({
+    this.id,
+    this.device,
+  });
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "id": id,
+      "device": device,
+    };
+    return map;
+  }
+}

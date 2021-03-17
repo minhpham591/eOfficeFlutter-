@@ -8,6 +8,7 @@ import 'package:EOfficeMobile/pdfViewer/pdfViewerContractAfterSign.dart';
 import 'package:EOfficeMobile/signScreen/signOTPResendContract.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:otp_text_field/otp_field.dart';
 import 'package:otp_text_field/style.dart';
 import 'package:http/http.dart' as http;
@@ -150,7 +151,7 @@ class EnterOTPToSignContract extends StatelessWidget {
                 _createFileFromString(png, context);
               }
             });
-          } on FirebaseAuthException catch (_) {
+          } on PlatformException catch (_) {
             _showToast(context);
           }
         },
@@ -226,7 +227,7 @@ class EnterOTPToSignContract extends StatelessWidget {
                   style: style.copyWith(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 45),
+                SizedBox(height: 30),
                 OTPtextField,
                 SizedBox(height: 10),
                 nextButton,

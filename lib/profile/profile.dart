@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:EOfficeMobile/changeProfile/changeProfile.dart';
+import 'package:EOfficeMobile/model/account_model.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_restart/flutter_restart.dart';
+import 'package:http/http.dart' as http;
 
 LoginResponseModel value;
+String device;
 showAlertDialogLogout(BuildContext context) {
   // set up the buttons
   Widget cancelButton = FlatButton(
@@ -36,11 +41,24 @@ showAlertDialogLogout(BuildContext context) {
   );
 }
 
+Future<void> logout(LogoutRequestModel logoutRequestModel) async {
+  String url = "https://datnxeoffice.azurewebsites.net/api/accounts/logout";
+  var body = json.encode(logoutRequestModel.toJson());
+  final response = await http.post(url,
+      headers: <String, String>{
+        "Accept": "*/*",
+        "content-type": "application/json-patch+json",
+        'Authorization': 'Bearer ${value.token}'
+      },
+      body: body);
+}
+
 class Profile extends StatelessWidget {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
 
-  Profile(LoginResponseModel _value) {
+  Profile(LoginResponseModel _value, String _device) {
     value = _value;
+    device = _device;
   }
 
   @override
@@ -216,6 +234,11 @@ class Profile extends StatelessWidget {
                   minWidth: MediaQuery.of(context).size.width,
                   padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
                   onPressed: () {
+                    LogoutRequestModel logoutRequestModel =
+                        LogoutRequestModel();
+                    logoutRequestModel.id = value.id;
+                    logoutRequestModel.device = device;
+                    logout(logoutRequestModel);
                     showAlertDialogLogout(context);
                   },
                   child: Text(

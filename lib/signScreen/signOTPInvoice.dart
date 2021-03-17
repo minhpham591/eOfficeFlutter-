@@ -227,7 +227,7 @@ class EnterOTPToSignInvoice extends StatelessWidget {
                   style: style.copyWith(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
-                SizedBox(height: 45),
+                SizedBox(height: 30),
                 OTPtextField,
                 SizedBox(height: 10),
                 nextButton,
