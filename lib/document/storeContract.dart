@@ -113,25 +113,13 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["signs"]
-                    .toString()
-                    .contains("signerId: ${testvalue.id}")) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], signed),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], notSigned),
-                    ),
-                  );
-                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                  ),
+                );
               },
               child: ListTile(
                   title: Container(
@@ -156,7 +144,11 @@ class _MyHomePageState extends State<StoreContract> {
                             width: 100,
                             margin: const EdgeInsets.all(20.0),
                             //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["title"]),
+                            child: Text(
+                              jsonResponse[index]["title"],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25),
+                            ),
                           )
                         ]),
                         if (jsonResponse[index]["status"]
@@ -164,14 +156,13 @@ class _MyHomePageState extends State<StoreContract> {
                             .contains('3'))
                           Column(children: <Widget>[
                             Container(
-                              width: 100,
                               margin: const EdgeInsets.all(15.0),
                               padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.green, width: 5.0),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text("Signed"),
+                              child: Icon(
+                                Icons.create,
+                                color: Colors.green,
+                                semanticLabel: "Signed",
+                              ),
                             )
                           ]),
                         if (!jsonResponse[index]["status"]
@@ -182,14 +173,13 @@ class _MyHomePageState extends State<StoreContract> {
                               .contains("signerId: ${testvalue.id}"))
                             Column(children: <Widget>[
                               Container(
-                                width: 100,
                                 margin: const EdgeInsets.all(15.0),
                                 padding: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.yellow, width: 5.0),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Text("You've Signed"),
+                                child: Icon(
+                                  Icons.create,
+                                  color: Colors.yellow,
+                                  semanticLabel: "You've signed",
+                                ),
                               )
                             ]),
                         if (!jsonResponse[index]["status"]
@@ -200,26 +190,30 @@ class _MyHomePageState extends State<StoreContract> {
                               .contains("signerId: ${testvalue.id}"))
                             Column(children: <Widget>[
                               Container(
-                                width: 100,
                                 margin: const EdgeInsets.all(15.0),
                                 padding: const EdgeInsets.all(5.0),
-                                decoration: BoxDecoration(
-                                    border: Border.all(
-                                        color: Colors.red, width: 5.0),
-                                    borderRadius: BorderRadius.circular(10)),
-                                child: Text(
-                                  "You've not Signed",
+                                child: Icon(
+                                  Icons.create,
+                                  color: Colors.red,
+                                  semanticLabel: "You've not signed",
                                 ),
                               )
                             ]),
+                        SizedBox(
+                          width: 40,
+                        ),
                         Column(children: <Widget>[
                           Container(
                             width: 100,
                             margin: const EdgeInsets.all(15.0),
-                            //padding: const EdgeInsets.all(5.0),
-                            child: Text(jsonResponse[index]["dateExpire"]
-                                .toString()
-                                .substring(0, 10)),
+                            padding: const EdgeInsets.all(5.0),
+                            child: Center(
+                                child: Text(
+                              jsonResponse[index]["dateExpire"]
+                                  .toString()
+                                  .substring(0, 10),
+                              textAlign: TextAlign.center,
+                            )),
                           )
                         ]),
                       ]))),

@@ -80,9 +80,10 @@ class _MyHomePageState extends State<StoreSignerNotification> {
                           onPressed: () {
                             print('ok');
                           },
+                          color: Colors.blueAccent,
                           icon: Icon(
-                            Icons.read_more,
-                            color: Colors.blue,
+                            Icons.visibility,
+                            color: Colors.white70,
                           ),
                           label: Text('OPEN'),
                         ),
@@ -91,9 +92,10 @@ class _MyHomePageState extends State<StoreSignerNotification> {
                           onPressed: () {
                             print('delete');
                           },
+                          color: Colors.redAccent,
                           icon: Icon(
                             Icons.delete,
-                            color: Colors.red,
+                            color: Colors.white70,
                           ),
                           label: Text(
                             'DELETE',
@@ -132,10 +134,14 @@ class _MyHomePageState extends State<StoreSignerNotification> {
                             ),
                             Column(children: <Widget>[
                               Container(
-                                margin: const EdgeInsets.all(20.0),
-                                //padding: const EdgeInsets.all(10.0),
-                                child: Text(jsonResponse[index]["title"]),
-                              ),
+                                  margin: const EdgeInsets.all(20.0),
+                                  //padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    jsonResponse[index]["title"],
+                                    style: TextStyle(
+                                        fontSize: 25,
+                                        fontWeight: FontWeight.bold),
+                                  )),
                               Container(
                                 margin: const EdgeInsets.all(20.0),
                                 //padding: const EdgeInsets.all(10.0),

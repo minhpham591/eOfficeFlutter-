@@ -68,6 +68,8 @@ class _MyHomePageState extends State<StoreInvoice> {
             title: Container(
               margin: const EdgeInsets.all(1.0),
               padding: const EdgeInsets.all(1.0),
+              decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey, width: 1)),
               child: Row(children: <Widget>[
                 Column(children: <Widget>[
                   Container(
@@ -83,7 +85,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                 Column(children: <Widget>[
                   Container(
                     width: 100,
-                    margin: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(15.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Sign",
@@ -94,7 +96,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                 Column(children: <Widget>[
                   Container(
                     width: 100,
-                    margin: const EdgeInsets.all(20.0),
+                    margin: const EdgeInsets.all(15.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Date Expire",
@@ -109,23 +111,13 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() == '3') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], signed),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewer(
-                          testvalue, jsonResponse[index]["id"], notSigned),
-                    ),
-                  );
-                }
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                  ),
+                );
               },
               child: ListTile(
                   title: Container(
@@ -150,46 +142,53 @@ class _MyHomePageState extends State<StoreInvoice> {
                             width: 100,
                             margin: const EdgeInsets.all(20.0),
                             //padding: const EdgeInsets.all(10.0),
-                            child: Text(jsonResponse[index]["title"]),
+                            child: Text(
+                              jsonResponse[index]["title"],
+                              style: TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 25),
+                            ),
                           )
                         ]),
                         if (jsonResponse[index]["status"].toString() == '3')
                           Column(children: <Widget>[
                             Container(
-                              width: 100,
                               margin: const EdgeInsets.all(15.0),
                               padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: Colors.green, width: 5.0),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text("Signed"),
+                              child: Icon(
+                                Icons.create,
+                                color: Colors.green,
+                                semanticLabel: "Signed",
+                              ),
                             )
                           ]),
                         if (jsonResponse[index]["status"].toString() != '3')
                           Column(children: <Widget>[
                             Container(
-                              width: 100,
                               margin: const EdgeInsets.all(15.0),
                               padding: const EdgeInsets.all(5.0),
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.red, width: 5.0),
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text(
-                                "Not Signed",
+                              child: Icon(
+                                Icons.create,
+                                color: Colors.red,
+                                semanticLabel: "You've not signed",
                               ),
                             )
                           ]),
+                        SizedBox(
+                          width: 40,
+                        ),
                         Column(children: <Widget>[
                           Container(
-                            width: 100,
-                            margin: const EdgeInsets.all(15.0),
-                            //padding: const EdgeInsets.all(5.0),
-                            child: Text(jsonResponse[index]["dateExpire"]
-                                .toString()
-                                .substring(0, 10)),
-                          )
+                              width: 100,
+                              margin: const EdgeInsets.all(15.0),
+                              //padding: const EdgeInsets.all(5.0),
+                              child: Center(
+                                child: Text(
+                                  jsonResponse[index]["dateExpire"]
+                                      .toString()
+                                      .substring(0, 10),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ))
                         ]),
                       ]))),
             );

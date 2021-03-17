@@ -16,10 +16,9 @@ int status;
 String _url = "";
 
 class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(LoginResponseModel _value, int contractID, int statusSign) {
+  MyPdfViewer(LoginResponseModel _value, int contractID) {
     testvalue = _value;
     contractId = contractID;
-    status = statusSign;
   }
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,7 +37,8 @@ class _MyHomePageState extends State<MyPdfViewer> {
     );
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
-
+      status =
+          DocInvoiceResponseModel.fromJson(json.decode(response.body)).status;
       _url = DocInvoiceResponseModel.fromJson(json.decode(response.body)).url;
       getFileFromUrl(_url).then(
         (value) => {
@@ -112,26 +112,11 @@ class _MyHomePageState extends State<MyPdfViewer> {
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
                   );
-                } else if (status == 1) {
+                } else if (status == 3) {
                   showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(
                       content: new Text('You have been already sign'),
-                      actions: <Widget>[
-                        new FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: new Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                } else if (status == 2) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                      content: new Text('You have been assign to view'),
                       actions: <Widget>[
                         new FlatButton(
                           onPressed: () {

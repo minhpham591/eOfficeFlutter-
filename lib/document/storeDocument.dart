@@ -1,9 +1,9 @@
 import 'dart:ui';
 
 import 'package:EOfficeMobile/document/storeContract.dart';
-import 'package:EOfficeMobile/document/storeContractManager.dart';
+
 import 'package:EOfficeMobile/document/storeInvoice.dart';
-import 'package:EOfficeMobile/document/storeInvoiceManager.dart';
+
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
 
@@ -27,80 +27,41 @@ TextStyle style = TextStyle(
 class _MyHomePageState extends State<StoreDocument> {
   @override
   Widget build(BuildContext context) {
-    if (testvalue.role.toString().contains("2")) {
-      return MaterialApp(
-        home: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "Document",
-                style: style,
-              ),
-              bottom: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'Contract',
-                      style: style,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Invoice',
-                      style: style,
-                    ),
-                  ),
-                ],
-              ),
-              backgroundColor: Colors.white,
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Document",
+              style: style,
             ),
-            body: TabBarView(
-              children: [
-                StoreContract(testvalue),
-                StoreInvoice(testvalue),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Contract',
+                    style: style,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Invoice',
+                    style: style,
+                  ),
+                ),
               ],
             ),
+            backgroundColor: Colors.white,
+          ),
+          body: TabBarView(
+            children: [
+              StoreContract(testvalue),
+              StoreInvoice(testvalue),
+            ],
           ),
         ),
-      );
-    } else {
-      return MaterialApp(
-        home: DefaultTabController(
-          length: 2,
-          child: Scaffold(
-            appBar: AppBar(
-              title: Text(
-                "Document",
-                style: style,
-              ),
-              bottom: TabBar(
-                tabs: [
-                  Tab(
-                    child: Text(
-                      'Contract',
-                      style: style,
-                    ),
-                  ),
-                  Tab(
-                    child: Text(
-                      'Invoice',
-                      style: style,
-                    ),
-                  ),
-                ],
-              ),
-              backgroundColor: Colors.white,
-            ),
-            body: TabBarView(
-              children: [
-                StoreContractByCompanyId(testvalue),
-                StoreInvoiceByCompanyID(testvalue),
-              ],
-            ),
-          ),
-        ),
-      );
-    }
+      ),
+    );
   }
 }

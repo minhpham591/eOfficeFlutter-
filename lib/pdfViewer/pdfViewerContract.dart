@@ -14,12 +14,12 @@ LoginResponseModel testvalue;
 int contractId;
 int status;
 String _url = "";
+String signerID;
 
 class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(LoginResponseModel _value, int contractID, int statusSign) {
+  MyPdfViewer(LoginResponseModel _value, int contractID) {
     testvalue = _value;
     contractId = contractID;
-    status = statusSign;
   }
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -38,7 +38,10 @@ class _MyHomePageState extends State<MyPdfViewer> {
     );
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
-
+      status =
+          DocContractResponseModel.fromJson(json.decode(response.body)).status;
+      signerID = DocContractResponseModel.fromJson(json.decode(response.body))
+          .signerId;
       _url = DocContractResponseModel.fromJson(json.decode(response.body)).url;
       getFileFromUrl(_url).then(
         (value) => {
@@ -105,33 +108,35 @@ class _MyHomePageState extends State<MyPdfViewer> {
               color: Colors.grey,
               iconSize: 35,
               onPressed: () {
-                if (status == 0) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) =>
-                            MySignScreen(testvalue, contractId)),
-                  );
-                } else if (status == 1) {
+                if (status != 3) {
+                  if (signerID.contains("signerId: ${testvalue.id}")) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => new AlertDialog(
+                        content: new Text('You have been already sign'),
+                        actions: <Widget>[
+                          new FlatButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            child: new Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
+                  } else {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              MySignScreen(testvalue, contractId)),
+                    );
+                  }
+                } else if (status == 3) {
                   showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(
                       content: new Text('You have been already sign'),
-                      actions: <Widget>[
-                        new FlatButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: new Text('OK'),
-                        ),
-                      ],
-                    ),
-                  );
-                } else if (status == 2) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => new AlertDialog(
-                      content: new Text('You have been assign to view'),
                       actions: <Widget>[
                         new FlatButton(
                           onPressed: () {
