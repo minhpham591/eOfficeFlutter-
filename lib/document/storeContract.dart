@@ -155,53 +155,112 @@ class _MyHomePageState extends State<StoreContract> {
                             .toString()
                             .contains('3'))
                           Column(children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.all(15.0),
-                              padding: const EdgeInsets.all(5.0),
-                              child: Icon(
-                                Icons.create,
-                                color: Colors.green,
-                                semanticLabel: "Signed",
-                              ),
-                            )
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.green,
+                                    semanticLabel: "Signed",
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.green,
+                                    semanticLabel: "Signed",
+                                  ),
+                                ),
+                              ],
+                            ),
                           ]),
                         if (!jsonResponse[index]["status"]
-                            .toString()
-                            .contains('3'))
-                          if (jsonResponse[index]["signs"]
-                              .toString()
-                              .contains("signerId: ${testvalue.id}"))
-                            Column(children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.create,
-                                  color: Colors.yellow,
-                                  semanticLabel: "You've signed",
+                                .toString()
+                                .contains('3') &&
+                            !jsonResponse[index]["status"]
+                                .toString()
+                                .contains('0'))
+                          Column(children: <Widget>[
+                            if (jsonResponse[index]["signs"].toString() != '[]')
+                              if (jsonResponse[index]["signs"].toString().contains(
+                                  "signerId: ${jsonResponse[index]["contractSigners"][0]["signerId"]}"))
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.create,
+                                        color: Colors.green,
+                                        semanticLabel: "You've signed",
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.create,
+                                        color: Colors.red,
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ]),
-                        if (!jsonResponse[index]["status"]
-                            .toString()
-                            .contains('3'))
-                          if (!jsonResponse[index]["signs"]
-                              .toString()
-                              .contains("signerId: ${testvalue.id}"))
-                            Column(children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.all(15.0),
-                                padding: const EdgeInsets.all(5.0),
-                                child: Icon(
-                                  Icons.create,
-                                  color: Colors.red,
-                                  semanticLabel: "You've not signed",
+                            if (jsonResponse[index]["signs"].toString() != '[]')
+                              if (jsonResponse[index]["signs"].toString().contains(
+                                  "signerId: ${jsonResponse[index]["contractSigners"][1]["signerId"]}"))
+                                Row(
+                                  children: <Widget>[
+                                    Container(
+                                      margin: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.create,
+                                        color: Colors.red,
+                                      ),
+                                    ),
+                                    Container(
+                                      margin: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Icon(
+                                        Icons.create,
+                                        color: Colors.green,
+                                        semanticLabel: "You've signed",
+                                      ),
+                                    )
+                                  ],
                                 ),
-                              )
-                            ]),
-                        SizedBox(
-                          width: 40,
-                        ),
+                          ]),
+                        if (jsonResponse[index]["status"]
+                            .toString()
+                            .contains('0'))
+                          Column(children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.red,
+                                    semanticLabel: "Not Signed",
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.red,
+                                    semanticLabel: "Not Signed",
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
                         Column(children: <Widget>[
                           Container(
                             width: 100,

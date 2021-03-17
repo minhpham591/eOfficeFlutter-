@@ -85,12 +85,15 @@ class _MyHomePageState extends State<StoreAllNotification> {
                             Icons.visibility,
                             color: Colors.white70,
                           ),
-                          label: Text('OPEN'),
+                          label: Text(
+                            'OPEN',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         FlatButton.icon(
                           height: 100,
                           onPressed: () {
-                            print('delete');
+                            print('DELETE');
                           },
                           color: Colors.redAccent,
                           icon: Icon(
@@ -99,6 +102,7 @@ class _MyHomePageState extends State<StoreAllNotification> {
                           ),
                           label: Text(
                             'DELETE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],

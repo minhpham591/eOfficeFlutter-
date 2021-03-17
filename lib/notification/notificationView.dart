@@ -85,7 +85,10 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                             Icons.visibility,
                             color: Colors.white70,
                           ),
-                          label: Text('OPEN'),
+                          label: Text(
+                            'OPEN',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
                         ),
                         FlatButton.icon(
                           height: 100,
@@ -99,6 +102,7 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                           ),
                           label: Text(
                             'DELETE',
+                            style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                         ),
                       ],
