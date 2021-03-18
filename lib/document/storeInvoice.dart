@@ -57,55 +57,78 @@ class _MyHomePageState extends State<StoreInvoice> {
       );
     } else if (jsonResponse.toString() == "[]") {
       return Scaffold(
-        body: Container(
-          child: Text('Not invoice yet'),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(120),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  child: Image.asset(
+                    "assets/images/27.png",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  child: Text(
+                    'Not contract yet',
+                    style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     } else {
       return new Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Container(
-              margin: const EdgeInsets.all(1.0),
-              padding: const EdgeInsets.all(1.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1)),
-              child: Row(children: <Widget>[
-                Column(children: <Widget>[
-                  Container(
-                    width: 85,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Title",
-                      style: style,
-                    ),
-                  )
-                ]),
-                Column(children: <Widget>[
-                  Container(
-                    width: 90,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Sign",
-                      style: style,
-                    ),
-                  )
-                ]),
-                Column(children: <Widget>[
-                  Container(
-                    width: 100,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Date Expire",
-                      style: style,
-                    ),
-                  )
-                ]),
-              ]),
-            )),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     title: Container(
+        //       margin: const EdgeInsets.all(1.0),
+        //       padding: const EdgeInsets.all(1.0),
+        //       decoration: BoxDecoration(
+        //           border: Border.all(color: Colors.grey, width: 1)),
+        //       child: Row(children: <Widget>[
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 85,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Title",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 90,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Sign",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 100,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Date Expire",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //       ]),
+        //     )),
         body: new ListView.builder(
           itemCount: jsonResponse == null ? 0 : jsonResponse.length,
           itemBuilder: (BuildContext context, int index) {
@@ -177,18 +200,38 @@ class _MyHomePageState extends State<StoreInvoice> {
                           width: 40,
                         ),
                         Column(children: <Widget>[
-                          Container(
-                              width: 85,
-                              margin: const EdgeInsets.all(15.0),
-                              //padding: const EdgeInsets.all(5.0),
-                              child: Center(
-                                child: Text(
-                                  jsonResponse[index]["dateExpire"]
-                                      .toString()
-                                      .substring(0, 10),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ))
+                          if (jsonResponse[index]["status"].toString() != '3')
+                            Container(
+                                width: 85,
+                                margin: const EdgeInsets.all(15.0),
+                                //padding: const EdgeInsets.all(5.0),
+                                child: Center(
+                                  child: Text(
+                                    jsonResponse[index]["dateExpire"]
+                                        .toString()
+                                        .substring(0, 10),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                )),
+                          if (jsonResponse[index]["status"].toString() == '3')
+                            Container(
+                                width: 85,
+                                margin: const EdgeInsets.all(15.0),
+                                //padding: const EdgeInsets.all(5.0),
+                                child: Center(
+                                  child: Text(
+                                    jsonResponse[index]["dateExpire"]
+                                        .toString()
+                                        .substring(0, 10),
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.greenAccent,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                )),
                         ]),
                       ]))),
             );

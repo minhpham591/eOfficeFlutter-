@@ -54,60 +54,89 @@ class _MyHomePageState extends State<StoreContract> {
     if (jsonResponse == null) {
       return Scaffold(
         body: Container(
-          child: Text('Loading...'),
+          child: Text(
+            'Loading...',
+            style: TextStyle(
+                color: Colors.blueAccent,
+                fontWeight: FontWeight.bold,
+                fontSize: 30),
+          ),
         ),
       );
     } else if (jsonResponse.toString() == "[]") {
       return Scaffold(
-        body: Container(
-          child: Text('Not contract yet'),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(120),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  child: Image.asset(
+                    "assets/images/27.png",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  child: Text(
+                    'Not contract yet',
+                    style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     } else {
       return Scaffold(
-        appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Container(
-              margin: const EdgeInsets.all(1.0),
-              padding: const EdgeInsets.all(1.0),
-              decoration: BoxDecoration(
-                  border: Border.all(color: Colors.grey, width: 1)),
-              child: Row(children: <Widget>[
-                Column(children: <Widget>[
-                  Container(
-                    width: 85,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Title",
-                      style: style,
-                    ),
-                  )
-                ]),
-                Column(children: <Widget>[
-                  Container(
-                    width: 90,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Sign",
-                      style: style,
-                    ),
-                  )
-                ]),
-                Column(children: <Widget>[
-                  Container(
-                    width: 100,
-                    margin: const EdgeInsets.all(10.0),
-                    padding: const EdgeInsets.all(5.0),
-                    child: Text(
-                      "Date Expire",
-                      style: style,
-                    ),
-                  )
-                ]),
-              ]),
-            )),
+        // appBar: AppBar(
+        //     backgroundColor: Colors.white,
+        //     title: Container(
+        //       margin: const EdgeInsets.all(1.0),
+        //       padding: const EdgeInsets.all(1.0),
+        //       decoration: BoxDecoration(
+        //           border: Border.all(color: Colors.grey, width: 1)),
+        //       child: Row(children: <Widget>[
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 85,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Title",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 90,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Sign",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //         Column(children: <Widget>[
+        //           Container(
+        //             width: 100,
+        //             margin: const EdgeInsets.all(10.0),
+        //             padding: const EdgeInsets.all(5.0),
+        //             child: Text(
+        //               "Date Expire",
+        //               style: style,
+        //             ),
+        //           )
+        //         ]),
+        //       ]),
+        //     )),
         body: ListView.builder(
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
@@ -262,18 +291,42 @@ class _MyHomePageState extends State<StoreContract> {
                             ),
                           ]),
                         Column(children: <Widget>[
-                          Container(
-                            width: 95,
-                            margin: const EdgeInsets.all(10.0),
-                            padding: const EdgeInsets.all(5.0),
-                            child: Center(
-                                child: Text(
-                              jsonResponse[index]["dateExpire"]
-                                  .toString()
-                                  .substring(0, 10),
-                              textAlign: TextAlign.center,
-                            )),
-                          )
+                          if (jsonResponse[index]["status"]
+                              .toString()
+                              .contains('0'))
+                            Container(
+                              width: 95,
+                              margin: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(5.0),
+                              child: Center(
+                                  child: Text(
+                                jsonResponse[index]["dateExpire"]
+                                    .toString()
+                                    .substring(0, 10),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.redAccent,
+                                    fontWeight: FontWeight.w800),
+                              )),
+                            ),
+                          if (jsonResponse[index]["signs"]
+                              .toString()
+                              .contains("signerId: ${testvalue.id}"))
+                            Container(
+                              width: 95,
+                              margin: const EdgeInsets.all(10.0),
+                              padding: const EdgeInsets.all(5.0),
+                              child: Center(
+                                  child: Text(
+                                jsonResponse[index]["dateExpire"]
+                                    .toString()
+                                    .substring(0, 10),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.greenAccent,
+                                    fontWeight: FontWeight.w800),
+                              )),
+                            ),
                         ]),
                       ]))),
             );

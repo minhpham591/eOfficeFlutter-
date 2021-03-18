@@ -77,8 +77,31 @@ class _MyHomePageState extends State<StoreAllNotification> {
       );
     } else if (jsonResponse.toString() == "[]") {
       return Scaffold(
-        body: Container(
-          child: Text('Not notification yet'),
+        body: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(120),
+            child: Column(
+              children: <Widget>[
+                Container(
+                  height: 250,
+                  child: Image.asset(
+                    "assets/images/27.png",
+                    fit: BoxFit.contain,
+                  ),
+                ),
+                Container(
+                  width: 200,
+                  child: Text(
+                    'Not contract yet',
+                    style: TextStyle(
+                        color: Colors.blueAccent,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       );
     } else {
