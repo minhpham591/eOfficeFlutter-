@@ -43,6 +43,24 @@ class _MyHomePageState extends State<StoreAllNotification> {
     }
   }
 
+  Future<void> deteleByID(int id) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/notifications/deletenotification?id=${id}";
+    final response = await http.delete(
+      url,
+      headers: <String, String>{
+        "accept": "*/*",
+        'Authorization': 'Bearer ${testvalue.token}'
+      },
+    );
+    if (response.statusCode == 200) {
+      print('DELETE');
+      //Contract.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -87,13 +105,14 @@ class _MyHomePageState extends State<StoreAllNotification> {
                           ),
                           label: Text(
                             'OPEN',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 8),
                           ),
                         ),
                         FlatButton.icon(
                           height: 100,
                           onPressed: () {
-                            print('DELETE');
+                            deteleByID(jsonResponse[index]['id']);
                           },
                           color: Colors.redAccent,
                           icon: Icon(
@@ -102,7 +121,8 @@ class _MyHomePageState extends State<StoreAllNotification> {
                           ),
                           label: Text(
                             'DELETE',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 8),
                           ),
                         ),
                       ],

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 LoginResponseModel testvalue;
 TextStyle style = TextStyle(
     fontFamily: 'Montserrat',
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 
@@ -73,9 +73,9 @@ class _MyHomePageState extends State<StoreInvoice> {
               child: Row(children: <Widget>[
                 Column(children: <Widget>[
                   Container(
-                    width: 100,
-                    margin: const EdgeInsets.all(20.0),
-                    padding: const EdgeInsets.all(10.0),
+                    width: 85,
+                    margin: const EdgeInsets.all(10.0),
+                    padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Title",
                       style: style,
@@ -84,8 +84,8 @@ class _MyHomePageState extends State<StoreInvoice> {
                 ]),
                 Column(children: <Widget>[
                   Container(
-                    width: 100,
-                    margin: const EdgeInsets.all(15.0),
+                    width: 90,
+                    margin: const EdgeInsets.all(10.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Sign",
@@ -96,7 +96,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                 Column(children: <Widget>[
                   Container(
                     width: 100,
-                    margin: const EdgeInsets.all(15.0),
+                    margin: const EdgeInsets.all(10.0),
                     padding: const EdgeInsets.all(5.0),
                     child: Text(
                       "Date Expire",
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                       child: Row(children: <Widget>[
                         Column(children: <Widget>[
                           Container(
-                            width: 100,
+                            width: 85,
                             margin: const EdgeInsets.all(20.0),
                             //padding: const EdgeInsets.all(10.0),
                             child: Text(
@@ -178,7 +178,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                         ),
                         Column(children: <Widget>[
                           Container(
-                              width: 100,
+                              width: 85,
                               margin: const EdgeInsets.all(15.0),
                               //padding: const EdgeInsets.all(5.0),
                               child: Center(
