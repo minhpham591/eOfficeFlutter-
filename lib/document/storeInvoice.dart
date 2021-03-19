@@ -51,28 +51,35 @@ class _MyHomePageState extends State<StoreInvoice> {
     int signed = 1;
     if (jsonResponse == null) {
       return Scaffold(
-        body: Container(
-          child: Text('Loading...'),
+        body: Center(
+          child: Container(
+            child: Text(
+              'Wait a minute. \n Loading...',
+              style: TextStyle(
+                  color: Colors.blueAccent,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30),
+            ),
+          ),
         ),
       );
     } else if (jsonResponse.toString() == "[]") {
       return Scaffold(
         body: Center(
           child: Padding(
-            padding: const EdgeInsets.all(120),
+            padding: const EdgeInsets.all(100),
             child: Column(
               children: <Widget>[
                 Container(
-                  height: 250,
+                  height: 400,
                   child: Image.asset(
                     "assets/images/27.png",
                     fit: BoxFit.contain,
                   ),
                 ),
                 Container(
-                  width: 200,
                   child: Text(
-                    'Not contract yet',
+                    'Not invoice yet',
                     style: TextStyle(
                         color: Colors.blueAccent,
                         fontWeight: FontWeight.bold,

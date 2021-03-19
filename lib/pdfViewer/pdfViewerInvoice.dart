@@ -210,13 +210,16 @@ class _MyHomePageState extends State<MyPdfViewer> {
       if (exists) {
         //Replace with your loading UI
         return Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            title: Text("PDF Viewer"),
-          ),
-          body: Text(
-            "Loading..",
-            style: TextStyle(fontSize: 20),
+          body: Center(
+            child: Container(
+              child: Text(
+                'Wait a minute. \n Loading...',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+            ),
           ),
         );
       } else {
@@ -224,11 +227,30 @@ class _MyHomePageState extends State<MyPdfViewer> {
         return Scaffold(
           appBar: AppBar(
             backgroundColor: Colors.white,
-            title: Text("PDF Viewer"),
+            title: Text(''),
+            actions: <Widget>[
+              IconButton(
+                color: Colors.grey,
+                iconSize: 35,
+                icon: Icon(Icons.cancel),
+                onPressed: () {
+                  Navigator.pop(context);
+
+                  //_showToast(context);
+                },
+              ),
+            ],
           ),
-          body: Text(
-            "PDF Not Available",
-            style: TextStyle(fontSize: 20),
+          body: Center(
+            child: Container(
+              child: Text(
+                'PDF Not Available',
+                style: TextStyle(
+                    color: Colors.blueAccent,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30),
+              ),
+            ),
           ),
         );
       }
