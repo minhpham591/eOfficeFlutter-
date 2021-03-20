@@ -190,7 +190,7 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                               Container(
                                 margin: const EdgeInsets.all(20.0),
                                 //padding: const EdgeInsets.all(10.0),
-                                child: Text(jsonResponse[index]["title"],
+                                child: Text(jsonResponse[index]["content"],
                                     style: TextStyle(
                                         fontSize: 25,
                                         fontWeight: FontWeight.bold)),
