@@ -200,7 +200,9 @@ class _MyHomePageState extends State<StoreAllNotification> {
                               Container(
                                 margin: const EdgeInsets.all(20.0),
                                 //padding: const EdgeInsets.all(10.0),
-                                child: Text(jsonResponse[index]["createdDate"]),
+                                child: Text(jsonResponse[index]["createdDate"]
+                                    .toString()
+                                    .substring(0, 10)),
                               ),
                             ]),
                           ])))),
