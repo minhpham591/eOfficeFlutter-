@@ -145,7 +145,7 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString().contains('0'))
+                if (jsonResponse[index]["status"].toString().contains('0')) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -153,7 +153,7 @@ class _MyHomePageState extends State<StoreContract> {
                           MyPdfViewer(testvalue, jsonResponse[index]["id"]),
                     ),
                   );
-                if (!jsonResponse[index]["status"].toString().contains('0'))
+                } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -161,6 +161,7 @@ class _MyHomePageState extends State<StoreContract> {
                           testvalue, jsonResponse[index]["id"]),
                     ),
                   );
+                }
               },
               child: ListTile(
                   title: Container(

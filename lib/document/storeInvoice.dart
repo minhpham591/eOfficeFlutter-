@@ -142,7 +142,7 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() == '3')
+                if (jsonResponse[index]["status"].toString() != '3') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -150,7 +150,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                           MyPdfViewer(testvalue, jsonResponse[index]["id"]),
                     ),
                   );
-                if (jsonResponse[index]["status"].toString() != '3')
+                } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -158,6 +158,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                           testvalue, jsonResponse[index]["id"]),
                     ),
                   );
+                }
               },
               child: ListTile(
                   title: Container(
