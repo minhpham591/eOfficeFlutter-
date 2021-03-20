@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoice.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -141,13 +142,22 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        MyPdfViewer(testvalue, jsonResponse[index]["id"]),
-                  ),
-                );
+                if (jsonResponse[index]["status"].toString() == '3')
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                    ),
+                  );
+                if (jsonResponse[index]["status"].toString() != '3')
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewerAfter(
+                          testvalue, jsonResponse[index]["id"]),
+                    ),
+                  );
               },
               child: ListTile(
                   title: Container(

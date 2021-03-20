@@ -13,8 +13,8 @@ LoginResponseModel testvalue;
 int contractId;
 String _url = "";
 
-class MyPdfViewer extends StatefulWidget {
-  MyPdfViewer(LoginResponseModel _value, int contractID) {
+class MyPdfViewerAfter extends StatefulWidget {
+  MyPdfViewerAfter(LoginResponseModel _value, int contractID) {
     testvalue = _value;
     contractId = contractID;
   }
@@ -22,7 +22,7 @@ class MyPdfViewer extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyPdfViewer> {
+class _MyHomePageState extends State<MyPdfViewerAfter> {
   Future<void> getContractByID() async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/contracts/$contractId";

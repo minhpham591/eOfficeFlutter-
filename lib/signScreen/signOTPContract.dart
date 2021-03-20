@@ -278,7 +278,8 @@ class EnterOTPToSignContract extends StatelessWidget {
               Navigator.pushAndRemoveUntil(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => MyPdfViewer(testvalue, contractId)),
+                    builder: (context) =>
+                        MyPdfViewerAfter(testvalue, contractId)),
                 ModalRoute.withName('/'),
               );
             }),
