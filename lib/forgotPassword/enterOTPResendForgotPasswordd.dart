@@ -85,7 +85,7 @@ class EnterOTPResendForgotPassword extends StatelessWidget {
           }
         },
         child: Text(
-          "Verifying",
+          "Verify",
           textAlign: TextAlign.center,
           style:
               style.copyWith(color: Colors.white, fontWeight: FontWeight.bold),

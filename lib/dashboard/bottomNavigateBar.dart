@@ -5,6 +5,7 @@ import 'package:EOfficeMobile/document/storeDocument.dart';
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:EOfficeMobile/notification/notification.dart';
 import 'package:EOfficeMobile/profile/profile.dart';
+import 'package:EOfficeMobile/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
 
@@ -32,6 +33,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
   static List<Widget> _widgetOptions = <Widget>[
     dashboard(),
     StoreDocument(testValue),
+    Search(testValue),
     MyNotification(testValue),
     Profile(testValue, device),
   ];
@@ -82,6 +84,14 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
               Icons.insert_drive_file_rounded,
             ),
             label: 'Document',
+            backgroundColor: Colors.white,
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search_rounded,
+              size: 35,
+            ),
+            label: 'Search',
             backgroundColor: Colors.white,
           ),
           BottomNavigationBarItem(

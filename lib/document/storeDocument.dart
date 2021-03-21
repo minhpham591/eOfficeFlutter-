@@ -27,39 +27,37 @@ TextStyle style = TextStyle(
 class _MyHomePageState extends State<StoreDocument> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 2,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Document",
-              style: style,
-            ),
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Text(
-                    'Contract',
-                    style: style,
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Invoice',
-                    style: style,
-                  ),
-                ),
-              ],
-            ),
-            backgroundColor: Colors.white,
+    return DefaultTabController(
+      length: 2,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Document",
+            style: style,
           ),
-          body: TabBarView(
-            children: [
-              StoreContract(testvalue),
-              StoreInvoice(testvalue),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                child: Text(
+                  'Contract',
+                  style: style,
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Invoice',
+                  style: style,
+                ),
+              ),
             ],
           ),
+          backgroundColor: Colors.white,
+        ),
+        body: TabBarView(
+          children: [
+            StoreContract(testvalue),
+            StoreInvoice(testvalue),
+          ],
         ),
       ),
     );

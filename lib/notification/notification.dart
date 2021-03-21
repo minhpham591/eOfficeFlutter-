@@ -25,46 +25,44 @@ TextStyle style = TextStyle(
 class _DropDownButtonState extends State<MyNotification> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text(
-              "Notification",
-              style: style,
-            ),
-            bottom: TabBar(
-              tabs: [
-                Tab(
-                  child: Text(
-                    'All',
-                    style: style,
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'Sign',
-                    style: style,
-                  ),
-                ),
-                Tab(
-                  child: Text(
-                    'View',
-                    style: style,
-                  ),
-                ),
-              ],
-            ),
-            backgroundColor: Colors.white,
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            "Notification",
+            style: style,
           ),
-          body: TabBarView(
-            children: [
-              StoreAllNotification(testvalue),
-              StoreSignerNotification(testvalue),
-              StoreViewerNotification(testvalue),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                child: Text(
+                  'All',
+                  style: style,
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'Sign',
+                  style: style,
+                ),
+              ),
+              Tab(
+                child: Text(
+                  'View',
+                  style: style,
+                ),
+              ),
             ],
           ),
+          backgroundColor: Colors.white,
+        ),
+        body: TabBarView(
+          children: [
+            StoreAllNotification(testvalue),
+            StoreSignerNotification(testvalue),
+            StoreViewerNotification(testvalue),
+          ],
         ),
       ),
     );
