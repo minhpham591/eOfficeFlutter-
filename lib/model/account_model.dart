@@ -98,3 +98,39 @@ class LogoutRequestModel {
     return map;
   }
 }
+
+class ChangeAccount {
+  int id;
+  String email;
+  String avatar;
+  String password;
+  String phone;
+  String address;
+  int subDepartmentId;
+  int departmentId;
+  int status;
+
+  ChangeAccount(
+      {this.id,
+      this.address,
+      this.avatar,
+      this.departmentId,
+      this.email,
+      this.password,
+      this.phone,
+      this.status,
+      this.subDepartmentId});
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {
+      "id": id,
+      "avatar": avatar,
+      "password": password,
+      "phone": phone,
+      "address": address,
+      "subDepartmentId": subDepartmentId,
+      "departmentId": departmentId,
+      "status": status,
+    };
+    return map;
+  }
+}
