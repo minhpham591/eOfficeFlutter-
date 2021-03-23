@@ -182,16 +182,55 @@ class _MyHomePageState extends State<StoreContract> {
                           borderRadius: BorderRadius.circular(10)),
                       child: Row(children: <Widget>[
                         Column(children: <Widget>[
-                          Container(
-                            width: 85,
-                            margin: const EdgeInsets.all(20.0),
-                            //padding: const EdgeInsets.all(10.0),
-                            child: Text(
-                              jsonResponse[index]["title"],
-                              style: TextStyle(
-                                  fontWeight: FontWeight.bold, fontSize: 25),
-                            ),
-                          )
+                          Row(
+                            children: [
+                              Container(
+                                width: 250,
+                                margin: const EdgeInsets.all(20.0),
+                                //padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  jsonResponse[index]["title"],
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 25),
+                                ),
+                              )
+                            ],
+                          ),
+                          Row(children: <Widget>[
+                            if (jsonResponse[index]["status"]
+                                .toString()
+                                .contains('0'))
+                              Container(
+                                  width: 250,
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    jsonResponse[index]["dateExpire"]
+                                        .toString()
+                                        .substring(0, 10),
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.redAccent,
+                                        fontWeight: FontWeight.w800),
+                                  )),
+                            if (jsonResponse[index]["signs"]
+                                .toString()
+                                .contains("signerId: ${testvalue.id}"))
+                              Container(
+                                  width: 250,
+                                  margin: const EdgeInsets.all(10.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(
+                                    jsonResponse[index]["dateExpire"]
+                                        .toString()
+                                        .substring(0, 10),
+                                    textAlign: TextAlign.left,
+                                    style: TextStyle(
+                                        color: Colors.greenAccent,
+                                        fontWeight: FontWeight.w800),
+                                  )),
+                          ]),
                         ]),
                         if (jsonResponse[index]["status"]
                             .toString()
@@ -303,44 +342,6 @@ class _MyHomePageState extends State<StoreContract> {
                               ],
                             ),
                           ]),
-                        Column(children: <Widget>[
-                          if (jsonResponse[index]["status"]
-                              .toString()
-                              .contains('0'))
-                            Container(
-                              width: 95,
-                              margin: const EdgeInsets.all(10.0),
-                              padding: const EdgeInsets.all(5.0),
-                              child: Center(
-                                  child: Text(
-                                jsonResponse[index]["dateExpire"]
-                                    .toString()
-                                    .substring(0, 10),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.redAccent,
-                                    fontWeight: FontWeight.w800),
-                              )),
-                            ),
-                          if (jsonResponse[index]["signs"]
-                              .toString()
-                              .contains("signerId: ${testvalue.id}"))
-                            Container(
-                              width: 95,
-                              margin: const EdgeInsets.all(10.0),
-                              padding: const EdgeInsets.all(5.0),
-                              child: Center(
-                                  child: Text(
-                                jsonResponse[index]["dateExpire"]
-                                    .toString()
-                                    .substring(0, 10),
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.greenAccent,
-                                    fontWeight: FontWeight.w800),
-                              )),
-                            ),
-                        ]),
                       ]))),
             );
           },
