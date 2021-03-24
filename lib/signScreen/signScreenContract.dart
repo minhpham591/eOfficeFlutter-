@@ -34,12 +34,11 @@ class _ExamplePageState extends State<MySignScreen> {
         },
         codeSent: (String verficationID, int resendToken) {
           verificationId = verficationID;
-          Navigator.pushAndRemoveUntil(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => EnterOTPToSignContract(testvalue.phone,
                     verificationId, png, testvalue, contractId, 0)),
-            ModalRoute.withName('/'),
           );
         },
         codeAutoRetrievalTimeout: (String verificationID) {},

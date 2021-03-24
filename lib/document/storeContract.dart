@@ -145,20 +145,22 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString().contains('0')) {
+                if (jsonResponse[index]["signs"]
+                    .toString()
+                    .contains("signerId: ${testvalue.id}")) {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                      builder: (context) => MyPdfViewerAfter(
+                          testvalue, jsonResponse[index]["id"]),
                     ),
                   );
                 } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyPdfViewerAfter(
-                          testvalue, jsonResponse[index]["id"]),
+                      builder: (context) =>
+                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
                     ),
                   );
                 }

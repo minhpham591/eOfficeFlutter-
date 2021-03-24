@@ -22,6 +22,7 @@ String phone;
 String verificationId;
 Uint8List png;
 int countResend;
+final _scaffoldKey = GlobalKey<ScaffoldState>();
 
 class EnterOTPToSignContract extends StatelessWidget {
   EnterOTPToSignContract(String _phone, String _vertificationId, Uint8List _png,
@@ -186,6 +187,7 @@ class EnterOTPToSignContract extends StatelessWidget {
       ),
     );
     return Scaffold(
+      key: _scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(''),
@@ -244,8 +246,7 @@ class EnterOTPToSignContract extends StatelessWidget {
   }
 
   void _showToast(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
+    _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         backgroundColor: Colors.red,
         duration: const Duration(seconds: 45),
@@ -263,8 +264,7 @@ class EnterOTPToSignContract extends StatelessWidget {
   }
 
   void _showToastSuccess(BuildContext context) {
-    final scaffold = Scaffold.of(context);
-    scaffold.showSnackBar(
+    _scaffoldKey.currentState.showSnackBar(
       SnackBar(
         backgroundColor: Colors.green,
         duration: const Duration(minutes: 1, seconds: 45),
@@ -275,12 +275,11 @@ class EnterOTPToSignContract extends StatelessWidget {
         action: SnackBarAction(
             label: "OK",
             onPressed: () {
-              Navigator.pushAndRemoveUntil(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
                         MyPdfViewerAfter(testvalue, contractId)),
-                ModalRoute.withName('/'),
               );
             }),
       ),
