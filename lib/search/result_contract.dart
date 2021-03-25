@@ -14,6 +14,7 @@ TextStyle style = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 String content;
+int count = 0;
 
 class ResultContract extends StatefulWidget {
   ResultContract(LoginResponseModel _value, String _content) {
@@ -194,6 +195,7 @@ class _MyHomePageState extends State<ResultContract> {
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
             if (jsonResponse[index]["title"].toString().contains(content)) {
+              count++;
               return InkWell(
                 onTap: () {
                   if (jsonResponse[index]["signs"]
@@ -404,31 +406,35 @@ class _MyHomePageState extends State<ResultContract> {
                         ]))),
               );
             } else {
-              return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(100),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 400,
-                        child: Image.asset(
-                          "assets/images/27.png",
-                          fit: BoxFit.contain,
+              if (count == 0) {
+                return Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(100),
+                    child: Column(
+                      children: <Widget>[
+                        Container(
+                          height: 400,
+                          child: Image.asset(
+                            "assets/images/27.png",
+                            fit: BoxFit.contain,
+                          ),
                         ),
-                      ),
-                      Container(
-                        child: Text(
-                          'Not Found',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30),
+                        Container(
+                          child: Text(
+                            'Not Found',
+                            style: TextStyle(
+                                color: Colors.redAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 30),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-              );
+                );
+              } else {
+                return InkWell();
+              }
             }
           },
         ),
