@@ -6,8 +6,8 @@ import 'package:EOfficeMobile/search/result_invoice.dart';
 import 'package:flutter/material.dart';
 
 LoginResponseModel testvalue;
-String content = searchController.text;
-TextEditingController searchController = new TextEditingController();
+String content;
+TextEditingController findController = new TextEditingController();
 
 class Search extends StatefulWidget {
   Search(LoginResponseModel _value) {
@@ -34,14 +34,14 @@ class _MyAppPageState extends State<Search> {
 
   @override
   Widget build(BuildContext context) {
-    final searchField = TextFormField(
+    final searchField = TextField(
       obscureText: false,
       style: style,
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
           hintText: "Please enter name of contract or invoice",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
-      controller: searchController,
+      controller: findController,
     );
     final nextButton = Material(
       elevation: 5,
@@ -51,6 +51,7 @@ class _MyAppPageState extends State<Search> {
         minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
+          content = findController.text.toString();
           print(content);
           if (_character.toString() == "SingingCharacter.contract") {
             Navigator.push(

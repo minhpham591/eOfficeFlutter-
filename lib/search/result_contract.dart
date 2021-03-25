@@ -193,23 +193,25 @@ class _MyHomePageState extends State<ResultContract> {
         body: ListView.builder(
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
-            if (jsonResponse[index]["title"].contains(content)) {
+            if (jsonResponse[index]["title"].toString().contains(content)) {
               return InkWell(
                 onTap: () {
-                  if (jsonResponse[index]["status"].toString().contains('0')) {
+                  if (jsonResponse[index]["signs"]
+                      .toString()
+                      .contains("signerId: ${testvalue.id}")) {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                        builder: (context) => MyPdfViewerAfter(
+                            testvalue, jsonResponse[index]["id"]),
                       ),
                     );
                   } else {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyPdfViewerAfter(
-                            testvalue, jsonResponse[index]["id"]),
+                        builder: (context) =>
+                            MyPdfViewer(testvalue, jsonResponse[index]["id"]),
                       ),
                     );
                   }
@@ -233,16 +235,55 @@ class _MyHomePageState extends State<ResultContract> {
                             borderRadius: BorderRadius.circular(10)),
                         child: Row(children: <Widget>[
                           Column(children: <Widget>[
-                            Container(
-                              width: 85,
-                              margin: const EdgeInsets.all(20.0),
-                              //padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                jsonResponse[index]["title"],
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 25),
-                              ),
-                            )
+                            Row(
+                              children: [
+                                Container(
+                                  width: 250,
+                                  margin: const EdgeInsets.all(20.0),
+                                  //padding: const EdgeInsets.all(10.0),
+                                  child: Text(
+                                    jsonResponse[index]["title"],
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 25),
+                                  ),
+                                )
+                              ],
+                            ),
+                            Row(children: <Widget>[
+                              if (jsonResponse[index]["status"]
+                                  .toString()
+                                  .contains('0'))
+                                Container(
+                                    width: 250,
+                                    margin: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      jsonResponse[index]["dateExpire"]
+                                          .toString()
+                                          .substring(0, 10),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Colors.redAccent,
+                                          fontWeight: FontWeight.w800),
+                                    )),
+                              if (jsonResponse[index]["signs"]
+                                  .toString()
+                                  .contains("signerId: ${testvalue.id}"))
+                                Container(
+                                    width: 250,
+                                    margin: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      jsonResponse[index]["dateExpire"]
+                                          .toString()
+                                          .substring(0, 10),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Colors.greenAccent,
+                                          fontWeight: FontWeight.w800),
+                                    )),
+                            ]),
                           ]),
                           if (jsonResponse[index]["status"]
                               .toString()
@@ -360,45 +401,33 @@ class _MyHomePageState extends State<ResultContract> {
                                 ],
                               ),
                             ]),
-                          Column(children: <Widget>[
-                            if (jsonResponse[index]["status"]
-                                .toString()
-                                .contains('0'))
-                              Container(
-                                width: 95,
-                                margin: const EdgeInsets.all(10.0),
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                    child: Text(
-                                  jsonResponse[index]["dateExpire"]
-                                      .toString()
-                                      .substring(0, 10),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.redAccent,
-                                      fontWeight: FontWeight.w800),
-                                )),
-                              ),
-                            if (jsonResponse[index]["signs"]
-                                .toString()
-                                .contains("signerId: ${testvalue.id}"))
-                              Container(
-                                width: 95,
-                                margin: const EdgeInsets.all(10.0),
-                                padding: const EdgeInsets.all(5.0),
-                                child: Center(
-                                    child: Text(
-                                  jsonResponse[index]["dateExpire"]
-                                      .toString()
-                                      .substring(0, 10),
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      color: Colors.greenAccent,
-                                      fontWeight: FontWeight.w800),
-                                )),
-                              ),
-                          ]),
                         ]))),
+              );
+            } else {
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(100),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 400,
+                        child: Image.asset(
+                          "assets/images/27.png",
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                      Container(
+                        child: Text(
+                          'Not Found',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
               );
             }
           },
