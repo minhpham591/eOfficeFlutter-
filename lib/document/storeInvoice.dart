@@ -142,7 +142,7 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() != '3') {
+                if (jsonResponse[index]["status"].toString() != '2') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -197,7 +197,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                           Row(
                             children: [
                               if (jsonResponse[index]["status"].toString() !=
-                                  '3')
+                                  '2')
                                 Container(
                                   width: 250,
                                   margin: const EdgeInsets.all(15.0),
@@ -214,7 +214,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                                   ),
                                 ),
                               if (jsonResponse[index]["status"].toString() ==
-                                  '3')
+                                  '2')
                                 Container(
                                   width: 250,
                                   margin: const EdgeInsets.all(15.0),
@@ -233,7 +233,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                             ],
                           ),
                         ]),
-                        if (jsonResponse[index]["status"].toString() == '3')
+                        if (jsonResponse[index]["status"].toString() == '2')
                           Column(children: <Widget>[
                             Container(
                               margin: const EdgeInsets.all(15.0),
@@ -245,7 +245,7 @@ class _MyHomePageState extends State<StoreInvoice> {
                               ),
                             )
                           ]),
-                        if (jsonResponse[index]["status"].toString() != '3')
+                        if (jsonResponse[index]["status"].toString() != '2')
                           Column(children: <Widget>[
                             Container(
                               margin: const EdgeInsets.all(15.0),

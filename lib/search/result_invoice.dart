@@ -13,7 +13,6 @@ TextStyle style = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 String content;
-int count = 0;
 
 class ResultInvoice extends StatefulWidget {
   ResultInvoice(LoginResponseModel _value, String _content) {
@@ -191,11 +190,13 @@ class _MyHomePageState extends State<ResultInvoice> {
         body: new ListView.builder(
           itemCount: jsonResponse == null ? 0 : jsonResponse.length,
           itemBuilder: (BuildContext context, int index) {
-            if (jsonResponse[index]["title"].toString().contains(content)) {
-              count++;
+            if (jsonResponse[index]["title"]
+                .toString()
+                .toLowerCase()
+                .contains(content)) {
               return InkWell(
                 onTap: () {
-                  if (jsonResponse[index]["status"].toString() != '3') {
+                  if (jsonResponse[index]["status"].toString() != '2') {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -250,7 +251,7 @@ class _MyHomePageState extends State<ResultInvoice> {
                             Row(
                               children: [
                                 if (jsonResponse[index]["status"].toString() !=
-                                    '3')
+                                    '2')
                                   Container(
                                     width: 250,
                                     margin: const EdgeInsets.all(15.0),
@@ -267,7 +268,7 @@ class _MyHomePageState extends State<ResultInvoice> {
                                     ),
                                   ),
                                 if (jsonResponse[index]["status"].toString() ==
-                                    '3')
+                                    '2')
                                   Container(
                                     width: 250,
                                     margin: const EdgeInsets.all(15.0),
@@ -286,7 +287,7 @@ class _MyHomePageState extends State<ResultInvoice> {
                               ],
                             ),
                           ]),
-                          if (jsonResponse[index]["status"].toString() == '3')
+                          if (jsonResponse[index]["status"].toString() == '2')
                             Column(children: <Widget>[
                               Container(
                                 margin: const EdgeInsets.all(15.0),
@@ -298,7 +299,7 @@ class _MyHomePageState extends State<ResultInvoice> {
                                 ),
                               )
                             ]),
-                          if (jsonResponse[index]["status"].toString() != '3')
+                          if (jsonResponse[index]["status"].toString() != '2')
                             Column(children: <Widget>[
                               Container(
                                 margin: const EdgeInsets.all(15.0),
@@ -316,35 +317,31 @@ class _MyHomePageState extends State<ResultInvoice> {
                         ]))),
               );
             } else {
-              if (count == 0) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(100),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 400,
-                          child: Image.asset(
-                            "assets/images/27.png",
-                            fit: BoxFit.contain,
-                          ),
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(100),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 400,
+                        child: Image.asset(
+                          "assets/images/27.png",
+                          fit: BoxFit.contain,
                         ),
-                        Container(
-                          child: Text(
-                            'Not Found',
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
+                      ),
+                      Container(
+                        child: Text(
+                          'Not Found',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              } else {
-                return InkWell();
-              }
+                ),
+              );
             }
           },
         ),

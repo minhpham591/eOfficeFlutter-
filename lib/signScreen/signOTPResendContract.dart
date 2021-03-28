@@ -73,12 +73,11 @@ class EnterOTPResendToSignContract extends StatelessWidget {
         },
         codeSent: (String verficationID, int resendToken) {
           verificationId = verficationID;
-          Navigator.pushAndRemoveUntil(
+          Navigator.pushReplacement(
             context,
             MaterialPageRoute(
                 builder: (context) => EnterOTPToSignContract(
                     phone, verificationId, png, testvalue, contractId, count)),
-            ModalRoute.withName('/'),
           );
         },
         codeAutoRetrievalTimeout: (String verificationID) {},

@@ -236,7 +236,7 @@ class _MyHomePageState extends State<StoreContract> {
                         ]),
                         if (jsonResponse[index]["status"]
                             .toString()
-                            .contains('3'))
+                            .contains('2'))
                           Column(children: <Widget>[
                             Row(
                               children: <Widget>[
@@ -263,7 +263,7 @@ class _MyHomePageState extends State<StoreContract> {
                           ]),
                         if (!jsonResponse[index]["status"]
                                 .toString()
-                                .contains('3') &&
+                                .contains('2') &&
                             !jsonResponse[index]["status"]
                                 .toString()
                                 .contains('0'))

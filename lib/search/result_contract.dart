@@ -14,7 +14,6 @@ TextStyle style = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 String content;
-int count = 0;
 
 class ResultContract extends StatefulWidget {
   ResultContract(LoginResponseModel _value, String _content) {
@@ -194,8 +193,10 @@ class _MyHomePageState extends State<ResultContract> {
         body: ListView.builder(
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
-            if (jsonResponse[index]["title"].toString().contains(content)) {
-              count++;
+            if (jsonResponse[index]["title"]
+                .toString()
+                .toLowerCase()
+                .contains(content)) {
               return InkWell(
                 onTap: () {
                   if (jsonResponse[index]["signs"]
@@ -289,7 +290,7 @@ class _MyHomePageState extends State<ResultContract> {
                           ]),
                           if (jsonResponse[index]["status"]
                               .toString()
-                              .contains('3'))
+                              .contains('2'))
                             Column(children: <Widget>[
                               Row(
                                 children: <Widget>[
@@ -316,7 +317,7 @@ class _MyHomePageState extends State<ResultContract> {
                             ]),
                           if (!jsonResponse[index]["status"]
                                   .toString()
-                                  .contains('3') &&
+                                  .contains('2') &&
                               !jsonResponse[index]["status"]
                                   .toString()
                                   .contains('0'))
@@ -406,35 +407,31 @@ class _MyHomePageState extends State<ResultContract> {
                         ]))),
               );
             } else {
-              if (count == 0) {
-                return Center(
-                  child: Padding(
-                    padding: const EdgeInsets.all(100),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                          height: 400,
-                          child: Image.asset(
-                            "assets/images/27.png",
-                            fit: BoxFit.contain,
-                          ),
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(100),
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        height: 400,
+                        child: Image.asset(
+                          "assets/images/27.png",
+                          fit: BoxFit.contain,
                         ),
-                        Container(
-                          child: Text(
-                            'Not Found',
-                            style: TextStyle(
-                                color: Colors.redAccent,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 30),
-                          ),
+                      ),
+                      Container(
+                        child: Text(
+                          'Not Found',
+                          style: TextStyle(
+                              color: Colors.redAccent,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                );
-              } else {
-                return InkWell();
-              }
+                ),
+              );
             }
           },
         ),

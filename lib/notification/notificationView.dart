@@ -187,20 +187,34 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                             //   ],
                             // ),
                             Column(children: <Widget>[
-                              Container(
-                                margin: const EdgeInsets.all(20.0),
-                                //padding: const EdgeInsets.all(10.0),
-                                child: Text(jsonResponse[index]["content"],
-                                    style: TextStyle(
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.bold)),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    margin: const EdgeInsets.all(20.0),
+                                    //padding: const EdgeInsets.all(10.0),
+                                    child: Text(
+                                      jsonResponse[index]["content"],
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ),
+                                ],
                               ),
-                              Container(
-                                margin: const EdgeInsets.all(20.0),
-                                //padding: const EdgeInsets.all(10.0),
-                                child: Text(jsonResponse[index]["createdDate"]
-                                    .toString()
-                                    .substring(0, 10)),
+                              Row(
+                                children: [
+                                  Container(
+                                    width: 250,
+                                    margin: const EdgeInsets.all(20.0),
+                                    child: Text(
+                                      jsonResponse[index]["createdDate"]
+                                          .toString()
+                                          .substring(0, 10),
+                                      textAlign: TextAlign.left,
+                                    ),
+                                  ),
+                                ],
                               ),
                             ]),
                           ])))),
