@@ -58,7 +58,7 @@ class _MyHomePageState extends State<StoreContract> {
         body: Center(
           child: Container(
             child: Text(
-              'Wait a minute. \n Loading...',
+              'Loading...',
               style: TextStyle(
                   color: Colors.blueAccent,
                   fontWeight: FontWeight.bold,
@@ -79,15 +79,6 @@ class _MyHomePageState extends State<StoreContract> {
                   child: Image.asset(
                     "assets/images/27.png",
                     fit: BoxFit.contain,
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    'Not contract yet',
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
                   ),
                 ),
               ],

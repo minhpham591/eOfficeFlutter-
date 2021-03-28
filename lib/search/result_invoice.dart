@@ -73,7 +73,7 @@ class _MyHomePageState extends State<ResultInvoice> {
         body: Center(
           child: Container(
             child: Text(
-              'Wait a minute. \n Loading...',
+              'Loading...',
               style: TextStyle(
                   color: Colors.blueAccent,
                   fontWeight: FontWeight.bold,
@@ -110,15 +110,6 @@ class _MyHomePageState extends State<ResultInvoice> {
                   child: Image.asset(
                     "assets/images/27.png",
                     fit: BoxFit.contain,
-                  ),
-                ),
-                Container(
-                  child: Text(
-                    'Not invoice yet',
-                    style: TextStyle(
-                        color: Colors.blueAccent,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30),
                   ),
                 ),
               ],
@@ -318,28 +309,8 @@ class _MyHomePageState extends State<ResultInvoice> {
               );
             } else {
               return Center(
-                child: Padding(
-                  padding: const EdgeInsets.all(100),
-                  child: Column(
-                    children: <Widget>[
-                      Container(
-                        height: 400,
-                        child: Image.asset(
-                          "assets/images/27.png",
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                      Container(
-                        child: Text(
-                          'Not Found',
-                          style: TextStyle(
-                              color: Colors.redAccent,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30),
-                        ),
-                      ),
-                    ],
-                  ),
+                child: Column(
+                  children: <Widget>[],
                 ),
               );
             }
