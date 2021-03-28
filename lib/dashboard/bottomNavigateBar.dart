@@ -31,7 +31,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
 
   static List<Widget> _widgetOptions = <Widget>[
-    dashboard(),
+    dashboard(testValue),
     StoreDocument(testValue),
     Search(testValue),
     MyNotification(testValue),
