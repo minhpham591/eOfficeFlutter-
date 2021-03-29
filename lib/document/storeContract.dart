@@ -179,7 +179,7 @@ class _MyHomePageState extends State<StoreContract> {
                           Row(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
+                                width: MediaQuery.of(context).size.width * 0.6,
                                 margin: const EdgeInsets.all(20.0),
                                 //padding: const EdgeInsets.all(10.0),
                                 child: Text(
