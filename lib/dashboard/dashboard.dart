@@ -134,11 +134,12 @@ class _MyAppPageState extends State<dashboard> {
               ],
             ),
             Container(
-              height: MediaQuery.of(context).size.height * 0.15,
+              height: MediaQuery.of(context).size.height * 0.1,
             ),
             Container(
               margin: const EdgeInsets.all(1.0),
               padding: const EdgeInsets.all(1.0),
+              width: MediaQuery.of(context).size.width * 0.75,
               decoration: BoxDecoration(
                   color: Colors.blue[800],
                   border: Border.all(color: Colors.grey, width: 0.25),
@@ -209,7 +210,7 @@ class _MyAppPageState extends State<dashboard> {
                       Column(
                         children: [
                           Container(
-                            width: MediaQuery.of(context).size.width * 0.13,
+                            width: MediaQuery.of(context).size.width * 0.2,
                           ),
                         ],
                       ),
