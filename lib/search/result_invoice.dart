@@ -209,6 +209,7 @@ class _MyHomePageState extends State<ResultInvoice> {
                     title: Container(
                         margin: const EdgeInsets.all(1.0),
                         padding: const EdgeInsets.all(1.0),
+                        width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                             color: Colors.white,
                             border: Border.all(color: Colors.grey, width: 0.25),
@@ -227,7 +228,8 @@ class _MyHomePageState extends State<ResultInvoice> {
                             Row(
                               children: [
                                 Container(
-                                  width: 270,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
                                   margin: const EdgeInsets.all(20.0),
                                   //padding: const EdgeInsets.all(10.0),
                                   child: Text(
@@ -244,7 +246,8 @@ class _MyHomePageState extends State<ResultInvoice> {
                                 if (jsonResponse[index]["status"].toString() !=
                                     '2')
                                   Container(
-                                    width: 250,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
                                     margin: const EdgeInsets.all(15.0),
                                     //padding: const EdgeInsets.all(5.0),
 
@@ -261,7 +264,8 @@ class _MyHomePageState extends State<ResultInvoice> {
                                 if (jsonResponse[index]["status"].toString() ==
                                     '2')
                                   Container(
-                                    width: 250,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
                                     margin: const EdgeInsets.all(15.0),
                                     //padding: const EdgeInsets.all(5.0),
 

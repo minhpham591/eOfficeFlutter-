@@ -150,6 +150,7 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                       child: Container(
                           margin: const EdgeInsets.all(1.0),
                           padding: const EdgeInsets.all(1.0),
+                          width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
                               color: Colors.white,
                               border:
@@ -181,7 +182,8 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                               Row(
                                 children: [
                                   Container(
-                                    width: 250,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
                                     margin: const EdgeInsets.all(20.0),
                                     //padding: const EdgeInsets.all(10.0),
                                     child: Text(
@@ -196,7 +198,8 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                               Row(
                                 children: [
                                   Container(
-                                    width: 250,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
                                     margin: const EdgeInsets.all(20.0),
                                     child: Text(
                                       jsonResponse[index]["createdDate"]

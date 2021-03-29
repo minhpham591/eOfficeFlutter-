@@ -111,252 +111,262 @@ class _MyAppPageState extends State<dashboard> {
       getNumberInvoiceNotSignedByID(testvalue.id);
     });
     return Scaffold(
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 350,
-                child: Image.asset(
-                  "assets/images/7.png",
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ],
-          ),
-          Container(
-            height: 150,
-          ),
-          Container(
-            margin: const EdgeInsets.all(1.0),
-            padding: const EdgeInsets.all(1.0),
-            decoration: BoxDecoration(
-                color: Colors.blue[800],
-                border: Border.all(color: Colors.grey, width: 0.25),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withOpacity(0.1),
-                    spreadRadius: 1,
-                    blurRadius: 3,
-                    offset: Offset(4, 8), // changes position of shadow
-                  ),
-                ],
-                borderRadius: BorderRadius.circular(10)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
+      body: Container(
+        margin: const EdgeInsets.all(1.0),
+        padding: const EdgeInsets.all(1.0),
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Column(children: [
-                      Container(
-                        width: 10,
-                      ),
-                    ]),
-                    Column(children: [
-                      CircleAvatar(
-                        backgroundImage: NetworkImage(testvalue.avatar),
-                        radius: 25,
-                      ),
-                    ]),
-                    Column(children: [
-                      Container(
-                        width: 25,
-                      ),
-                    ]),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              testvalue.name,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 25),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              testvalue.company,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 50,
-                ),
-                Row(
-                  children: [
-                    Column(
-                      children: [
-                        Container(
-                          width: 130,
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Amount",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 75,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Signed",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 75,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Not signed yet",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Row(
-                  children: [
-                    Container(
-                      width: 15,
-                    ),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              "Contract",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            )
-                          ],
-                        ),
-                        Container(
-                          height: 30,
-                        ),
-                        Row(
-                          children: [
-                            Text(
-                              "Invoice",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                    Container(
-                      width: 15,
-                    ),
-                    Column(
-                      children: [
-                        new Container(
-                          decoration: BoxDecoration(
-                              border: Border.all(color: Colors.white)),
-                          child: Text("\n\n\n\n\n\n\n"),
-                        )
-                      ],
-                    ),
-                    Container(
-                      width: 35,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          "Amount",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                        Container(
-                          height: 30,
-                        ),
-                        Text(
-                          "Amount",
-                          style: TextStyle(color: Colors.white, fontSize: 15),
-                        ),
-                      ],
-                    ),
-                    Container(
-                      width: 100,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (numberContractSigned != null)
-                          Text(
-                            numberContractSigned,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        Container(
-                          height: 30,
-                        ),
-                        if (numberInvoiceSigned != null)
-                          Text(
-                            numberInvoiceSigned,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                      ],
-                    ),
-                    Container(
-                      width: 100,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        if (numberContractNotSigned != null)
-                          Text(
-                            numberContractNotSigned,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                        Container(
-                          height: 30,
-                        ),
-                        if (numberInvoiceNotSigned != null)
-                          Text(
-                            numberInvoiceNotSigned,
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
-                      ],
-                    ),
-                  ],
-                ),
-                Container(
-                  height: 50,
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.35,
+                  child: Image.asset(
+                    "assets/images/7.png",
+                    fit: BoxFit.contain,
+                  ),
                 ),
               ],
             ),
-          ),
-        ],
+            Container(
+              height: MediaQuery.of(context).size.height * 0.15,
+            ),
+            Container(
+              margin: const EdgeInsets.all(1.0),
+              padding: const EdgeInsets.all(1.0),
+              decoration: BoxDecoration(
+                  color: Colors.blue[800],
+                  border: Border.all(color: Colors.grey, width: 0.25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.1),
+                      spreadRadius: 1,
+                      blurRadius: 3,
+                      offset: Offset(4, 8), // changes position of shadow
+                    ),
+                  ],
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Column(children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.01,
+                        ),
+                      ]),
+                      Column(children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(testvalue.avatar),
+                          radius: 25,
+                        ),
+                      ]),
+                      Column(children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width * 0.025,
+                        ),
+                      ]),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                testvalue.name,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 25),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                testvalue.company,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.025,
+                  ),
+                  Row(
+                    children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: MediaQuery.of(context).size.width * 0.13,
+                          ),
+                        ],
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Amount",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.075,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Signed",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.075,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Not signed yet",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.015,
+                      ),
+                      Column(
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                "Contract",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              )
+                            ],
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                "Invoice",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.015,
+                      ),
+                      Column(
+                        children: [
+                          new Container(
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.white)),
+                            child: Text("\n\n\n\n\n\n\n"),
+                          )
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.035,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            "Amount",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          Text(
+                            "Amount",
+                            style: TextStyle(color: Colors.white, fontSize: 15),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (numberContractSigned != null)
+                            Text(
+                              numberContractSigned,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          if (numberInvoiceSigned != null)
+                            Text(
+                              numberInvoiceSigned,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                        ],
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width * 0.1,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          if (numberContractNotSigned != null)
+                            Text(
+                              numberContractNotSigned,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                          Container(
+                            height: MediaQuery.of(context).size.height * 0.03,
+                          ),
+                          if (numberInvoiceNotSigned != null)
+                            Text(
+                              numberInvoiceNotSigned,
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.05,
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
