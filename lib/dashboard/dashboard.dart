@@ -249,7 +249,7 @@ class _MyAppPageState extends State<dashboard> {
                   Row(
                     children: [
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.015,
+                        width: MediaQuery.of(context).size.width * 0.02,
                       ),
                       Column(
                         children: [
