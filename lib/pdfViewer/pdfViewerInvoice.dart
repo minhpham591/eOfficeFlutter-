@@ -213,7 +213,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
           body: Center(
             child: Container(
               child: Text(
-                'Wait a minute. \n Loading...',
+                'Loading...',
                 style: TextStyle(
                     color: Colors.blueAccent,
                     fontWeight: FontWeight.bold,

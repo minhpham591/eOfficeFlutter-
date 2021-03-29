@@ -48,7 +48,6 @@ class _MyAppPageState extends State<Search> {
       borderRadius: BorderRadius.circular(30),
       color: Colors.blue[900],
       child: MaterialButton(
-        minWidth: MediaQuery.of(context).size.width,
         padding: EdgeInsets.fromLTRB(20, 15, 20, 15),
         onPressed: () {
           content = findController.text.toString();
@@ -78,46 +77,59 @@ class _MyAppPageState extends State<Search> {
       ),
     );
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.all(36),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 300,
-              child: Image.asset(
-                "assets/images/8.png",
-                fit: BoxFit.contain,
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/bg_profile.png"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(15),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SizedBox(
+                height: 300,
+                child: Image.asset(
+                  "assets/images/8.png",
+                  fit: BoxFit.contain,
+                ),
               ),
-            ),
-            searchField,
-            ListTile(
-              title: const Text('Contract'),
-              leading: Radio<SingingCharacter>(
-                value: SingingCharacter.contract,
-                groupValue: _character,
-                onChanged: (SingingCharacter value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
               ),
-            ),
-            ListTile(
-              title: const Text('Invoice'),
-              leading: Radio<SingingCharacter>(
-                value: SingingCharacter.invoice,
-                groupValue: _character,
-                onChanged: (SingingCharacter value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
+              searchField,
+              ListTile(
+                title: const Text('Contract'),
+                leading: Radio<SingingCharacter>(
+                  value: SingingCharacter.contract,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter value) {
+                    setState(() {
+                      _character = value;
+                    });
+                  },
+                ),
               ),
-            ),
-            nextButton,
-          ],
+              ListTile(
+                title: const Text('Invoice'),
+                leading: Radio<SingingCharacter>(
+                  value: SingingCharacter.invoice,
+                  groupValue: _character,
+                  onChanged: (SingingCharacter value) {
+                    setState(() {
+                      _character = value;
+                    });
+                  },
+                ),
+              ),
+              nextButton,
+            ],
+          ),
         ),
       ),
     );

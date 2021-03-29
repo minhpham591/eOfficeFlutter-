@@ -53,7 +53,7 @@ class _MyHomePageState extends State<MyHomePage> {
       cursorColor: Colors.grey[600],
       decoration: InputDecoration(
           contentPadding: EdgeInsets.fromLTRB(20, 15, 20, 15),
-          hintText: "Username",
+          hintText: "Email",
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(12))),
       validator: (String value) {
         if (value.isEmpty) {

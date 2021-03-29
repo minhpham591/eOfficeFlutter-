@@ -19,10 +19,11 @@ class StoreDocument extends StatefulWidget {
 }
 
 TextStyle style = TextStyle(
-    fontFamily: 'Montserrat',
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-    color: Colors.grey);
+  fontFamily: 'Montserrat',
+  fontSize: 20,
+  fontWeight: FontWeight.bold,
+  color: Colors.grey,
+);
 
 class _MyHomePageState extends State<StoreDocument> {
   @override
@@ -50,6 +51,9 @@ class _MyHomePageState extends State<StoreDocument> {
                 ),
               ),
             ],
+            indicatorWeight: 2,
+            indicatorPadding: EdgeInsets.all(10.0),
+            indicatorColor: Colors.red,
           ),
           backgroundColor: Colors.white,
         ),
