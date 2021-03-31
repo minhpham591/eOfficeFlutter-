@@ -14,8 +14,8 @@ TextStyle style = TextStyle(
     fontWeight: FontWeight.bold,
     color: Colors.grey);
 
-class StoreContract extends StatefulWidget {
-  StoreContract(LoginResponseModel _value) {
+class StoreContractManage extends StatefulWidget {
+  StoreContractManage(LoginResponseModel _value) {
     testvalue = _value;
   }
 
@@ -23,7 +23,7 @@ class StoreContract extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<StoreContract> {
+class _MyHomePageState extends State<StoreContractManage> {
   List jsonResponse;
   Future<void> getContractByID(int id) async {
     String url =

@@ -196,7 +196,7 @@ class _MyHomePageState extends State<ResultContract> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => MyPdfViewerAfter(
+                        builder: (context) => MyPdfViewerAfterContract(
                             testvalue, jsonResponse[index]["id"]),
                       ),
                     );
@@ -204,8 +204,8 @@ class _MyHomePageState extends State<ResultContract> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>
-                            MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                        builder: (context) => MyPdfViewerContract(
+                            testvalue, jsonResponse[index]["id"]),
                       ),
                     );
                   }

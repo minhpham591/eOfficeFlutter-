@@ -23,6 +23,7 @@ class StoreViewerNotification extends StatefulWidget {
 
 class _MyHomePageState extends State<StoreViewerNotification> {
   List jsonResponse;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<void> getContractByID(int id) async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/notifications/getnotificationbyviewer?id=${id}";
@@ -55,6 +56,7 @@ class _MyHomePageState extends State<StoreViewerNotification> {
     );
     if (response.statusCode == 200) {
       print('DELETE');
+      _showToast(context);
       //Contract.fromJson(json.decode(response.body));
     } else {
       throw Exception('Failed to load data');
@@ -104,6 +106,7 @@ class _MyHomePageState extends State<StoreViewerNotification> {
       );
     } else {
       return Scaffold(
+        key: _scaffoldKey,
         body: ListView.builder(
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
@@ -217,5 +220,18 @@ class _MyHomePageState extends State<StoreViewerNotification> {
         ),
       );
     }
+  }
+
+  void _showToast(BuildContext context) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 2),
+        content: const Text('Delete successfully'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+      ),
+    );
   }
 }

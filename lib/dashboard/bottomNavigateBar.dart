@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ui';
 
 import 'package:EOfficeMobile/dashboard/dashboard.dart';
@@ -8,9 +9,11 @@ import 'package:EOfficeMobile/profile/profile.dart';
 import 'package:EOfficeMobile/search/search.dart';
 import 'package:flutter/material.dart';
 import 'package:badges/badges.dart';
+import 'package:http/http.dart' as http;
 
 LoginResponseModel testValue;
 String device;
+int count = 0;
 
 class BottomNavigateBar extends StatefulWidget {
   // bottomNavigateBar({Key key}) : super(key: key);
@@ -43,6 +46,33 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
     });
   }
 
+  List jsonResponse;
+  Future<void> getContractByID(int id) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/notifications/getnotificationbyaccountid?id=${id}";
+    final response = await http.get(
+      url,
+      headers: <String, String>{
+        "accept": "*/*",
+        'Authorization': 'Bearer ${testValue.token}'
+      },
+    );
+    if (response.statusCode == 200) {
+      //Contract.fromJson(json.decode(response.body));
+
+      setState(() {
+        jsonResponse = json.decode(response.body);
+        for (int i = 0; i < jsonResponse.length; i++) {
+          if (jsonResponse[i]['status'] == 0) {
+            count++;
+          }
+        }
+      });
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   Future<bool> _onWillPop() async {
     return (await showDialog(
           context: context,
@@ -66,6 +96,9 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      getContractByID(testValue.id);
+    });
     return Scaffold(
       body: Center(
         child: _widgetOptions.elementAt(selectedIndex),
@@ -101,7 +134,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
             icon: Badge(
               child: Icon(Icons.notifications_rounded),
               badgeContent: Text(
-                '1',
+                count.toString(),
                 style: TextStyle(
                     color: Colors.white,
                     fontSize: 10,

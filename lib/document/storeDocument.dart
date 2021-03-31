@@ -1,8 +1,10 @@
 import 'dart:ui';
 
 import 'package:EOfficeMobile/document/storeContract.dart';
+import 'package:EOfficeMobile/document/storeContractManage.dart';
 
 import 'package:EOfficeMobile/document/storeInvoice.dart';
+import 'package:EOfficeMobile/document/storeInvoiceManage.dart';
 
 import 'package:EOfficeMobile/model/login_model.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,45 @@ TextStyle style = TextStyle(
 class _MyHomePageState extends State<StoreDocument> {
   @override
   Widget build(BuildContext context) {
+    // if (testvalue.role.toString() == '1') {
+    //   return DefaultTabController(
+    //     length: 2,
+    //     child: Scaffold(
+    //       appBar: AppBar(
+    //         title: Text(
+    //           "Document",
+    //           style: style,
+    //         ),
+    //         bottom: TabBar(
+    //           tabs: [
+    //             Tab(
+    //               child: Text(
+    //                 'Contract',
+    //                 style: style,
+    //               ),
+    //             ),
+    //             Tab(
+    //               child: Text(
+    //                 'Invoice',
+    //                 style: style,
+    //               ),
+    //             ),
+    //           ],
+    //           indicatorWeight: 2,
+    //           indicatorPadding: EdgeInsets.all(10.0),
+    //           indicatorColor: Colors.red,
+    //         ),
+    //         backgroundColor: Colors.white,
+    //       ),
+    //       body: TabBarView(
+    //         children: [
+    //           StoreContractManage(testvalue),
+    //           StoreInvoiceManage(testvalue),
+    //         ],
+    //       ),
+    //     ),
+    //   );
+    // } else {
     return DefaultTabController(
       length: 2,
       child: Scaffold(
@@ -67,3 +108,4 @@ class _MyHomePageState extends State<StoreDocument> {
     );
   }
 }
+// }

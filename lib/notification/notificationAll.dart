@@ -1,6 +1,11 @@
 import 'dart:convert';
 
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/model/notificaton_model.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerContract.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerContractAfterSign.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoice.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -23,6 +28,7 @@ class StoreAllNotification extends StatefulWidget {
 
 class _MyHomePageState extends State<StoreAllNotification> {
   List jsonResponse;
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   Future<void> getContractByID(int id) async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/notifications/getnotificationbyaccountid?id=${id}";
@@ -55,7 +61,26 @@ class _MyHomePageState extends State<StoreAllNotification> {
     );
     if (response.statusCode == 200) {
       print('DELETE');
+      _showToast(context);
       //Contract.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
+  Future<void> updatePassword(Status s) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/notifications/changestatus";
+    var body = json.encode(s.toJson());
+    print(body);
+    final response = await http.put(url,
+        headers: <String, String>{
+          "Accept": "*/*",
+          "content-type": "application/json-patch+json",
+        },
+        body: body);
+    print("status code = " + response.statusCode.toString());
+    if (response.statusCode == 200) {
     } else {
       throw Exception('Failed to load data');
     }
@@ -104,6 +129,7 @@ class _MyHomePageState extends State<StoreAllNotification> {
       );
     } else {
       return Scaffold(
+        key: _scaffoldKey,
         body: ListView.builder(
           itemCount: jsonResponse != null ? jsonResponse.length : 0,
           itemBuilder: (BuildContext context, int index) {
@@ -117,7 +143,66 @@ class _MyHomePageState extends State<StoreAllNotification> {
                         FlatButton.icon(
                           height: 100,
                           onPressed: () {
-                            print('ok');
+                            Status s = new Status();
+                            s.id = jsonResponse[index]['id'];
+                            s.status = 1;
+                            if (jsonResponse[index]['title']
+                                .toString()
+                                .toLowerCase()
+                                .contains('sign')) {
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('contract')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewerContract(
+                                        testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('invoice')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewer(testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('contract')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyPdfViewerAfterContract(testvalue,
+                                            jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('invoice')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewerAfter(
+                                        testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                            }
                           },
                           color: Colors.blueAccent,
                           icon: Icon(
@@ -217,5 +302,18 @@ class _MyHomePageState extends State<StoreAllNotification> {
         ),
       );
     }
+  }
+
+  void _showToast(BuildContext context) {
+    _scaffoldKey.currentState.showSnackBar(
+      SnackBar(
+        backgroundColor: Colors.red,
+        duration: const Duration(seconds: 2),
+        content: const Text('Delete successfully'),
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(20))),
+      ),
+    );
   }
 }

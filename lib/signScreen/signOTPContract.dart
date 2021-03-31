@@ -278,7 +278,7 @@ class EnterOTPToSignContract extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                     builder: (context) =>
-                        MyPdfViewerAfter(testvalue, contractId)),
+                        MyPdfViewerAfterContract(testvalue, contractId)),
               );
             }),
       ),
