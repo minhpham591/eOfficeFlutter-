@@ -26,7 +26,7 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
   List jsonResponse;
   Future<void> getInvoiceByID() async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/invoices/getbysignerid?signerId=${testvalue.id}";
+        "https://datnxeoffice.azurewebsites.net/api/invoices/getbycompany?id=${testvalue.companyId}";
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -134,13 +134,24 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
             return InkWell(
               onTap: () {
                 if (jsonResponse[index]["status"].toString() != '2') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
-                    ),
-                  );
+                  if (jsonResponse[index]["signerId"].toString() ==
+                      "${testvalue.id}") {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) =>
+                            MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPdfViewerAfter(
+                            testvalue, jsonResponse[index]["id"]),
+                      ),
+                    );
+                  }
                 } else {
                   Navigator.push(
                     context,

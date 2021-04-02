@@ -27,7 +27,7 @@ class _MyHomePageState extends State<StoreContractManage> {
   List jsonResponse;
   Future<void> getContractByID(int id) async {
     String url =
-        "https://datnxeoffice.azurewebsites.net/api/contracts/getbysignerid?id=${id}";
+        "https://datnxeoffice.azurewebsites.net/api/contracts/getbycompany?id=${id}";
     final response = await http.get(
       url,
       headers: <String, String>{
@@ -48,7 +48,7 @@ class _MyHomePageState extends State<StoreContractManage> {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      getContractByID(testvalue.id);
+      getContractByID(testvalue.companyId);
     });
     int notSigned = 0;
     int signed = 1;
@@ -136,21 +136,31 @@ class _MyHomePageState extends State<StoreContractManage> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["signs"]
-                    .toString()
-                    .contains("signerId: ${testvalue.id}")) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewerAfterContract(
-                          testvalue, jsonResponse[index]["id"]),
-                    ),
-                  );
+                if (jsonResponse[index]["status"].toString() != "2") {
+                  if (jsonResponse[index]["contractSigners"]
+                      .toString()
+                      .contains("signerId: ${testvalue.id}")) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPdfViewerContract(
+                            testvalue, jsonResponse[index]["id"]),
+                      ),
+                    );
+                  } else {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => MyPdfViewerAfterContract(
+                            testvalue, jsonResponse[index]["id"]),
+                      ),
+                    );
+                  }
                 } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyPdfViewerContract(
+                      builder: (context) => MyPdfViewerAfterContract(
                           testvalue, jsonResponse[index]["id"]),
                     ),
                   );
@@ -209,9 +219,9 @@ class _MyHomePageState extends State<StoreContractManage> {
                                         color: Colors.redAccent,
                                         fontWeight: FontWeight.w800),
                                   )),
-                            if (jsonResponse[index]["signs"]
+                            if (jsonResponse[index]["status"]
                                 .toString()
-                                .contains("signerId: ${testvalue.id}"))
+                                .contains('2'))
                               Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.5,

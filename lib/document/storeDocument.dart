@@ -30,82 +30,82 @@ TextStyle style = TextStyle(
 class _MyHomePageState extends State<StoreDocument> {
   @override
   Widget build(BuildContext context) {
-    // if (testvalue.role.toString() == '1') {
-    //   return DefaultTabController(
-    //     length: 2,
-    //     child: Scaffold(
-    //       appBar: AppBar(
-    //         title: Text(
-    //           "Document",
-    //           style: style,
-    //         ),
-    //         bottom: TabBar(
-    //           tabs: [
-    //             Tab(
-    //               child: Text(
-    //                 'Contract',
-    //                 style: style,
-    //               ),
-    //             ),
-    //             Tab(
-    //               child: Text(
-    //                 'Invoice',
-    //                 style: style,
-    //               ),
-    //             ),
-    //           ],
-    //           indicatorWeight: 2,
-    //           indicatorPadding: EdgeInsets.all(10.0),
-    //           indicatorColor: Colors.red,
-    //         ),
-    //         backgroundColor: Colors.white,
-    //       ),
-    //       body: TabBarView(
-    //         children: [
-    //           StoreContractManage(testvalue),
-    //           StoreInvoiceManage(testvalue),
-    //         ],
-    //       ),
-    //     ),
-    //   );
-    // } else {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Document",
-            style: style,
+    if (testvalue.role.toString() == '1') {
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Document",
+              style: style,
+            ),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Contract',
+                    style: style,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Invoice',
+                    style: style,
+                  ),
+                ),
+              ],
+              indicatorWeight: 2,
+              indicatorPadding: EdgeInsets.all(10.0),
+              indicatorColor: Colors.red,
+            ),
+            backgroundColor: Colors.white,
           ),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                child: Text(
-                  'Contract',
-                  style: style,
-                ),
-              ),
-              Tab(
-                child: Text(
-                  'Invoice',
-                  style: style,
-                ),
-              ),
+          body: TabBarView(
+            children: [
+              StoreContractManage(testvalue),
+              StoreInvoiceManage(testvalue),
             ],
-            indicatorWeight: 2,
-            indicatorPadding: EdgeInsets.all(10.0),
-            indicatorColor: Colors.red,
           ),
-          backgroundColor: Colors.white,
         ),
-        body: TabBarView(
-          children: [
-            StoreContract(testvalue),
-            StoreInvoice(testvalue),
-          ],
+      );
+    } else {
+      return DefaultTabController(
+        length: 2,
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              "Document",
+              style: style,
+            ),
+            bottom: TabBar(
+              tabs: [
+                Tab(
+                  child: Text(
+                    'Contract',
+                    style: style,
+                  ),
+                ),
+                Tab(
+                  child: Text(
+                    'Invoice',
+                    style: style,
+                  ),
+                ),
+              ],
+              indicatorWeight: 2,
+              indicatorPadding: EdgeInsets.all(10.0),
+              indicatorColor: Colors.red,
+            ),
+            backgroundColor: Colors.white,
+          ),
+          body: TabBarView(
+            children: [
+              StoreContract(testvalue),
+              StoreInvoice(testvalue),
+            ],
+          ),
         ),
-      ),
-    );
+      );
+    }
   }
 }
-// }
