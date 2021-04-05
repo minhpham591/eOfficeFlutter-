@@ -13,7 +13,7 @@ import 'package:http/http.dart' as http;
 
 LoginResponseModel testValue;
 String device;
-int count = 0;
+String count = ' ';
 
 class BottomNavigateBar extends StatefulWidget {
   // bottomNavigateBar({Key key}) : super(key: key);
@@ -64,7 +64,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
         jsonResponse = json.decode(response.body);
         for (int i = 0; i < jsonResponse.length; i++) {
           if (jsonResponse[i]['status'] == 0) {
-            count++;
+            count = "*";
           }
         }
       });

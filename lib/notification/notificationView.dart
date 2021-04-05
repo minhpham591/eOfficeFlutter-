@@ -1,6 +1,11 @@
 import 'dart:convert';
 
 import 'package:EOfficeMobile/model/login_model.dart';
+import 'package:EOfficeMobile/model/notificaton_model.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerContract.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerContractAfterSign.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoice.dart';
+import 'package:EOfficeMobile/pdfViewer/pdfViewerInvoiceAfterSign.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -63,6 +68,24 @@ class _MyHomePageState extends State<StoreViewerNotification> {
     }
   }
 
+  Future<void> updatePassword(Status s) async {
+    String url =
+        "https://datnxeoffice.azurewebsites.net/api/notifications/changestatus";
+    var body = json.encode(s.toJson());
+    print(body);
+    final response = await http.put(url,
+        headers: <String, String>{
+          "Accept": "*/*",
+          "content-type": "application/json-patch+json",
+        },
+        body: body);
+    print("status code = " + response.statusCode.toString());
+    if (response.statusCode == 200) {
+    } else {
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     setState(() {
@@ -120,7 +143,66 @@ class _MyHomePageState extends State<StoreViewerNotification> {
                         FlatButton.icon(
                           height: 100,
                           onPressed: () {
-                            print('ok');
+                            Status s = new Status();
+                            s.id = jsonResponse[index]['id'];
+                            s.status = 1;
+                            if (jsonResponse[index]['title']
+                                .toString()
+                                .toLowerCase()
+                                .contains('sign')) {
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('contract')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewerContract(
+                                        testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('invoice')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewer(testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                            } else {
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('contract')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        MyPdfViewerAfterContract(testvalue,
+                                            jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                              if (jsonResponse[index]['title']
+                                  .toString()
+                                  .toLowerCase()
+                                  .contains('invoice')) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => MyPdfViewerAfter(
+                                        testvalue,
+                                        jsonResponse[index]["objectId"]),
+                                  ),
+                                );
+                              }
+                            }
                           },
                           color: Colors.blueAccent,
                           icon: Icon(

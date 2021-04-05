@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyPdfViewer> {
                         builder: (context) =>
                             MySignScreen(testvalue, contractId)),
                   );
-                } else if (status == 3) {
+                } else if (status == 2) {
                   showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(

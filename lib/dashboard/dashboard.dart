@@ -18,10 +18,10 @@ class dashboard extends StatefulWidget {
 
 class _MyAppPageState extends State<dashboard> {
   TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20);
-  String numberContractSigned;
-  String numberInvoiceSigned;
-  String numberContractNotSigned;
-  String numberInvoiceNotSigned;
+  int numberContractSigned;
+  int numberInvoiceSigned;
+  int numberContractNotSigned;
+  int numberInvoiceNotSigned;
   Future<void> getNumberContractSignedByID(int id) async {
     String url =
         "https://datnxeoffice.azurewebsites.net/api/contracts/getnumberofcontractsigned?id=$id";
@@ -35,7 +35,7 @@ class _MyAppPageState extends State<dashboard> {
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
       setState(() {
-        numberContractSigned = json.decode(response.body).toString();
+        numberContractSigned = json.decode(response.body);
       });
     } else {
       throw Exception('Failed to load data');
@@ -55,7 +55,7 @@ class _MyAppPageState extends State<dashboard> {
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
       setState(() {
-        numberContractNotSigned = json.decode(response.body).toString();
+        numberContractNotSigned = json.decode(response.body);
       });
     } else {
       throw Exception('Failed to load data');
@@ -75,7 +75,7 @@ class _MyAppPageState extends State<dashboard> {
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
       setState(() {
-        numberInvoiceSigned = json.decode(response.body).toString();
+        numberInvoiceSigned = json.decode(response.body);
       });
     } else {
       throw Exception('Failed to load data');
@@ -95,7 +95,7 @@ class _MyAppPageState extends State<dashboard> {
     if (response.statusCode == 200) {
       //Contract.fromJson(json.decode(response.body));
       setState(() {
-        numberInvoiceNotSigned = json.decode(response.body).toString();
+        numberInvoiceNotSigned = json.decode(response.body);
       });
     } else {
       throw Exception('Failed to load data');
@@ -297,21 +297,29 @@ class _MyAppPageState extends State<dashboard> {
                       ),
                       Column(
                         children: [
-                          Text(
-                            "Amount",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
+                          if (numberContractSigned != null &&
+                              numberContractNotSigned != null)
+                            Text(
+                              (numberContractSigned + numberContractNotSigned)
+                                  .toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
                           Container(
                             height: MediaQuery.of(context).size.height * 0.03,
                           ),
-                          Text(
-                            "Amount",
-                            style: TextStyle(color: Colors.white, fontSize: 15),
-                          ),
+                          if (numberInvoiceSigned != null &&
+                              numberInvoiceNotSigned != null)
+                            Text(
+                              (numberInvoiceNotSigned + numberInvoiceSigned)
+                                  .toString(),
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            ),
                         ],
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.1,
+                        width: MediaQuery.of(context).size.width * 0.15,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -319,7 +327,7 @@ class _MyAppPageState extends State<dashboard> {
                         children: [
                           if (numberContractSigned != null)
                             Text(
-                              numberContractSigned,
+                              numberContractSigned.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),
@@ -328,14 +336,14 @@ class _MyAppPageState extends State<dashboard> {
                           ),
                           if (numberInvoiceSigned != null)
                             Text(
-                              numberInvoiceSigned,
+                              numberInvoiceSigned.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),
                         ],
                       ),
                       Container(
-                        width: MediaQuery.of(context).size.width * 0.1,
+                        width: MediaQuery.of(context).size.width * 0.15,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -343,7 +351,7 @@ class _MyAppPageState extends State<dashboard> {
                         children: [
                           if (numberContractNotSigned != null)
                             Text(
-                              numberContractNotSigned,
+                              numberContractNotSigned.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),
@@ -352,7 +360,7 @@ class _MyAppPageState extends State<dashboard> {
                           ),
                           if (numberInvoiceNotSigned != null)
                             Text(
-                              numberInvoiceNotSigned,
+                              numberInvoiceNotSigned.toString(),
                               style:
                                   TextStyle(color: Colors.white, fontSize: 15),
                             ),

@@ -109,7 +109,7 @@ class _MyHomePageState extends State<MyPdfViewerContract> {
               color: Colors.grey,
               iconSize: 35,
               onPressed: () {
-                if (status != 3) {
+                if (status != 2) {
                   if (signerID.contains("signerId: ${testvalue.id}")) {
                     showDialog(
                       context: context,
@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyPdfViewerContract> {
                               MySignScreen(testvalue, contractId)),
                     );
                   }
-                } else if (status == 3) {
+                } else if (status == 2) {
                   showDialog(
                     context: context,
                     builder: (context) => new AlertDialog(
