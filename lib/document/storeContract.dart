@@ -254,6 +254,18 @@ class _MyHomePageState extends State<StoreContract> {
                                 ),
                               ],
                             ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    'Signed',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ]),
                         if (!jsonResponse[index]["status"]
                                 .toString()
@@ -310,6 +322,18 @@ class _MyHomePageState extends State<StoreContract> {
                                     )
                                   ],
                                 ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    'Pre-Signed',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ]),
                         if (jsonResponse[index]["status"]
                             .toString()

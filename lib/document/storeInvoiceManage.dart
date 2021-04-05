@@ -248,7 +248,15 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
                                 color: Colors.green,
                                 semanticLabel: "Signed",
                               ),
-                            )
+                            ),
+                            Container(
+                              child: Text(
+                                'Signed',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                              ),
+                            ),
                           ]),
                         if (jsonResponse[index]["status"].toString() != '2')
                           Column(children: <Widget>[

@@ -219,9 +219,9 @@ class _MyHomePageState extends State<StoreContractManage> {
                                         color: Colors.redAccent,
                                         fontWeight: FontWeight.w800),
                                   )),
-                            if (jsonResponse[index]["status"]
+                            if (!jsonResponse[index]["status"]
                                 .toString()
-                                .contains('2'))
+                                .contains('0'))
                               Container(
                                   width:
                                       MediaQuery.of(context).size.width * 0.5,
@@ -260,6 +260,18 @@ class _MyHomePageState extends State<StoreContractManage> {
                                     Icons.create,
                                     color: Colors.green,
                                     semanticLabel: "Signed",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    'Signed',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
                                   ),
                                 ),
                               ],
@@ -320,6 +332,18 @@ class _MyHomePageState extends State<StoreContractManage> {
                                     )
                                   ],
                                 ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    'Pre-Signed',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ]),
                         if (jsonResponse[index]["status"]
                             .toString()
