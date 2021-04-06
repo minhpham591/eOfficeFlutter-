@@ -64,7 +64,10 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
         jsonResponse = json.decode(response.body);
         for (int i = 0; i < jsonResponse.length; i++) {
           if (jsonResponse[i]['status'] == 0) {
-            count = "*";
+            count = "N";
+            break;
+          } else if (jsonResponse[i]['status'] == 1) {
+            count = " ";
           }
         }
       });
@@ -131,6 +134,7 @@ class _MyStatefulWidgetState extends State<BottomNavigateBar> {
             // icon: Icon(
             //   Icons.notifications_rounded,
             // ),
+
             icon: Badge(
               child: Icon(Icons.notifications_rounded),
               badgeContent: Text(

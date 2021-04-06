@@ -146,6 +146,7 @@ class _MyHomePageState extends State<StoreSignerNotification> {
                             Status s = new Status();
                             s.id = jsonResponse[index]['id'];
                             s.status = 1;
+                            updatePassword(s);
                             if (jsonResponse[index]['title']
                                 .toString()
                                 .toLowerCase()
@@ -296,6 +297,28 @@ class _MyHomePageState extends State<StoreSignerNotification> {
                                 ],
                               ),
                             ]),
+                            Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                            ),
+                            if (jsonResponse[index]['status']
+                                .toString()
+                                .contains('1'))
+                              Column(
+                                children: [
+                                  Icon(
+                                    Icons.turned_in,
+                                    color: Colors.green,
+                                  )
+                                ],
+                              ),
+                            if (jsonResponse[index]['status']
+                                .toString()
+                                .contains('0'))
+                              Column(
+                                children: [
+                                  Icon(Icons.turned_in, color: Colors.red)
+                                ],
+                              ),
                           ])))),
             );
           },
