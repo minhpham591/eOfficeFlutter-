@@ -185,7 +185,7 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
                           Row(
                             children: [
                               Container(
-                                width: MediaQuery.of(context).size.width * 0.67,
+                                width: MediaQuery.of(context).size.width * 0.5,
                                 margin: const EdgeInsets.all(20.0),
                                 //padding: const EdgeInsets.all(10.0),
                                 child: Text(
@@ -269,6 +269,28 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
                                 semanticLabel: "You've not signed",
                               ),
                             )
+                          ]),
+                        if (jsonResponse[index]["status"]
+                            .toString()
+                            .contains('3'))
+                          Column(children: <Widget>[
+                            Container(
+                              margin: const EdgeInsets.all(15.0),
+                              padding: const EdgeInsets.all(5.0),
+                              child: Icon(
+                                Icons.create,
+                                color: Colors.grey,
+                                semanticLabel: "You've not signed",
+                              ),
+                            ),
+                            Container(
+                              child: Text(
+                                'Expiration',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.grey),
+                              ),
+                            ),
                           ]),
                       ]))),
             );

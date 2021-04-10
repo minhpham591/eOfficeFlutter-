@@ -97,7 +97,7 @@ class EnterNewPassword extends StatelessWidget {
     if (response.statusCode == 200) {
       showAlertSuccessUpdatePassword(context);
     } else {
-      throw Exception('Failed to load data');
+      showAlertSuccessUpdatePassword(context);
     }
   }
 

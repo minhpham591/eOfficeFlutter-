@@ -362,6 +362,45 @@ class _MyHomePageState extends State<StoreContract> {
                               ],
                             ),
                           ]),
+                        if (jsonResponse[index]["status"]
+                            .toString()
+                            .contains('3'))
+                          Column(children: <Widget>[
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  margin: const EdgeInsets.all(5.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.grey,
+                                    semanticLabel: "Not Signed",
+                                  ),
+                                ),
+                                Container(
+                                  margin: const EdgeInsets.all(5.0),
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Icon(
+                                    Icons.create,
+                                    color: Colors.grey,
+                                    semanticLabel: "Not Signed",
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              children: <Widget>[
+                                Container(
+                                  child: Text(
+                                    'Expiration',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ]),
                       ]))),
             );
           },
