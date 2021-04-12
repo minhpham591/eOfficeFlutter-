@@ -259,7 +259,7 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
                               ),
                             ),
                           ]),
-                        if (jsonResponse[index]["status"].toString() != '2')
+                        if (jsonResponse[index]["status"].toString() == '0')
                           Column(children: <Widget>[
                             Container(
                               margin: const EdgeInsets.all(15.0),

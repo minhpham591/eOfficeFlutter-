@@ -278,12 +278,9 @@ class _MyHomePageState extends State<StoreContract> {
                               ],
                             ),
                           ]),
-                        if (!jsonResponse[index]["status"]
-                                .toString()
-                                .contains('2') &&
-                            !jsonResponse[index]["status"]
-                                .toString()
-                                .contains('0'))
+                        if (jsonResponse[index]["status"]
+                            .toString()
+                            .contains('1'))
                           Column(children: <Widget>[
                             if (jsonResponse[index]["signs"].toString() != '[]')
                               if (jsonResponse[index]["signs"].toString().contains(
