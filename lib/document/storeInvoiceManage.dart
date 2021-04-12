@@ -133,7 +133,8 @@ class _MyHomePageState extends State<StoreInvoiceManage> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() != '2') {
+                if (jsonResponse[index]["status"].toString() != '2' ||
+                    jsonResponse[index]["status"].toString() != '3') {
                   if (jsonResponse[index]["signerId"].toString() ==
                       "${testvalue.id}") {
                     Navigator.push(

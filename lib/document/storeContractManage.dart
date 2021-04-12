@@ -136,7 +136,8 @@ class _MyHomePageState extends State<StoreContractManage> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() != "2") {
+                if (jsonResponse[index]["status"].toString() != "2" ||
+                    jsonResponse[index]["status"].toString() != "3") {
                   if (jsonResponse[index]["contractSigners"]
                       .toString()
                       .contains("signerId: ${testvalue.id}")) {
