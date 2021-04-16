@@ -133,21 +133,21 @@ class _MyHomePageState extends State<StoreInvoice> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() != '2' ||
-                    jsonResponse[index]["status"].toString() != '3') {
+                if (jsonResponse[index]["status"].toString() == '2' ||
+                    jsonResponse[index]["status"].toString() == '3') {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) =>
-                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
+                      builder: (context) => MyPdfViewerAfter(
+                          testvalue, jsonResponse[index]["id"]),
                     ),
                   );
                 } else {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => MyPdfViewerAfter(
-                          testvalue, jsonResponse[index]["id"]),
+                      builder: (context) =>
+                          MyPdfViewer(testvalue, jsonResponse[index]["id"]),
                     ),
                   );
                 }

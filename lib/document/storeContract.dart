@@ -136,8 +136,16 @@ class _MyHomePageState extends State<StoreContract> {
           itemBuilder: (BuildContext context, int index) {
             return InkWell(
               onTap: () {
-                if (jsonResponse[index]["status"].toString() != "2" ||
-                    jsonResponse[index]["status"].toString() != "3") {
+                if (jsonResponse[index]["status"].toString() == "2" ||
+                    jsonResponse[index]["status"].toString() == "3") {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => MyPdfViewerAfterContract(
+                          testvalue, jsonResponse[index]["id"]),
+                    ),
+                  );
+                } else {
                   if (jsonResponse[index]["signs"]
                       .toString()
                       .contains("signerId: ${testvalue.id}")) {
@@ -157,14 +165,6 @@ class _MyHomePageState extends State<StoreContract> {
                       ),
                     );
                   }
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => MyPdfViewerContract(
-                          testvalue, jsonResponse[index]["id"]),
-                    ),
-                  );
                 }
               },
               child: ListTile(
