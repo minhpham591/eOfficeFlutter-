@@ -244,8 +244,8 @@ class _MyHomePageState extends State<ResultInvoice> {
                             ),
                             Row(
                               children: [
-                                if (jsonResponse[index]["status"].toString() !=
-                                    '2')
+                                if (jsonResponse[index]["status"].toString() ==
+                                    '0')
                                   Container(
                                     width:
                                         MediaQuery.of(context).size.width * 0.5,
@@ -259,6 +259,24 @@ class _MyHomePageState extends State<ResultInvoice> {
                                       textAlign: TextAlign.left,
                                       style: TextStyle(
                                           color: Colors.redAccent,
+                                          fontWeight: FontWeight.w800),
+                                    ),
+                                  ),
+                                if (jsonResponse[index]["status"].toString() ==
+                                    '3')
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    margin: const EdgeInsets.all(15.0),
+                                    //padding: const EdgeInsets.all(5.0),
+
+                                    child: Text(
+                                      jsonResponse[index]["dateExpire"]
+                                          .toString()
+                                          .substring(0, 10),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Colors.grey,
                                           fontWeight: FontWeight.w800),
                                     ),
                                   ),
