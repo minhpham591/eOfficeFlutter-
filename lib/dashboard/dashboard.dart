@@ -217,7 +217,7 @@ class _MyAppPageState extends State<dashboard> {
                       Column(
                         children: [
                           Text(
-                            "Amount",
+                            "Amounts",
                             style: TextStyle(color: Colors.white, fontSize: 15),
                           ),
                         ],

@@ -238,11 +238,8 @@ class _MyHomePageState extends State<StoreContractManage> {
                                         fontWeight: FontWeight.w800),
                                   )),
                             if (jsonResponse[index]["status"]
-                                    .toString()
-                                    .contains('1') ||
-                                jsonResponse[index]["status"]
-                                    .toString()
-                                    .contains('2'))
+                                .toString()
+                                .contains('1'))
                               if (jsonResponse[index]["signs"]
                                   .toString()
                                   .contains("signerId: ${testvalue.id}"))
@@ -259,7 +256,27 @@ class _MyHomePageState extends State<StoreContractManage> {
                                       style: TextStyle(
                                           color: Colors.greenAccent,
                                           fontWeight: FontWeight.w800),
-                                    ))
+                                    )),
+                            if (jsonResponse[index]["status"]
+                                .toString()
+                                .contains('2'))
+                              if (jsonResponse[index]["signs"]
+                                  .toString()
+                                  .contains("signerId: ${testvalue.id}"))
+                                Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.5,
+                                    margin: const EdgeInsets.all(10.0),
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: Text(
+                                      jsonResponse[index]["dateExpire"]
+                                          .toString()
+                                          .substring(0, 10),
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          color: Colors.greenAccent,
+                                          fontWeight: FontWeight.w800),
+                                    )),
                           ]),
                         ]),
                         if (jsonResponse[index]["status"]
